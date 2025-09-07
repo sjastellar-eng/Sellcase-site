@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SellCase — OLX Analytics</title>
+  <meta name="description" content="SellCase: OLX analytics — watch slots, alerts, dashboards, CSV export."/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html,body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial}
+    .badge{background:rgba(37,99,235,.12);color:#2563EB;border:1px solid rgba(37,99,235,.25)}
+    .soft{box-shadow:0 12px 30px rgba(0,0,0,.08)}
+    .hero-grad{background:linear-gradient(135deg,#eff6ff 0%,#ffffff 50%,#fff7ed 100%)}
+    .lang-btn{padding:.4rem .6rem;border:1px solid #e5e7eb;border-radius:.5rem;font-weight:600}
+    .lang-btn.active{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- Top banner -->
+  <div class="bg-gray-900 text-white text-center text-sm py-2 px-4" data-i18n="top_banner">Бета-доступ безкоштовно для перших 100 користувачів</div>
+
+  <!-- Header -->
+  <header class="sticky top-0 bg-white bg-opacity-80 backdrop-filter backdrop-blur border-b border-gray-100 z-40">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <svg aria-label="SellCase logo" width="28" height="28" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="28" fill="#0f172a"></circle>
+          <rect x="22" y="36" width="6" height="16" rx="2" fill="#ffffff"></rect>
+          <rect x="30" y="30" width="6" height="22" rx="2" fill="#ffffff"></rect>
+          <rect x="38" y="24" width="6" height="28" rx="2" fill="#ffffff"></rect>
+        </svg>
+        <span class="font-semibold text-lg">SellCase</span>
+      </div>
+      <nav class="hidden md:flex items-center space-x-8 text-sm">
+        <a href="#features" class="hover:text-blue-600" data-i18n="nav_features">Функції</a>
+        <a href="#how" class="hover:text-blue-600" data-i18n="nav_how">Як працює</a>
+        <a href="#pricing" class="hover:text-blue-600" data-i18n="nav_pricing">Тарифи</a>
+        <a href="#faq" class="hover:text-blue-600" data-i18n="nav_faq">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button id="btn-uk" type="button" class="lang-btn active" aria-pressed="true" onclick="setLang('uk');">UA</button>
+<button id="btn-en" type="button" class="lang-btn" aria-pressed="false" onclick="setLang('en');">EN</button>
+        <a href="#waitlist" class="hidden sm:inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700" data-i18n="cta_header">У вейтлист</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-grad">
+    <div class="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <div class="inline-flex items-center space-x-2 badge px-2 py-1 rounded-full text-xs mb-4">
+          <span data-i18n="hero_chip_1">OLX аналітика</span><span>•</span><span data-i18n="hero_chip_2">Алерти та CSV</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold">
+          <span data-i18n="hero_title_prefix">Заробляйте більше завдяки аналітиці </span>
+          <span class="text-blue-600 font-extrabold">OLX</span>
+          <span data-i18n="hero_title_suffix"></span>
+        </h1>
+        <p class="mt-4 text-gray-700 text-base sm:text-lg" data-i18n="hero_sub">
+          Автоматично збираємо нові оголошення, зміни цін і тренди. Підказуємо оптимальну ціну та коли варто виходити в нішу.
+        </p>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <a href="#waitlist" class="inline-flex items-center justify-center px-5 py-3 rounded-md bg-blue-600 text-white font-medium soft hover:bg-blue-700" data-i18n="cta_primary">Приєднатися</a>
+          <a href="#features" class="inline-flex items-center justify-center px-5 py-3 rounded-md border border-gray-300 text-gray-700 font-medium bg-white hover:bg-gray-50" data-i18n="cta_secondary">Дивитися функції</a>
+        </div>
+      </div>
+      <div class="soft bg-white rounded-2xl border border-gray-100 p-6">
+        <div class="grid sm:grid-cols-3 gap-3 text-sm">
+          <div class="p-4 rounded-lg border border-gray-200 bg-white text-gray-800" data-i18n="feature_alerts">Алерти про нові оголошення в ніші</div>
+          <div class="p-4 rounded-lg border border-gray-200 bg-white text-gray-800" data-i18n="feature_tracking">Відстеження змін цін конкурентів</div>
+          <div class="p-4 rounded-lg border border-gray-200 bg-white text-gray-800" data-i18n="feature_export">Експорт CSV/Excel для звітів</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-12 bg-white border-t border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-8" data-i18n="features_title">Ключові функції SellCase</h2>
+      <div class="grid md:grid-cols-3 gap-6 text-sm">
+        <div class="bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f1_h">Дашборд «Ніша»</h3><p class="text-gray-600" data-i18n="f1_p">Медіана/квантили цін, швидкість появи нових оголошень, активні продавці.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f2_h">Алерти</h3><p class="text-gray-600" data-i18n="f2_p">Нові оголошення, зміни цін, зникнення позицій — e-mail/Telegram.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f3_h">Експорт CSV</h3><p class="text-gray-600" data-i18n="f3_p">Вивантаження відфільтрованих вибірок у CSV/Excel.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How -->
+  <section id="how" class="py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-8" data-i18n="how_title">Як це працює</h2>
+      <div class="grid md:grid-cols-4 gap-6 text-sm">
+        <div class="p-6 rounded-xl bg-gray-50 border border-gray-100"><div class="text-xs text-gray-500 mb-2" data-i18n="how_s1_t">Крок 1</div><div class="font-semibold mb-1" data-i18n="how_s1_h">Створіть «слот»</div><p class="text-gray-600" data-i18n="how_s1_p">Вкажіть нішу/ключові слова (напр., «iPhone 13», «автозапчастини»).</p></div>
+        <div class="p-6 rounded-xl bg-gray-50 border border-gray-100"><div class="text-xs text-gray-500 mb-2" data-i18n="how_s2_t">Крок 2</div><div class="font-semibold mb-1" data-i18n="how_s2_h">Збір даних</div><p class="text-gray-600" data-i18n="how_s2_p">Лише публічні сторінки OLX, з повагою до robots.txt і частоти запитів.</p></div>
+        <div class="p-6 rounded-xl bg-gray-50 border border-gray-100"><div class="text-xs text-gray-500 mb-2" data-i18n="how_s3_t">Крок 3</div><div class="font-semibold mb-1" data-i18n="how_s3_h">Аналітика</div><p class="text-gray-600" data-i18n="how_s3_p">Дашборди ніш/продавців, експорт CSV, швидкі фільтри.</p></div>
+        <div class="p-6 rounded-xl bg-gray-50 border border-gray-100"><div class="text-xs text-gray-500 mb-2" data-i18n="how_s4_t">Крок 4</div><div class="font-semibold mb-1" data-i18n="how_s4_h">Алерти</div><p class="text-gray-600" data-i18n="how_s4_p">Про нові оголошення, зміни цін та зникнення.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="py-12 bg-white border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-center" data-i18n="pricing_title">Тарифи</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Lite -->
+        <div class="p-8 bg-white rounded-2xl border border-gray-100 soft text-center">
+          <div class="text-sm font-semibold text-gray-700" data-i18n="pricing_lite">Lite</div>
+          <div class="mt-2 text-3xl font-extrabold" data-i18n="pricing_lite_price">$0</div>
+          <ul class="mt-4 space-y-2 text-sm text-gray-600">
+            <li data-i18n="pricing_lite_f1">5 слотів спостереження</li>
+            <li data-i18n="pricing_lite_f2">Алерти e-mail (оновлення раз/день)</li>
+            <li data-i18n="pricing_lite_f3">Експорт лише CSV</li>
+          </ul>
+          <a href="#waitlist" class="mt-6 inline-flex px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700" data-i18n="pricing_cta_waitlist">У вейтлист</a>
+        </div>
+        <!-- Basic -->
+        <div class="p-8 bg-white rounded-2xl border border-blue-200 soft text-center ring-1 ring-blue-600">
+          <div class="text-sm font-semibold text-gray-700" data-i18n="pricing_basic">Basic</div>
+          <div class="mt-2 text-3xl font-extrabold" data-i18n="pricing_basic_price">$9</div>
+          <ul class="mt-4 space-y-2 text-sm text-gray-600">
+            <li data-i18n="pricing_basic_f1">10 слотів спостереження</li>
+            <li data-i18n="pricing_basic_f2">E-mail + базові Telegram-алерти (кожні 3 год)</li>
+            <li data-i18n="pricing_basic_f3">Експорт CSV + Excel</li>
+          </ul>
+          <a href="#waitlist" class="mt-6 inline-flex px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700" data-i18n="pricing_cta_waitlist">У вейтлист</a>
+        </div>
+        <!-- Pro -->
+        <div class="p-8 bg-gray-900 text-white rounded-2xl border border-gray-800 soft text-center">
+          <div class="text-sm font-semibold text-gray-300" data-i18n="pricing_pro">Pro</div>
+          <div class="mt-2 text-3xl font-extrabold" data-i18n="pricing_pro_price">$19</div>
+          <ul class="mt-4 space-y-2 text-sm text-gray-300">
+            <li data-i18n="pricing_pro_f1">20 слотів спостереження</li>
+            <li data-i18n="pricing_pro_f2">Алерти: e-mail + Telegram + Slack (щогодини)</li>
+            <li data-i18n="pricing_pro_f3">Експорт CSV + Excel + Google Sheets</li>
+            <li data-i18n="pricing_pro_f4">Розширені дашборди та сегментації</li>
+            <li data-i18n="pricing_pro_f5">Пріоритетна підтримка</li>
+          </ul>
+          <a href="#waitlist" class="mt-6 inline-flex px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700" data-i18n="pricing_cta_waitlist">У вейтлист</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist -->
+  <section id="waitlist" class="py-12">
+    <div class="max-w-2xl mx-auto px-4">
+      <div class="p-8 bg-white rounded-2xl border border-gray-100 soft">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-2" data-i18n="waitlist_title">Ранній доступ</h2>
+        <p class="text-gray-600 mb-6" data-i18n="waitlist_text">Залиште e-mail і виберіть пріоритети. Першим відкриємо доступ і дамо знижку.</p>
+        <form id="wl" class="grid sm:grid-cols-2 gap-4" name="waitlist" method="POST" data-netlify="true">
+          <div class="sm:col-span-2">
+            <label class="text-sm text-gray-700" data-i18n="email_label">E-mail</label>
+            <input required type="email" name="email" placeholder="you@email.com" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+          </div>
+          <label class="inline-flex items-center space-x-2 text-sm text-gray-700"><input type="checkbox" name="alerts" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"/><span data-i18n="wl_alerts">Алерти (нові/ціни)</span></label>
+          <label class="inline-flex items-center space-x-2 text-sm text-gray-700"><input type="checkbox" name="dash" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"/><span data-i18n="wl_dash">Дашборди (ніші/продавці)</span></label>
+          <label class="inline-flex items-center space-x-2 text-sm text-gray-700"><input type="checkbox" name="csv" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"/><span data-i18n="wl_csv">Експорт CSV</span></label>
+          <label class="inline-flex items-center space-x-2 text-sm text-gray-700"><input type="checkbox" name="ai" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"/><span data-i18n="wl_ai">AI-помічник описів</span></label>
+          <div class="sm:col-span-2">
+            <button type="submit" class="w-full sm:w-auto px-5 py-3 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700" data-i18n="submit_btn">Надіслати</button>
+          </div>
+          <p id="wl-ok" class="hidden sm:col-span-2 text-green-600 text-sm" data-i18n="submit_ok">Дякуємо! Заявку збережено.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-12 bg-white border-t border-gray-100">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-6" data-i18n="faq_title">FAQ та правила</h2>
+      <div class="space-y-4 text-sm">
+        <details class="p-4 rounded-xl border border-gray-200 bg-white">
+          <summary class="font-semibold cursor-pointer" data-i18n="faq_data_q">Звідси дані?</summary>
+          <div class="mt-2 text-gray-600" data-i18n="faq_data_a">Лише з публічних сторінок OLX. Ми поважаємо robots.txt та рейт-ліміти.</div>
+        </details>
+        <details class="p-4 rounded-xl border border-gray-200 bg-white">
+          <summary class="font-semibold cursor-pointer" data-i18n="faq_account_q">Доступ до акаунту потрібен?</summary>
+          <div class="mt-2 text-gray-600" data-i18n="faq_account_a">Ні. Для аналітики акаунт не потрібен.</div>
+        </details>
+        <details class="p-4 rounded-xl border border-gray-200 bg-white">
+          <summary class="font-semibold cursor-pointer" data-i18n="faq_speed_q">Швидкість оновлення?</summary>
+          <div class="mt-2 text-gray-600" data-i18n="faq_speed_a">Щогодини.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-10 border-t border-gray-100 bg-white">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500">
+      <div class="flex items-center space-x-2">
+        <svg aria-label="SellCase logo" width="20" height="20" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="28" fill="#0f172a"></circle>
+          <rect x="22" y="36" width="6" height="16" rx="2" fill="#ffffff"></rect>
+          <rect x="30" y="30" width="6" height="22" rx="2" fill="#ffffff"></rect>
+          <rect x="38" y="24" width="6" height="28" rx="2" fill="#ffffff"></rect>
+        </svg>
+        <span>© 2025 SellCase</span>
+      </div>
+      <div class="mt-3 sm:mt-0 space-x-4">
+        <a href="#" class="hover:text-blue-600">Terms</a>
+        <a href="#" class="hover:text-blue-600">Privacy</a>
+        <a href="mailto:hello@sellcase.com" class="hover:text-blue-600" data-i18n="support">Підтримка</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+(function () {
+  // === СЛОВАРЬ ===
+  var dict = {
+    uk: {
+      nav_features:"Функції", nav_how:"Як працює", nav_pricing:"Тарифи", nav_faq:"FAQ",
+      cta_header:"У вейтлист",
+      top_banner:"Бета-доступ безкоштовно для перших 100 користувачів",
+      hero_chip_1:"OLX аналітика", hero_chip_2:"Алерти та CSV",
+      hero_title_prefix:"Заробляйте більше завдяки аналітиці ", hero_title_suffix:"",
+      hero_sub:"Автоматично збираємо нові оголошення, зміни цін і тренди. Підказуємо оптимальну ціну та коли варто виходити в нішу.",
+      cta_primary:"Приєднатися", cta_secondary:"Дивитися функції",
+      feature_alerts:"Алерти про нові оголошення в ніші",
+      feature_tracking:"Відстеження змін цін конкурентів",
+      feature_export:"Експорт CSV/Excel для звітів",
+      features_title:"Ключові функції SellCase",
+      f1_h:"Дашборд «Ніша»", f1_p:"Медіана/квантили цін, швидкість появи нових оголошень, активні продавці.",
+      f2_h:"Алерти", f2_p:"Нові оголошення, зміни цін, зникнення позицій — e-mail/Telegram.",
+      f3_h:"Експорт CSV", f3_p:"Вивантаження відфільтрованих вибірок у CSV/Excel.",
+      how_title:"Як це працює",
+      how_s1_t:"Крок 1", how_s1_h:"Створіть «слот»", how_s1_p:"Вкажіть нішу/ключові слова (напр., «iPhone 13», «автозапчастини»).",
+      how_s2_t:"Крок 2", how_s2_h:"Збір даних", how_s2_p:"Лише публічні сторінки OLX, з повагою до robots.txt і частоти запитів.",
+      how_s3_t:"Крок 3", how_s3_h:"Аналітика", how_s3_p:"Дашборди ніш/продавців, експорт CSV, швидкі фільтри.",
+      how_s4_t:"Крок 4", how_s4_h:"Алерти", how_s4_p:"Про нові оголошення, зміни цін та зникнення.",
+      pricing_title:"Тарифи",
+      pricing_lite:"Lite", pricing_lite_price:"$0", pricing_lite_f1:"5 слотів спостереження", pricing_lite_f2:"Алерти e-mail (раз/день)", pricing_lite_f3:"Експорт лише CSV",
+      pricing_basic:"Basic", pricing_basic_price:"$9", pricing_basic_f1:"10 слотів спостереження", pricing_basic_f2:"E-mail + базові Telegram-алерти (кожні 3 год)", pricing_basic_f3:"Експорт CSV + Excel",
+      pricing_pro:"Pro", pricing_pro_price:"$19", pricing_pro_f1:"20 слотів спостереження", pricing_pro_f2:"Алерти: e-mail + Telegram + Slack (щогодини)", pricing_pro_f3:"Експорт CSV + Excel + Google Sheets", pricing_pro_f4:"Розширені дашборди та сегментації", pricing_pro_f5:"Пріоритетна підтримка",
+      pricing_cta_waitlist:"У вейтлист",
+      waitlist_title:"Ранній доступ", waitlist_text:"Залиште e-mail і виберіть пріоритети. Першим відкриємо доступ і дамо знижку.", email_label:"E-mail",
+      wl_alerts:"Алерти (нові/ціни)", wl_dash:"Дашборди (ніші/продавці)", wl_csv:"Експорт CSV", wl_ai:"AI-помічник описів",
+      submit_btn:"Надіслати", submit_ok:"Дякуємо! Заявку збережено.",
+      faq_title:"FAQ та правила",
+      faq_data_q:"Звідси дані?", faq_data_a:"Лише з публічних сторінок OLX. Ми поважаємо robots.txt та рейт-ліміти.",
+      faq_account_q:"Доступ до акаунту потрібен?", faq_account_a:"Ні. Для аналітики акаунт не потрібен.",
+      faq_speed_q:"Швидкість оновлення?", faq_speed_a:"Щогодини.",
+      support:"Підтримка"
+    },
+    en: {
+      nav_features:"Features", nav_how:"How it works", nav_pricing:"Pricing", nav_faq:"FAQ",
+      cta_header:"Join waitlist",
+      top_banner:"Free beta access for the first 100 users",
+      hero_chip_1:"OLX analytics", hero_chip_2:"Alerts & CSV",
+      hero_title_prefix:"Earn more with ", hero_title_suffix:" analytics",
+      hero_sub:"We automatically collect new listings, price changes and trends. Get price recommendations and timing insights.",
+      cta_primary:"Join", cta_secondary:"See features",
+      feature_alerts:"Alerts about new listings in the niche",
+      feature_tracking:"Competitor price change tracking",
+      feature_export:"CSV/Excel export for reports",
+      features_title:"Key features of SellCase",
+      f1_h:"“Niche” dashboard", f1_p:"Median/quantiles of prices, new listing velocity, active sellers.",
+      f2_h:"Alerts", f2_p:"New listings, price changes, disappearances — e-mail/Telegram.",
+      f3_h:"CSV export", f3_p:"Export filtered selections to CSV/Excel.",
+      how_title:"How it works",
+      how_s1_t:"Step 1", how_s1_h:"Create a slot", how_s1_p:"Enter a niche/keywords (e.g., “iPhone 13”, “auto parts”).",
+      how_s2_t:"Step 2", how_s2_h:"Data collection", how_s2_p:"Public OLX pages only; we respect robots.txt and rate limits.",
+      how_s3_t:"Step 3", how_s3_h:"Analytics", how_s3_p:"Niche/seller dashboards, CSV export, quick filters.",
+      how_s4_t:"Step 4", how_s4_h:"Alerts", how_s4_p:"New listings, price changes and disappearances.",
+      pricing_title:"Pricing",
+      pricing_lite:"Lite", pricing_lite_price:"$0", pricing_lite_f1:"5 watch slots", pricing_lite_f2:"E-mail alerts (daily)", pricing_lite_f3:"CSV export only",
+      pricing_basic:"Basic", pricing_basic_price:"$9", pricing_basic_f1:"10 watch slots", pricing_basic_f2:"E-mail + basic Telegram alerts (every 3h)", pricing_basic_f3:"CSV + Excel export",
+      pricing_pro:"Pro", pricing_pro_price:"$19", pricing_pro_f1:"20 watch slots", pricing_pro_f2:"Alerts: e-mail + Telegram + Slack (hourly)", pricing_pro_f3:"CSV + Excel + Google Sheets export", pricing_pro_f4:"Advanced dashboards & segmentation", pricing_pro_f5:"Priority support",
+      pricing_cta_waitlist:"Join waitlist",
+      waitlist_title:"Early access", waitlist_text:"Leave your e-mail and pick priorities. We’ll onboard you first and provide a discount.", email_label:"E-mail",
+      wl_alerts:"Alerts (new/prices)", wl_dash:"Dashboards (niches/sellers)", wl_csv:"CSV export", wl_ai:"AI description assistant",
+      submit_btn:"Submit", submit_ok:"Thanks! Saved.",
+      faq_title:"FAQ & compliance",
+      faq_data_q:"Where does the data come from?", faq_data_a:"Only public OLX pages. We respect robots.txt and rate limits.",
+      faq_account_q:"Do you need access to my OLX account?", faq_account_a:"No. Analytics doesn’t require account access.",
+      faq_speed_q:"How fast is the data updated?", faq_speed_a:"Hourly.",
+      support:"Support"
+    }
+  };
+
+  // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ===
+  function applyLang(lang) {
+    var map = dict[lang]; if (!map) return;
+    document.documentElement.lang = (lang === 'uk') ? 'uk' : 'en';
+    var nodes = document.querySelectorAll('[data-i18n]');
+    for (var i=0;i<nodes.length;i++){
+      var el = nodes[i];
+      var key = el.getAttribute('data-i18n');
+      if (map[key] !== undefined) el.innerText = map[key];
+    }
+    var ukBtn = document.getElementById('btn-uk');
+    var enBtn = document.getElementById('btn-en');
+    if (ukBtn){ ukBtn.classList.toggle('active', lang==='uk'); ukBtn.setAttribute('aria-pressed', lang==='uk'); }
+    if (enBtn){ enBtn.classList.toggle('active', lang==='en'); enBtn.setAttribute('aria-pressed', lang==='en'); }
+    try { localStorage.setItem('sellcase_lang', lang); } catch(e){}
+  }
+
+  // Глобальная функция для inline-обработчиков
+  window.setLang = function(lang){ applyLang(lang); };
+
+  // Автовыбор по URL/локальному сохранению
+  document.addEventListener('DOMContentLoaded', function(){
+    var url = new URL(window.location.href);
+    var fromUrl = url.searchParams.get('lang');
+    var fromLS = null;
+    try { fromLS = localStorage.getItem('sellcase_lang'); } catch(e){}
+    var lang = fromUrl || fromLS || 'uk';
+    if (lang !== 'uk' && lang !== 'en') lang = 'uk';
+    applyLang(lang);
+
+    // Фикс формы Netlify: показываем "успех" локально
+    var wl = document.getElementById('wl');
+    if (wl) wl.addEventListener('submit', function(){
+      var ok = document.getElementById('wl-ok');
+      if (ok) ok.classList.remove('hidden');
+    });
+  });
+})();
+</script>
