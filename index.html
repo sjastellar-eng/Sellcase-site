@@ -306,25 +306,6 @@
     }
   };
 
-<script>
-(function () {
-  // dict уже должен быть выше в этом же <script> (оставь как было)
-
-  // Показ/скрытие нужной формы
-  function switchLangForms(lang) {
-    var ua = document.getElementById('wl-ua');
-    var en = document.getElementById('wl-en');
-    if (!ua || !en) return; // если форм нет — тихо выходим
-
-    if (lang === 'uk') {
-      ua.classList.remove('hidden');
-      en.classList.add('hidden');
-    } else {
-      en.classList.remove('hidden');
-      ua.classList.add('hidden');
-    }
-  }
-
   // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ===
   function applyLang(lang) {
     var map = dict[lang];        // dict должен быть определён выше
