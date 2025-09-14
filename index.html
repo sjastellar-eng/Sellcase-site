@@ -147,27 +147,50 @@
 
   <!-- Waitlist -->
   <section id="waitlist" class="py-12">
-    <div class="max-w-2xl mx-auto px-4">
-      <div class="p-8 bg-white rounded-2xl border border-gray-100 soft">
-        <h2 class="text-2xl sm:text-3xl font-bold mb-2" data-i18n="waitlist_title">Ранній доступ</h2>
-        <p class="text-gray-600 mb-6" data-i18n="waitlist_text">Залиште e-mail і виберіть пріоритети. Першим відкриємо доступ і дамо знижку.</p>
-        <form id="wl" class="grid sm:grid-cols-2 gap-4" name="waitlist" method="POST" data-netlify="true">
-          <div class="sm:col-span-2">
-            <label class="text-sm text-gray-700" data-i18n="email_label">E-mail</label>
-            <input required type="email" name="email" placeholder="you@email.com" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
-          </div>
-          <label class="inline-flex items-center space-x-2 text-sm text-gray-700"><input type="checkbox" name="alerts" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"/><span data-i18n="wl_alerts">Алерти (нові/ціни)</span></label>
-          <label class="inline-flex items-center space-x-2 text-sm text-gray-700"><input type="checkbox" name="dash" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"/><span data-i18n="wl_dash">Дашборди (ніші/продавці)</span></label>
-          <label class="inline-flex items-center space-x-2 text-sm text-gray-700"><input type="checkbox" name="csv" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"/><span data-i18n="wl_csv">Експорт CSV</span></label>
-          <label class="inline-flex items-center space-x-2 text-sm text-gray-700"><input type="checkbox" name="ai" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"/><span data-i18n="wl_ai">AI-помічник описів</span></label>
-          <div class="sm:col-span-2">
-            <button type="submit" class="w-full sm:w-auto px-5 py-3 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700" data-i18n="submit_btn">Надіслати</button>
-          </div>
-          <p id="wl-ok" class="hidden sm:col-span-2 text-green-600 text-sm" data-i18n="submit_ok">Дякуємо! Заявку збережено.</p>
-        </form>
-      </div>
+<section id="waitlist" class="py-12">
+  <div class="max-w-2xl mx-auto px-4">
+    <div class="p-8 bg-white rounded-2xl border border-gray-100 shadow">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-i18n="waitlist_title">
+        Залиште свою пошту, щоб потрапити у список очікування
+      </h2>
+      <p class="text-gray-600 mb-6" data-i18n="waitlist_text">
+        Ми повідомимо вас, коли сервіс стане доступним
+      </p>
+
+      <!-- Форма UA -->
+      <form id="wl-ua" class="grid sm:grid-cols-2 gap-4" name="waitlist-ua" netlify>
+        <div class="sm:col-span-2">
+          <label class="text-sm text-gray-700 block mb-1" for="email-ua">Email</label>
+          <input required type="email" id="email-ua" name="email" placeholder="Ваша пошта"
+            class="w-full border rounded-lg px-3 py-2">
+        </div>
+        <div class="sm:col-span-2">
+          <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+            Надіслати
+          </button>
+        </div>
+      </form>
+
+      <!-- Форма EN -->
+      <form id="wl-en" class="grid sm:grid-cols-2 gap-4 hidden" name="waitlist-en" netlify>
+        <div class="sm:col-span-2">
+          <label class="text-sm text-gray-700 block mb-1" for="email-en">Email</label>
+          <input required type="email" id="email-en" name="email" placeholder="Your email"
+            class="w-full border rounded-lg px-3 py-2">
+        </div>
+        <div class="sm:col-span-2">
+          <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+            Submit
+          </button>
+        </div>
+      </form>
+
+      <p id="wl-ok" class="hidden sm:col-span-2 text-green-600 mt-4">
+        ✅ Дякуємо! Ви у списку очікування.
+      </p>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- FAQ -->
   <section id="faq" class="py-12 bg-white border-t border-gray-100">
@@ -283,42 +306,66 @@
     }
   };
 
-  // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ===
-  function applyLang(lang) {
-    var map = dict[lang]; if (!map) return;
-    document.documentElement.lang = (lang === 'uk') ? 'uk' : 'en';
-    var nodes = document.querySelectorAll('[data-i18n]');
-    for (var i=0;i<nodes.length;i++){
-      var el = nodes[i];
-      var key = el.getAttribute('data-i18n');
-      if (map[key] !== undefined) el.innerText = map[key];
-    }
-    var ukBtn = document.getElementById('btn-uk');
-    var enBtn = document.getElementById('btn-en');
-    if (ukBtn){ ukBtn.classList.toggle('active', lang==='uk'); ukBtn.setAttribute('aria-pressed', lang==='uk'); }
-    if (enBtn){ enBtn.classList.toggle('active', lang==='en'); enBtn.setAttribute('aria-pressed', lang==='en'); }
-    try { localStorage.setItem('sellcase_lang', lang); } catch(e){}
+  // <-- === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ === -->
+function applyLang(lang){
+  var map = dict[lang]; if (!map) return;
+
+  // атрибут lang у <html>
+  document.documentElement.lang = (lang === 'uk') ? 'uk' : 'en';
+
+  // подстановка текстов по data-i18n
+  var nodes = document.querySelectorAll('[data-i18n]');
+  for (var i = 0; i < nodes.length; i++){
+    var el = nodes[i];
+    var key = el.getAttribute('data-i18n');
+    if (map[key] !== undefined) el.innerText = map[key];
   }
 
-  // Глобальная функция для inline-обработчиков
-  window.setLang = function(lang){ applyLang(lang); };
+  // подсветка активной кнопки
+  var ukBtn = document.getElementById('btn-uk');
+  var enBtn = document.getElementById('btn-en');
+  if (ukBtn) ukBtn.classList.toggle('active', lang === 'uk');
+  if (enBtn) enBtn.classList.toggle('active', lang === 'en');
 
-  // Автовыбор по URL/локальному сохранению
-  document.addEventListener('DOMContentLoaded', function(){
-    var url = new URL(window.location.href);
-    var fromUrl = url.searchParams.get('lang');
-    var fromLS = null;
-    try { fromLS = localStorage.getItem('sellcase_lang'); } catch(e){}
-    var lang = fromUrl || fromLS || 'uk';
-    if (lang !== 'uk' && lang !== 'en') lang = 'uk';
-    applyLang(lang);
+  // переключаем видимость форм
+  switchLang(lang);
 
-    // Фикс формы Netlify: показываем "успех" локально
-    var wl = document.getElementById('wl');
-    if (wl) wl.addEventListener('submit', function(){
-      var ok = document.getElementById('wl-ok');
-      if (ok) ok.classList.remove('hidden');
-    });
+  try { localStorage.setItem('sellcase_lang', lang); } catch(e){}
+}
+
+// ПЕРЕКЛЮЧАТЕЛЬ ФОРМ (UA/EN)
+function switchLang(lang){
+  var uaForm = document.getElementById('wl-ua');
+  var enForm = document.getElementById('wl-en');
+  if (!uaForm || !enForm) return;
+
+  if (lang === 'uk'){
+    uaForm.classList.remove('hidden');
+    enForm.classList.add('hidden');
+  } else {
+    enForm.classList.remove('hidden');
+    uaForm.classList.add('hidden');
+  }
+}
+
+// Глобальная функция для inline-обработчиков (кнопки)
+window.setLang = function(lang){ applyLang(lang); };
+
+// Автовыбор языка по URL (?lang=uk|en) / локальному сохранению
+document.addEventListener('DOMContentLoaded', function(){
+  var url = new URL(window.location.href);
+  var fromUrl = url.searchParams.get('lang');
+  var fromLS = null;
+  try { fromLS = localStorage.getItem('sellcase_lang'); } catch(e){}
+  var lang = fromUrl || fromLS || 'uk';
+  if (lang !== 'uk' && lang !== 'en') lang = 'uk';
+  applyLang(lang);
+
+  // Фикс Netlify-формы: показываем "успех" локально
+  var wl = document.getElementById('wl');
+  if (wl) wl.addEventListener('submit', function(){
+    var ok = document.getElementById('wl-ok');
+    if (ok) ok.classList.remove('hidden');
   });
-})();
+});
 </script>
