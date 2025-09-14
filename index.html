@@ -306,61 +306,66 @@
     }
   };
 
-  // <=== ЛОГИКА ПЕРЕКЛЮЧЕНИЯ === >
-function applyLang(lang){
-  var map = dict[lang]; if (!map) return;
-  // атрибут lang у <html>
-  document.documentElement.lang = (lang === 'uk') ? 'uk' : 'en';
-  // подстановка текстов по data-i18n
-  var nodes = document.querySelectorAll('[data-i18n]');
-  for (var i = 0; i < nodes.length; i++){
-    var el = nodes[i];
-    var key = el.getAttribute('data-i18n');
-    if (map[key] !== undefined) el.innerText = map[key];
+<script>
+(function () {
+  // dict уже должен быть выше в этом же <script> (оставь как было)
+
+  // Показ/скрытие нужной формы
+  function switchLangForms(lang) {
+    var ua = document.getElementById('wl-ua');
+    var en = document.getElementById('wl-en');
+    if (!ua || !en) return; // если форм нет — тихо выходим
+
+    if (lang === 'uk') {
+      ua.classList.remove('hidden');
+      en.classList.add('hidden');
+    } else {
+      en.classList.remove('hidden');
+      ua.classList.add('hidden');
+    }
   }
-  // подсветка активной кнопки
-  var ukBtn = document.getElementById('btn-uk');
-  var enBtn = document.getElementById('btn-en');
-  if (ukBtn) ukBtn.classList.toggle('active', lang === 'uk');
-  if (enBtn) enBtn.classList.toggle('active', lang === 'en');
 
-  // переключаем видимость форм
-  switchLang(lang);
+  // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ===
+  function applyLang(lang) {
+    var map = dict[lang];        // dict должен быть определён выше
+    if (!map) return;
 
-  try { localStorage.setItem('sellcase_lang', lang); } catch(e){}
-}
-// ПЕРЕКЛЮЧАТЕЛЬ ФОРМ (UA/EN)
-function switchLang(lang){
-  var uaForm = document.getElementById('wl-ua');
-  var enForm = document.getElementById('wl-en');
-  if (!uaForm || !enForm) return;
+    document.documentElement.lang = (lang === 'uk') ? 'uk' : 'en';
 
-  if (lang === 'uk'){
-    uaForm.classList.remove('hidden');
-    enForm.classList.add('hidden');
-  } else {
-    enForm.classList.remove('hidden');
-    uaForm.classList.add('hidden');
+    var nodes = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      var key = el.getAttribute('data-i18n');
+      if (map[key] !== undefined) el.innerText = map[key];
+    }
+
+    var ukBtn = document.getElementById('btn-uk');
+    var enBtn = document.getElementById('btn-en');
+    if (ukBtn) ukBtn.classList.toggle('active', lang === 'uk');
+    if (enBtn) enBtn.classList.toggle('active', lang === 'en');
+
+    try { localStorage.setItem('sellcase_lang', lang); } catch (e) {}
+    switchLangForms(lang);  // <-- важная строка: показать нужную форму
   }
-}
-// Глобальная функция для inline-обработчиков (кнопки)
-window.setLang = function(lang){ applyLang(lang); };
 
-// Автовыбор языка по URL (?lang=uk|en) / локальному сохранению
-document.addEventListener('DOMContentLoaded', function(){
-  var url = new URL(window.location.href);
-  var fromUrl = url.searchParams.get('lang');
-  var fromLS = null;
-  try { fromLS = localStorage.getItem('sellcase_lang'); } catch(e){}
-  var lang = fromUrl || fromLS || 'uk';
-  if (lang !== 'uk' && lang !== 'en') lang = 'uk';
-  applyLang(lang);
+  // Глобальная функция для кнопок
+  window.setLang = function (lang) { applyLang(lang); };
 
-  // Фикс Netlify-формы: показываем "успех" локально
-  var wl = document.getElementById('wl');
-  if (wl) wl.addEventListener('submit', function(){
-    var ok = document.getElementById('wl-ok');
-    if (ok) ok.classList.remove('hidden');
+  // Автовыбор языка и фикс формы Netlify
+  document.addEventListener('DOMContentLoaded', function () {
+    var url = new URL(window.location.href);
+    var fromUrl = url.searchParams.get('lang');
+    var fromLS = null;
+    try { fromLS = localStorage.getItem('sellcase_lang'); } catch (e) {}
+    var lang = fromUrl || fromLS || 'uk';
+    if (lang !== 'uk' && lang !== 'en') lang = 'uk';
+    applyLang(lang);
+
+    var wl = document.getElementById('wl');
+    if (wl) wl.addEventListener('submit', function () {
+      var ok = document.getElementById('wl-ok');
+      if (ok) ok.classList.remove('hidden');
+    });
   });
-});
+})();
 </script>
