@@ -304,20 +304,7 @@
       support:"Support"
     }
   };
-<script>
-function switchLangForms(lang) {
-  var uaForm = document.getElementById('wl-ua');
-  var enForm = document.getElementById('wl-en');
-  if (!uaForm || !enForm) return;
-
-  if (lang === 'uk') {
-    uaForm.classList.remove('hidden');
-    enForm.classList.add('hidden');
-  } else {
-    uaForm.classList.add('hidden');
-    enForm.classList.remove('hidden');
-  }
-}
+  
 </script>
   // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ===
   function applyLang(lang) {
