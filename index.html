@@ -157,40 +157,39 @@
         Ми повідомимо вас, коли сервіс стане доступним
       </p>
 
-      <!-- Форма UA -->
-      <form id="wl-ua" class="grid sm:grid-cols-2 gap-4" name="waitlist-ua" netlify>
-        <div class="sm:col-span-2">
-          <label class="text-sm text-gray-700 block mb-1" for="email-ua">Email</label>
-          <input required type="email" id="email-ua" name="email" placeholder="Ваша пошта"
-            class="w-full border rounded-lg px-3 py-2">
-        </div>
-        <div class="sm:col-span-2">
-          <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-            Надіслати
-          </button>
-        </div>
-      </form>
+<!-- Форма UA -->
+<form id="wl-ua" class="grid sm:grid-cols-2 gap-4" name="waitlist-ua"
+      method="POST" data-netlify="true" netlify-honeypot="bot-field">
+  <input type="hidden" name="form-name" value="waitlist-ua" />
+  <p class="hidden">
+    <label>Не заполняйте это поле: <input name="bot-field"></label>
+  </p>
+  <div class="sm:col-span-2">
+    <label class="text-sm text-gray-700 block mb-1" for="email-ua">Email</label>
+    <input required type="email" id="email-ua" name="email"
+           class="w-full border rounded-lg px-3 py-2">
+  </div>
+  <div class="sm:col-span-2">
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg">Надіслати</button>
+  </div>
+</form>
 
       <!-- Форма EN -->
-      <form id="wl-en" class="grid sm:grid-cols-2 gap-4 hidden" name="waitlist-en" netlify>
-        <div class="sm:col-span-2">
-          <label class="text-sm text-gray-700 block mb-1" for="email-en">Email</label>
-          <input required type="email" id="email-en" name="email" placeholder="Your email"
-            class="w-full border rounded-lg px-3 py-2">
-        </div>
-        <div class="sm:col-span-2">
-          <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-            Submit
-          </button>
-        </div>
-      </form>
-
-      <p id="wl-ok" class="hidden sm:col-span-2 text-green-600 mt-4">
-        ✅ Дякуємо! Ви у списку очікування.
-      </p>
-    </div>
+<form id="wl-en" class="grid sm:grid-cols-2 gap-4 hidden" name="waitlist-en"
+      method="POST" data-netlify="true" netlify-honeypot="bot-field">
+  <input type="hidden" name="form-name" value="waitlist-en" />
+  <p class="hidden">
+    <label>Don’t fill this out: <input name="bot-field"></label>
+  </p>
+  <div class="sm:col-span-2">
+    <label class="text-sm text-gray-700 block mb-1" for="email-en">Email</label>
+    <input required type="email" id="email-en" name="email"
+           class="w-full border rounded-lg px-3 py-2">
   </div>
-</section>
+  <div class="sm:col-span-2">
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg">Submit</button>
+  </div>
+</form>
 
   <!-- FAQ -->
   <section id="faq" class="py-12 bg-white border-t border-gray-100">
