@@ -364,3 +364,18 @@
   });
 })();
 </script>
+<script>
+document.querySelectorAll('#wl-ua, #wl-en').forEach(function(form){
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const action = form.getAttribute('action');
+    const formData = new FormData(form);
+    try {
+      await fetch(action, { method: 'POST', body: formData });
+      form.innerHTML = '<p class="text-green-600 text-center py-4" data-i18n="submit_ok">Спасибо! Заявка сохранена.</p>';
+    } catch(err) {
+      alert('Ошибка. Попробуйте ещё раз.');
+    }
+  });
+});
+</script>
