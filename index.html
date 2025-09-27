@@ -159,33 +159,35 @@
 
 <!-- Форма UA -->
 <form id="wl-ua" class="grid sm:grid-cols-2 gap-4" name="waitlist-ua"
-      method="POST" action="https://script.google.com/macros/s/AKfycbwPNEbgSUyggr6xof-tKFB1Ny6Obl64r68pJaBl7wIMa6GuqehXw6ork4qVaI17migVzA/exec">
+      method="POST" data-netlify="true" netlify-honeypot="bot-field">
   <input type="hidden" name="form-name" value="waitlist-ua" />
+  <p class="hidden">
+    <label>Не заполняйте это поле: <input name="bot-field"></label>
+  </p>
   <div class="sm:col-span-2">
-    <label for="email-ua" class="text-sm text-gray-700 block mb-1">Email</label>
+    <label class="text-sm text-gray-700 block mb-1" for="email-ua">Email</label>
     <input required type="email" id="email-ua" name="email"
            class="w-full border rounded-lg px-3 py-2">
   </div>
   <div class="sm:col-span-2">
-    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg" data-i18n="submit_btn">
-      Отправить
-    </button>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg" data-i18n="submit_btn"></button>
   </div>
 </form>
 
-<!-- Форма EN -->
+      <!-- Форма EN -->
 <form id="wl-en" class="grid sm:grid-cols-2 gap-4 hidden" name="waitlist-en"
-      method="POST" action="https://script.google.com/macros/s/AKfycbwPNEbgSUyggr6xof-tKFB1Ny6Obl64r68pJaBl7wIMa6GuqehXw6ork4qVaI17migVzA/exec">
+      method="POST" data-netlify="true" netlify-honeypot="bot-field">
   <input type="hidden" name="form-name" value="waitlist-en" />
+  <p class="hidden">
+    <label>Don’t fill this out: <input name="bot-field"></label>
+  </p>
   <div class="sm:col-span-2">
-    <label for="email-en" class="text-sm text-gray-700 block mb-1">Email</label>
+    <label class="text-sm text-gray-700 block mb-1" for="email-en">Email</label>
     <input required type="email" id="email-en" name="email"
            class="w-full border rounded-lg px-3 py-2">
   </div>
   <div class="sm:col-span-2">
-    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg" data-i18n="submit_btn">
-      Submit
-    </button>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg" data-i18n="submit_btn"></button>
   </div>
 </form>
 
