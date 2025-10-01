@@ -369,37 +369,9 @@
     if (lang !== 'uk' && lang !== 'en') lang = 'uk';
     applyLang(lang);
 
-    var wl = document.getElementById('wl');
-    if (wl) wl.addEventListener('submit', function () {
-      var ok = document.getElementById('wl-ok');
-      if (ok) ok.classList.remove('hidden');
-    });
   });
 })();
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // текущий язык берём из localStorage или из <html lang="...">, иначе 'uk'
-  const currentLang =
-    (function () {
-      try { return localStorage.getItem('sellcase_lang'); } catch (e) { return null; }
-    })() || document.documentElement.lang || 'uk';
-
-  // авто-подстановка UTM из URL
-  const params = new URLSearchParams(window.location.search);
-  const utmNames = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-
-  const forms = document.querySelectorAll('#wl-ua, #wl-en');
-  forms.forEach(form => {
-    // не даём повесить обработчик второй раз
-    if (form.dataset.bound === '1') return;
-    form.dataset.bound = '1';
-
-    // заполним скрытые UTM-поля, если в URL есть такие параметры
-    utmNames.forEach(name => {
-      const input = form.querySelector(`input[name="${name}"]`);
-      if (input && params.has(name)) input.value = params.get(name);
-    });
     
 <script>
 document.addEventListener('DOMContentLoaded', function () {
