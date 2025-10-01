@@ -404,38 +404,43 @@ document.addEventListener('DOMContentLoaded', function () {
       if (input && params.has(name)) input.value = params.get(name);
     });
 
-    form.addEventListener('submit', async function (e) {
-  e.preventDefault();
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+  ['wl-ua','wl-en'].forEach(function (fid) {
+    var form = document.getElementById(fid);
+    if (!form) return;
 
-  // защита от дабл-кликов
-  const btn = form.querySelector('button[type="submit"]');
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправка...';
-  }
+    // чтобы не навешивать повторно
+    if (form.dataset.bound === '1') return;
+    form.dataset.bound = '1';
 
-  const action = form.getAttribute('action');
-  const body = new FormData(form);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-  try {
-    await fetch(action, { method: 'POST', body });
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = (fid === 'wl-en') ? 'Sending...' : 'Відправка...';
+      }
 
-    // скрываем форму и выводим сообщение об успехе
-    form.style.display = "none";
-
-    if (form.id === 'wl-ua') {
-      document.getElementById("form-success-ua").innerHTML =
-        '<p class="text-green-600 text-center">Дякуємо! Заявку збережено.</p>';
-    } else if (form.id === 'wl-en') {
-      document.getElementById("form-success-en").innerHTML =
-        '<p class="text-green-600 text-center">Thank you! Your request has been saved.</p>';
-    }
-
-  } catch (err) {
-    alert(currentLang === 'en'
-      ? 'An error occurred. Please try again.'
-      : 'Сталася помилка. Спробуйте ще раз.'
-    );
-    if (btn) btn.disabled = false;
-  }
-}, { once: true });
+      fetch(form.action, { method: 'POST', body: new FormData(form) })
+        .then(function () {
+          form.style.display = 'none';
+          var box = document.getElementById(fid === 'wl-en' ? 'form-success-en' : 'form-success-ua');
+          if (box) {
+            box.innerHTML = (fid === 'wl-en')
+              ? '<p class="text-green-600 text-center">Thank you! Your request has been saved.</p>'
+              : '<p class="text-green-600 text-center">Дякуємо! Заявку збережено.</p>';
+          }
+        })
+        .catch(function () {
+          alert(fid === 'wl-en'
+            ? 'An error occurred. Please try again.'
+            : 'Сталася помилка. Спробуйте ще раз.'
+          );
+          if (btn) btn.disabled = false;
+        });
+    }, { once: true });
+  });
+});
+</script>
