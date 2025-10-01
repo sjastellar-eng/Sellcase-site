@@ -422,3 +422,51 @@
   });
 })();
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Находим обе формы ожидания
+  const forms = document.querySelectorAll('#wl-ua, #wl-en');
+
+  // Автоподстановка UTM из URL в скрытые поля
+  const params = new URLSearchParams(window.location.search);
+  const utmNames = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  forms.forEach(form => {
+    utmNames.forEach(name => {
+      const input = form.querySelector(`input[name="${name}"]`);
+      if (input && params.has(name)) input.value = params.get(name);
+    });
+  });
+
+  // Обработчик отправки (общий для UA и EN)
+  forms.forEach(form => {
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      try {
+        // отправляем туда, что стоит в action формы
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form)
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        // Определяем язык: по id формы или по <html lang>
+        const isEN = form.id === 'wl-en' || document.documentElement.lang === 'en';
+
+        // Сообщение об успехе на нужном языке
+        form.innerHTML = isEN
+          ? '<p class="text-green-600 text-center py-4">Thank you! We have received your request.</p>'
+          : '<p class="text-green-600 text-center py-4">Дякуємо! Ми отримали вашу заявку.</p>';
+
+      } catch (err) {
+        const isEN = form.id === 'wl-en' || document.documentElement.lang === 'en';
+        alert(isEN
+          ? 'An error occurred. Please try again.'
+          : 'Сталася помилка. Спробуйте ще раз.'
+        );
+        console.error(err);
+      }
+    });
+  });
+});
+        </script>
