@@ -400,34 +400,36 @@ document.addEventListener('DOMContentLoaded', function () {
       const input = form.querySelector(`input[name="${name}"]`);
       if (input && params.has(name)) input.value = params.get(name);
     });
-
+    
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // язык
+  // Текущий язык
   const currentLang = (function () {
-    try { return localStorage.getItem('sellcase_lang'); } catch (e) {}
+    try { return localStorage.getItem('sellcase_lang'); } catch(e) {}
     return document.documentElement.lang || 'uk';
   })();
 
-  // читаем UTM из URL
+  // Забираем UTM из URL
   const params = new URLSearchParams(window.location.search);
   const utmNames = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
 
-  // вешаем обработчики на формы
+  // Две формы: UA и EN
   document.querySelectorAll('#wl-ua, #wl-en').forEach(form => {
+    // чтобы не вешать обработчик второй раз
     if (form.dataset.bound === '1') return;
     form.dataset.bound = '1';
 
-    // проставляем utm в скрытые поля
+    // Подставляем UTM в скрытые поля
     utmNames.forEach(name => {
       const input = form.querySelector(`input[name="${name}"]`);
       if (input && params.has(name)) input.value = params.get(name);
     });
 
+    // Сабмит формы
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      // защита от дабл-кликов
+      // анти-даблклик
       const btn = form.querySelector('button[type="submit"]');
       if (btn) {
         btn.disabled = true;
@@ -439,18 +441,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const body = new FormData(form);
         await fetch(action, { method: 'POST', body });
 
-        // заменяем форму сообщением
+        // Показываем успех вместо формы
         form.innerHTML = (form.id === 'wl-en')
           ? '<p class="text-green-600 text-center">Thank you! Your request has been saved.</p>'
           : '<p class="text-green-600 text-center">Дякуємо! Заявку збережено.</p>';
 
-        // чтобы текст подтянулся на активном языке
+        // Обновляем переводы под активный язык (если функция есть)
         if (typeof window.applyLang === 'function') {
           window.applyLang(currentLang);
         }
-
       } catch (err) {
-        alert(currentLang === 'en'
+        alert((currentLang === 'en')
           ? 'An error occurred. Please try again.'
           : 'Сталася помилка. Спробуйте ще раз.');
         if (btn) btn.disabled = false;
