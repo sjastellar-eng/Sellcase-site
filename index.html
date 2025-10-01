@@ -405,35 +405,37 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     form.addEventListener('submit', async function (e) {
-      e.preventDefault();
+  e.preventDefault();
 
-      // защита от дабл-кликов
-      const btn = form.querySelector('button[type="submit"]');
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = (currentLang === 'en') ? 'Sending…' : 'Надсилаємо…';
-      }
+  // защита от дабл-кликов
+  const btn = form.querySelector('button[type="submit"]');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправка...';
+  }
 
-      try {
-        const action = form.getAttribute('action');
-        const body = new FormData(form);
-        await fetch(action, { method: 'POST', body });
+  const action = form.getAttribute('action');
+  const body = new FormData(form);
 
-        // успешное сообщение — через i18n-ключ, чтобы applyLang перевёл правильно
-        form.innerHTML = '<p class="text-green-600 text-center py-4" data-i18n="submit_ok"></p>';
+  try {
+    await fetch(action, { method: 'POST', body });
 
-        // если на странице есть функция applyLang — применим выбранный язык
-        if (typeof window.applyLang === 'function') {
-          window.applyLang(currentLang);
-        }
-      } catch (err) {
-        alert(currentLang === 'en'
-          ? 'An error occurred. Please try again.'
-          : 'Сталася помилка. Спробуйте ще раз.'
-        );
-        if (btn) btn.disabled = false;
-      }
-    }, { once: true }); // <- обработчик сработает только один раз
-  });
-});
-</script>
+    // скрываем форму и выводим сообщение об успехе
+    form.style.display = "none";
+
+    if (form.id === 'wl-ua') {
+      document.getElementById("form-success-ua").innerHTML =
+        '<p class="text-green-600 text-center">Дякуємо! Заявку збережено.</p>';
+    } else if (form.id === 'wl-en') {
+      document.getElementById("form-success-en").innerHTML =
+        '<p class="text-green-600 text-center">Thank you! Your request has been saved.</p>';
+    }
+
+  } catch (err) {
+    alert(currentLang === 'en'
+      ? 'An error occurred. Please try again.'
+      : 'Сталася помилка. Спробуйте ще раз.'
+    );
+    if (btn) btn.disabled = false;
+  }
+}, { once: true });
