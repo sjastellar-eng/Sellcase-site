@@ -402,61 +402,80 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Текущий язык
-  const currentLang = (function () {
-    try { return localStorage.getItem('sellcase_lang'); } catch(e) {}
-    return document.documentElement.lang || 'uk';
-  })();
+  // Скрипт для обработки форм (UA и EN)
+  document.querySelectorAll('#wl-ua, #wl-en').forEach(function(form){
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      const action = form.getAttribute('action');
+      const formData = new FormData(form);
+      try {
+        await fetch(action, { method: 'POST', body: formData });
 
-  // Забираем UTM из URL
+        // Проверяем какая форма была отправлена
+        if (form.id === 'wl-ua') {
+          // 🇺🇦 Украинский текст
+          form.innerHTML = '<p class="text-green-600 text-center py-4">Дякуємо! Ми отримали вашу заявку.</p>';
+        } else if (form.id === 'wl-en') {
+          // 🇬🇧 English text
+          form.innerHTML = '<p class="text-green-600 text-center py-4">Thank you! We have received your submission.</p>';
+        }
+
+      } catch(err) {
+        if (form.id === 'wl-ua') {
+          alert('Сталася помилка. Спробуйте ще раз.');
+        } else if (form.id === 'wl-en') {
+          alert('An error occurred. Please try again.');
+        }
+      }
+    });
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Находим обе формы ожидания
+  const forms = document.querySelectorAll('#wl-ua, #wl-en');
+
+  // Автоподстановка UTM из URL в скрытые поля
   const params = new URLSearchParams(window.location.search);
   const utmNames = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
-
-  // Две формы: UA и EN
-  document.querySelectorAll('#wl-ua, #wl-en').forEach(form => {
-    // чтобы не вешать обработчик второй раз
-    if (form.dataset.bound === '1') return;
-    form.dataset.bound = '1';
-
-    // Подставляем UTM в скрытые поля
+  forms.forEach(form => {
     utmNames.forEach(name => {
       const input = form.querySelector(`input[name="${name}"]`);
       if (input && params.has(name)) input.value = params.get(name);
     });
+  });
 
-    // Сабмит формы
+  // Обработчик отправки (общий для UA и EN)
+  forms.forEach(form => {
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      // анти-даблклик
-      const btn = form.querySelector('button[type="submit"]');
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправка...';
-      }
-
       try {
-        const action = form.getAttribute('action');
-        const body = new FormData(form);
-        await fetch(action, { method: 'POST', body });
+        // отправляем туда, что стоит в action формы
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form)
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
 
-        // Показываем успех вместо формы
-        form.innerHTML = (form.id === 'wl-en')
-          ? '<p class="text-green-600 text-center">Thank you! Your request has been saved.</p>'
-          : '<p class="text-green-600 text-center">Дякуємо! Заявку збережено.</p>';
+        // Определяем язык: по id формы или по <html lang>
+        const isEN = form.id === 'wl-en' || document.documentElement.lang === 'en';
 
-        // Обновляем переводы под активный язык (если функция есть)
-        if (typeof window.applyLang === 'function') {
-          window.applyLang(currentLang);
-        }
+        // Сообщение об успехе на нужном языке
+        form.innerHTML = isEN
+          ? '<p class="text-green-600 text-center py-4">Thank you! We have received your request.</p>'
+          : '<p class="text-green-600 text-center py-4">Дякуємо! Ми отримали вашу заявку.</p>';
+
       } catch (err) {
-        alert((currentLang === 'en')
+        const isEN = form.id === 'wl-en' || document.documentElement.lang === 'en';
+        alert(isEN
           ? 'An error occurred. Please try again.'
-          : 'Сталася помилка. Спробуйте ще раз.');
-        if (btn) btn.disabled = false;
+          : 'Сталася помилка. Спробуйте ще раз.'
+        );
+        console.error(err);
       }
-    }, { once: true });
+    });
   });
 });
-</script>
+        </script>
