@@ -375,11 +375,10 @@
     
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Текущий язык (из localStorage или из <html lang>)
+  // Текущий язык
   const currentLang = (function () {
-    try { return localStorage.getItem('sellcase_lang'); } catch (e) {}
-    return document.documentElement.lang || 'uk';
-  })();
+    try { return localStorage.getItem('sellcase_lang'); } catch(e) { return null; }
+  })() || document.documentElement.lang || 'uk';
 
   // UTM из URL
   const params = new URLSearchParams(window.location.search);
@@ -387,25 +386,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Две формы: UA и EN
   document.querySelectorAll('#wl-ua, #wl-en').forEach(form => {
-    // не даём повесить обработчик второй раз
+    // чтобы не навесить обработчик второй раз
     if (form.dataset.bound === '1') return;
     form.dataset.bound = '1';
 
-    // проставляем UTM в скрытые поля
+    // Проставляем UTM в скрытые поля
     utmNames.forEach(name => {
       const input = form.querySelector(`input[name="${name}"]`);
       if (input && params.has(name)) input.value = params.get(name);
     });
 
-    // сабмит
+    // Сабмит
     form.addEventListener('submit', async function (e) {
-      e.preventDefault();
+      e.preventDefault(); // не уходим на JSON-страницу
 
-      // анти-даблклик
+      // защита от дабл-кликов
       const btn = form.querySelector('button[type="submit"]');
       if (btn) {
         btn.disabled = true;
-        btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Надсилаємо...';
+        btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправляємо...';
       }
 
       try {
@@ -413,22 +412,21 @@ document.addEventListener('DOMContentLoaded', function () {
         const body   = new FormData(form);
         await fetch(action, { method: 'POST', body });
 
-        // показываем успех вместо формы (без дополнительных div'ов)
-        form.innerHTML = (form.id === 'wl-en')
+        // Сообщение об успехе: определяем EN по id формы ИЛИ по текущему языку страницы
+        const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
+
+        form.innerHTML = isEN
           ? '<p class="text-green-600 text-center mt-4">Thank you! Your request has been saved.</p>'
           : '<p class="text-green-600 text-center mt-4">Дякуємо! Заявку збережено.</p>';
 
-        // подтянем текущий язык (если есть applyLang)
-        if (typeof window.applyLang === 'function') window.applyLang(currentLang);
-
       } catch (err) {
-        alert((currentLang === 'en')
-          ? 'An error occurred. Please try again.'
-          : 'Сталася помилка. Спробуйте ще раз.'
-        );
+        const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
+        alert(isEN ? 'An error occurred. Please try again.'
+                   : 'Сталася помилка. Спробуйте ще раз.');
+        console.error(err);
         if (btn) btn.disabled = false;
       }
-    }, { once: true }); // обработчик сработает один раз
+    }, { once: true });
   });
 });
 </script>
