@@ -187,8 +187,6 @@
             data-i18n="submit_btn"></button>
   </div>
 </form>
-<!-- Success message UA -->
-<div id="form-success-ua" class="text-green-600 text-center mt-4"></div>
       
 <!-- === EN form === -->
 <form id="wl-en"
@@ -220,8 +218,7 @@
             data-i18n="submit_btn"></button>
   </div>
 </form>  
-<!-- Success message EN -->
-<div id="form-success-en" class="text-green-600 text-center mt-4"></div>  
+
 <!-- FAQ -->
   <section id="faq" class="py-12 bg-white border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-4">
@@ -404,42 +401,60 @@ document.addEventListener('DOMContentLoaded', function () {
       if (input && params.has(name)) input.value = params.get(name);
     });
 
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', function () {
-  ['wl-ua','wl-en'].forEach(function (fid) {
-    var form = document.getElementById(fid);
-    if (!form) return;
+  // язык
+  const currentLang = (function () {
+    try { return localStorage.getItem('sellcase_lang'); } catch (e) {}
+    return document.documentElement.lang || 'uk';
+  })();
 
-    // чтобы не навешивать повторно
+  // читаем UTM из URL
+  const params = new URLSearchParams(window.location.search);
+  const utmNames = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+
+  // вешаем обработчики на формы
+  document.querySelectorAll('#wl-ua, #wl-en').forEach(form => {
     if (form.dataset.bound === '1') return;
     form.dataset.bound = '1';
 
-    form.addEventListener('submit', function (e) {
+    // проставляем utm в скрытые поля
+    utmNames.forEach(name => {
+      const input = form.querySelector(`input[name="${name}"]`);
+      if (input && params.has(name)) input.value = params.get(name);
+    });
+
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      var btn = form.querySelector('button[type="submit"]');
+      // защита от дабл-кликов
+      const btn = form.querySelector('button[type="submit"]');
       if (btn) {
         btn.disabled = true;
-        btn.textContent = (fid === 'wl-en') ? 'Sending...' : 'Відправка...';
+        btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправка...';
       }
 
-      fetch(form.action, { method: 'POST', body: new FormData(form) })
-        .then(function () {
-          form.style.display = 'none';
-          var box = document.getElementById(fid === 'wl-en' ? 'form-success-en' : 'form-success-ua');
-          if (box) {
-            box.innerHTML = (fid === 'wl-en')
-              ? '<p class="text-green-600 text-center">Thank you! Your request has been saved.</p>'
-              : '<p class="text-green-600 text-center">Дякуємо! Заявку збережено.</p>';
-          }
-        })
-        .catch(function () {
-          alert(fid === 'wl-en'
-            ? 'An error occurred. Please try again.'
-            : 'Сталася помилка. Спробуйте ще раз.'
-          );
-          if (btn) btn.disabled = false;
-        });
+      try {
+        const action = form.getAttribute('action');
+        const body = new FormData(form);
+        await fetch(action, { method: 'POST', body });
+
+        // заменяем форму сообщением
+        form.innerHTML = (form.id === 'wl-en')
+          ? '<p class="text-green-600 text-center">Thank you! Your request has been saved.</p>'
+          : '<p class="text-green-600 text-center">Дякуємо! Заявку збережено.</p>';
+
+        // чтобы текст подтянулся на активном языке
+        if (typeof window.applyLang === 'function') {
+          window.applyLang(currentLang);
+        }
+
+      } catch (err) {
+        alert(currentLang === 'en'
+          ? 'An error occurred. Please try again.'
+          : 'Сталася помилка. Спробуйте ще раз.');
+        if (btn) btn.disabled = false;
+      }
     }, { once: true });
   });
 });
