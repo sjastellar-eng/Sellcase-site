@@ -412,12 +412,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const body   = new FormData(form);
         await fetch(action, { method: 'POST', body });
 
-        // Сообщение об успехе: определяем EN по id формы ИЛИ по текущему языку страницы
-        const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
-
-        form.innerHTML = isEN
-          ? '<p class="text-green-600 text-center mt-4">Thank you! Your request has been saved.</p>'
-          : '<p class="text-green-600 text-center mt-4">Дякуємо! Заявку збережено.</p>';
+        // Сообщение об успехе (popup-модалка)
+const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
+showSuccessModal(isEN ? 'en' : 'ua');
 
       } catch (err) {
         const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
@@ -429,4 +426,33 @@ document.addEventListener('DOMContentLoaded', function () {
     }, { once: true });
   });
 });
+</script>
+<!-- === POPUP MODAL SUCCESS === -->
+<div id="success-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-2xl p-8 text-center shadow-xl animate-fadeIn">
+    <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="success" width="80" class="mx-auto mb-4">
+    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">✅ Дякуємо! Заявку збережено.</h2>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+</style>
+
+<script>
+function showSuccessModal(lang = 'ua') {
+  const modal = document.getElementById('success-modal');
+  const text = modal.querySelector('[data-i18n="success_title"]');
+  if (lang === 'en') text.textContent = '✅ Thank you! Your request has been saved.';
+  else text.textContent = '✅ Дякуємо! Заявку збережено.';
+
+  modal.classList.remove('hidden');
+  setTimeout(() => modal.classList.add('hidden'), 2500); // скрыть через 2.5 секунды
+}
 </script>
