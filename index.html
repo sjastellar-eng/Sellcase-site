@@ -409,21 +409,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
       try {
         const action = form.getAttribute('action');
-        const body   = new FormData(form);
-        await fetch(action, { method: 'POST', body });
+        try {
+  const action = form.getAttribute('action');
+  const body = new FormData(form);
 
-        // Сообщение об успехе (popup-модалка)
-const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
-showSuccessModal(isEN ? 'en' : 'ua');
+  const resp = await fetch(action, { method: 'POST', body });
 
-      } catch (err) {
-        const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
-        alert(isEN ? 'An error occurred. Please try again.'
-                   : 'Сталася помилка. Спробуйте ще раз.');
-        console.error(err);
-        if (btn) btn.disabled = false;
-      }
-    }, { once: true });
+  // Проверяем статус сервера и тело
+  const text = await resp.text();
+  console.log('SellCase fetch status:', resp.status, text);
+
+  if (!resp.ok) {
+    throw new Error(`HTTP ${resp.status}: ${text}`);
+  }
+
+  // Всё успешно → показываем модалку
+  const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
+  showSuccessModal(isEN ? 'en' : 'ua');
+
+} catch (err) {
+  const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
+  alert(isEN ? 'An error occurred. Please try again.' : 'Сталася помилка. Спробуйте ще раз.');
+  console.error('SellCase submit error:', err);
+} finally {
+  if (btn) btn.disabled = false;
+    }
   });
 });
 </script>
