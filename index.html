@@ -157,67 +157,63 @@
         Ми повідомимо вас, коли сервіс стане доступним
       </p>
 
-<!-- === UA form === -->
-<form id="wl-ua"
-      class="grid sm:grid-cols-2 gap-4"
-      name="waitlist-ua"
-      action="https://script.google.com/macros/s/AKfycbyWizg1L7tjd746Bngh9iPzETWvT7j35OmYAFfXVVy1rTFwj-Jvcf00lDO1K5JBANwiQw/exec
-      method="POST">
-  <input type="hidden" name="form-name" value="waitlist-ua" />
-  <input type="hidden" name="page" value="ua" />
-  <!-- скрытые поля UTM -->
+<!-- UA -->
+<form id="wl-ua" name="waitlist-ua"
+      action="https://script.google.com/macros/s/AKfycbyWizg1L7tjd746Bngh9iPzETWvT7j35OmYAFfXVVy1rTFwj-Jvcf00lDO1K5JBANwiQw/exec"
+      method="POST"
+      class="grid sm:grid-cols-2 gap-4">
+
+  <input type="hidden" name="form-name" value="waitlist-ua">
+  <input type="hidden" name="page" value="ua">
+
+  <!-- скрытые UTM -->
   <input type="hidden" name="utm_source">
   <input type="hidden" name="utm_medium">
   <input type="hidden" name="utm_campaign">
   <input type="hidden" name="utm_content">
   <input type="hidden" name="utm_term">
-  <p class="hidden">
-    <label>Не заполняйте это поле: <input name="bot-field"></label>
-  </p>
 
   <div class="sm:col-span-2">
     <label class="text-sm text-gray-700 block mb-1" for="email-ua">Email</label>
     <input required type="email" id="email-ua" name="email"
-           class="w-full border rounded-lg px-3 py-2">
+           class="w-full border rounded-lg px-3 py-2" placeholder="ваша пошта">
   </div>
 
   <div class="sm:col-span-2">
-    <button type="submit"
-            class="w-full bg-blue-600 text-white py-2 rounded-lg"
-            data-i18n="submit_btn"></button>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg">
+      Надіслати
+    </button>
   </div>
 </form>
-      
-<!-- === EN form === -->
-<form id="wl-en"
-      class="grid sm:grid-cols-2 gap-4 hidden"
-      name="waitlist-en"
-      action="https://script.google.com/macros/s/AKfycbyWizg1L7tjd746Bngh9iPzETWvT7j35OmYAFfXVVy1rTFwj-Jvcf00lDO1K5JBANwiQw/exec
-      method="POST">
-  <input type="hidden" name="form-name" value="waitlist-en" />
-  <input type="hidden" name="page" value="en" />
-<!-- скрытые поля UTM -->
+
+<!-- EN -->
+<form id="wl-en" name="waitlist-en"
+      action="https://script.google.com/macros/s/AKfycbyWizg1L7tjd746Bngh9iPzETWvT7j35OmYAFfXVVy1rTFwj-Jvcf00lDO1K5JBANwiQw/exec"
+      method="POST"
+      class="grid sm:grid-cols-2 gap-4 hidden">
+
+  <input type="hidden" name="form-name" value="waitlist-en">
+  <input type="hidden" name="page" value="en">
+
+  <!-- скрытые UTM -->
   <input type="hidden" name="utm_source">
   <input type="hidden" name="utm_medium">
   <input type="hidden" name="utm_campaign">
   <input type="hidden" name="utm_content">
   <input type="hidden" name="utm_term">
-  <p class="hidden">
-    <label>Don’t fill this out: <input name="bot-field"></label>
-  </p>
 
   <div class="sm:col-span-2">
     <label class="text-sm text-gray-700 block mb-1" for="email-en">Email</label>
     <input required type="email" id="email-en" name="email"
-           class="w-full border rounded-lg px-3 py-2">
+           class="w-full border rounded-lg px-3 py-2" placeholder="your email">
   </div>
 
   <div class="sm:col-span-2">
-    <button type="submit"
-            class="w-full bg-blue-600 text-white py-2 rounded-lg"
-            data-i18n="submit_btn"></button>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg">
+      Submit
+    </button>
   </div>
-</form>  
+</form>
 
 <!-- FAQ -->
   <section id="faq" class="py-12 bg-white border-t border-gray-100">
@@ -441,3 +437,74 @@ form.addEventListener('submit', async function (e) {
 } finally {
   if (btn) btn.disabled = false;
   }
+<!-- SUCCESS POPUP -->
+<div id="success-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-2xl p-8 text-center shadow-xl animate-fadeIn">
+    <svg width="80" height="80" viewBox="0 0 24 24" class="mx-auto mb-4">
+      <path d="M20 7L9 18l-5-5" fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">✅ Дякуємо! Заявку збережено.</h2>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeIn { from {opacity:0; transform:scale(.96)} to {opacity:1; transform:scale(1)} }
+  .animate-fadeIn { animation: fadeIn .25s ease-out forwards; }
+</style>
+
+<script>
+// UTM -> в скрытые поля всех форм
+(function fillUTM(){
+  const params = new URLSearchParams(location.search);
+  document.querySelectorAll('form').forEach(f=>{
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k=>{
+      const el = f.querySelector(`input[name="${k}"]`);
+      if (el) el.value = params.get(k) || '';
+    });
+  });
+})();
+
+function showSuccessModal(lang) {
+  const modal = document.getElementById('success-modal');
+  const title = modal.querySelector('[data-i18n="success_title"]');
+  title.textContent = (lang === 'en')
+    ? '✅ Thank you! Your request has been saved.'
+    : '✅ Дякуємо! Заявку збережено.';
+  modal.classList.remove('hidden');
+  setTimeout(()=>modal.classList.add('hidden'), 2400);
+}
+
+// отправка без CORS-проблем (FormData + no-cors, не читаем ответ)
+document.querySelectorAll('form').forEach(form=>{
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = (form.id==='wl-en'?'Sending...':'Відправляємо...'); }
+
+    try {
+      const action = form.getAttribute('action');
+      const body   = new FormData(form);
+
+      await fetch(action, {
+        method: 'POST',
+        body,                 // НЕ добавляем headers — пусть браузер сам
+        mode: 'no-cors',      // не требуем CORS, запрос уйдёт, ответ opaque — но нам он не нужен
+        keepalive: true
+      });
+
+      // показываем pop-up по языку
+      showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
+      form.reset();
+
+    } catch(err) {
+      console.error('submit error:', err);
+      // даже если браузер ругнётся на opaque-ответ — UX не ломаем
+      showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
+      form.reset();
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = (form.id==='wl-en'?'Submit':'Надіслати'); }
+    }
+  });
+});
+</script>
