@@ -407,8 +407,6 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправляємо...';
       }
 
-      try {
-        const action = form.getAttribute('action');
         try {
   const action = form.getAttribute('action');
   const body = new FormData(form);
