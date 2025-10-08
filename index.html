@@ -410,57 +410,15 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
   const action = form.getAttribute('action');
   const body = new FormData(form);
+  await fetch(action, { method: 'POST', body });
 
-  const resp = await fetch(action, { method: 'POST', body });
-
-  // Проверяем статус сервера и тело
-  const text = await resp.text();
-  console.log('SellCase fetch status:', resp.status, text);
-
-  if (!resp.ok) {
-    throw new Error(`HTTP ${resp.status}: ${text}`);
-  }
-
-  // Всё успешно → показываем модалку
-  const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
-  showSuccessModal(isEN ? 'en' : 'ua');
-
+  const isEN = form.id === 'wl-en';
+  alert(isEN ? '✅ Thank you! Your request has been saved.' : '✅ Дякуємо! Заявку збережено.');
+  form.reset();
 } catch (err) {
-  const isEN = (form.id === 'wl-en') || (document.documentElement.lang === 'en');
+  const isEN = form.id === 'wl-en';
   alert(isEN ? 'An error occurred. Please try again.' : 'Сталася помилка. Спробуйте ще раз.');
-  console.error('SellCase submit error:', err);
+  console.error(err);
 } finally {
   if (btn) btn.disabled = false;
-    }
-  });
-});
-</script>
-<!-- === POPUP MODAL SUCCESS === -->
-<div id="success-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-2xl p-8 text-center shadow-xl animate-fadeIn">
-    <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="success" width="80" class="mx-auto mb-4">
-    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">✅ Дякуємо! Заявку збережено.</h2>
-  </div>
-</div>
-
-<style>
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.3s ease-out forwards;
-  }
-</style>
-
-<script>
-function showSuccessModal(lang = 'ua') {
-  const modal = document.getElementById('success-modal');
-  const text = modal.querySelector('[data-i18n="success_title"]');
-  if (lang === 'en') text.textContent = '✅ Thank you! Your request has been saved.';
-  else text.textContent = '✅ Дякуємо! Заявку збережено.';
-
-  modal.classList.remove('hidden');
-  setTimeout(() => modal.classList.add('hidden'), 2500); // скрыть через 2.5 секунды
-}
-</script>
+        }
