@@ -157,64 +157,67 @@
         Ми повідомимо вас, коли сервіс стане доступним
       </p>
 
-<!-- UA -->
-<form id="wl-ua" name="waitlist-ua"
+<!-- === UA form === -->
+<form id="wl-ua"
+      class="grid sm:grid-cols-2 gap-4"
+      name="waitlist-ua"
       action="https://script.google.com/macros/s/AKfycbyWizg1L7tjd746Bngh9iPzETWvT7j35OmYAFfXVVy1rTFwj-Jvcf00lDO1K5JBANwiQw/exec"
-      method="POST"
-      class="grid sm:grid-cols-2 gap-4">
-
-  <input type="hidden" name="form-name" value="waitlist-ua">
-  <input type="hidden" name="page" value="ua">
-
-  <!-- скрытые UTM -->
+      method="POST">
+  <input type="hidden" name="form-name" value="waitlist-ua" />
+  <input type="hidden" name="page" value="ua" />
+  <!-- скрытые поля UTM -->
   <input type="hidden" name="utm_source">
   <input type="hidden" name="utm_medium">
   <input type="hidden" name="utm_campaign">
   <input type="hidden" name="utm_content">
   <input type="hidden" name="utm_term">
+  <p class="hidden">
+    <label>Не заполняйте это поле: <input name="bot-field"></label>
+  </p>
 
   <div class="sm:col-span-2">
     <label class="text-sm text-gray-700 block mb-1" for="email-ua">Email</label>
     <input required type="email" id="email-ua" name="email"
-           class="w-full border rounded-lg px-3 py-2" placeholder="ваша пошта">
+           class="w-full border rounded-lg px-3 py-2">
   </div>
 
   <div class="sm:col-span-2">
-    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg">
-      Надіслати
-    </button>
+    <button type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded-lg"
+            data-i18n="submit_btn"></button>
   </div>
 </form>
-
-<!-- EN -->
-<form id="wl-en" name="waitlist-en"
+      
+<!-- === EN form === -->
+<form id="wl-en"
+      class="grid sm:grid-cols-2 gap-4 hidden"
+      name="waitlist-en"
       action="https://script.google.com/macros/s/AKfycbyWizg1L7tjd746Bngh9iPzETWvT7j35OmYAFfXVVy1rTFwj-Jvcf00lDO1K5JBANwiQw/exec"
-      method="POST"
-      class="grid sm:grid-cols-2 gap-4 hidden">
-
-  <input type="hidden" name="form-name" value="waitlist-en">
-  <input type="hidden" name="page" value="en">
-
-  <!-- скрытые UTM -->
+      method="POST">
+  <input type="hidden" name="form-name" value="waitlist-en" />
+  <input type="hidden" name="page" value="en" />
+<!-- скрытые поля UTM -->
   <input type="hidden" name="utm_source">
   <input type="hidden" name="utm_medium">
   <input type="hidden" name="utm_campaign">
   <input type="hidden" name="utm_content">
   <input type="hidden" name="utm_term">
+  <p class="hidden">
+    <label>Don’t fill this out: <input name="bot-field"></label>
+  </p>
 
   <div class="sm:col-span-2">
     <label class="text-sm text-gray-700 block mb-1" for="email-en">Email</label>
     <input required type="email" id="email-en" name="email"
-           class="w-full border rounded-lg px-3 py-2" placeholder="your email">
+           class="w-full border rounded-lg px-3 py-2">
   </div>
 
   <div class="sm:col-span-2">
-    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg">
-      Submit
-    </button>
+    <button type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded-lg"
+            data-i18n="submit_btn"></button>
   </div>
-</form>
-
+</form>  
 <!-- FAQ -->
   <section id="faq" class="py-12 bg-white border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-4">
