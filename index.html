@@ -373,12 +373,19 @@
 </script>
     
 <!-- SUCCESS POPUP -->
-<div id="success-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-2xl p-8 text-center shadow-xl animate-fadeIn">
-    <svg width="80" height="80" viewBox="0 0 24 24" class="mx-auto mb-4 text-green-500" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20 6L9 17l-5-5" />
+<div id="success-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+  <div class="bg-white rounded-2xl p-8 text-center shadow-2xl animate-fadeIn">
+    <!-- Логотип SellCase -->
+    <svg aria-label="SellCase logo" width="64" height="64" viewBox="0 0 64 64" class="mx-auto mb-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="32" cy="32" r="28" fill="#2563EB" />
+      <rect x="22" y="36" width="6" height="16" rx="2" fill="#fff"/>
+      <rect x="30" y="30" width="6" height="22" rx="2" fill="#fff"/>
+      <rect x="38" y="24" width="6" height="28" rx="2" fill="#fff"/>
     </svg>
-    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">✅ Заявку збережено</h2>
+
+    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">
+      Thank you! Your request has been saved.
+    </h2>
   </div>
 </div>
 
@@ -388,7 +395,7 @@
   to {opacity: 1; transform: scale(1);}
 }
 .animate-fadeIn {
-  animation: fadeIn 0.25s ease-out forwards;
+  animation: fadeIn 0.3s ease-out forwards;
 }
 </style>
 
@@ -397,8 +404,8 @@ function showSuccessModal(lang) {
   const modal = document.getElementById('success-modal');
   const title = modal.querySelector('[data-i18n="success_title"]');
   title.textContent = (lang === 'en')
-    ? '✅ Thank you! Your request has been saved.'
-    : '✅ Дякуємо! Заявку збережено.';
+    ? 'Thank you! Your request has been saved.'
+    : 'Дякуємо! Заявку збережено.';
   modal.classList.remove('hidden');
   setTimeout(() => modal.classList.add('hidden'), 2400);
 }
@@ -440,4 +447,4 @@ document.querySelectorAll('form').forEach(form => {
     }
   });
 });
-    </script>
+</script>
