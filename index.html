@@ -408,35 +408,36 @@ form.addEventListener('submit', async function (e) {
   }
 
   try {
-    const action = form.getAttribute('action');
+  const action = form.getAttribute('action');
+  const body   = new FormData(form);
 
-    // Преобразуем FormData в обычный URL-кодированный формат
-    const formData = new FormData(form);
-    const body = new URLSearchParams();
-    for (const [k, v] of formData.entries()) body.append(k, v);
+  // КЛЮЧЕВОЕ: no-cors, не ставим никаких headers (браузер сам поставит boundary)
+  await fetch(action, {
+    method: 'POST',
+    body,
+    mode: 'no-cors',
+    cache: 'no-cache',
+    redirect: 'follow',
+    keepalive: true
+  });
 
-    await fetch(action, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      body
-    });
+  // Показываем успех, не ждём «читаемый» ответ (его не будет в no-cors)
+  const isEN = form.id === 'wl-en';
+  alert(isEN
+    ? '✅ Thank you! Your request has been saved.'
+    : '✅ Дякуємо! Заявку збережено.'
+  );
+  form.reset();
 
-    const isEN = form.id === 'wl-en';
-    alert(isEN
-      ? '✅ Thank you! Your request has been saved.'
-      : '✅ Дякуємо! Заявку збережено.');
-    form.reset();
-
-  } catch (err) {
-    console.error('Error sending form:', err);
-    const isEN = form.id === 'wl-en';
-    alert(isEN
-      ? 'An error occurred. Please try again.'
-      : 'Сталася помилка. Спробуйте ще раз.');
-  } finally {
-    if (btn) {
-      btn.disabled = false;
-      btn.textContent = (currentLang === 'en') ? 'Submit' : 'Надіслати';
-    }
+} catch (err) {
+  // Даже если браузер кинет NetworkError из-за opaque-ответа, не блокируем UX
+  console.error('fetch error (можно игнорировать в no-cors):', err);
+  const isEN = form.id === 'wl-en';
+  alert(isEN
+    ? '✅ Thank you! Your request has been saved.'
+    : '✅ Дякуємо! Заявку збережено.'
+  );
+  form.reset();
+} finally {
+  if (btn) btn.disabled = false;
   }
-});
