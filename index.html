@@ -398,47 +398,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // Сабмит
 form.addEventListener('submit', async function (e) {
   e.preventDefault(); // не уходим со страницы
-
-  // защита от дабл-кликов
-  const btn = form.querySelector('button[type="submit"]');
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправлення...';
-  }
-
-  try {
-  const action = form.getAttribute('action');
-  const body   = new FormData(form);
-
-  // КЛЮЧЕВОЕ: no-cors, не ставим никаких headers (браузер сам поставит boundary)
-  await fetch(action, {
-    method: 'POST',
-    body,
-    mode: 'no-cors',
-    cache: 'no-cache',
-    redirect: 'follow',
-    keepalive: true
-  });
-
-  // Показываем успех, не ждём «читаемый» ответ (его не будет в no-cors)
-  const isEN = form.id === 'wl-en';
-  alert(isEN
-    ? '✅ Thank you! Your request has been saved.'
-    : '✅ Дякуємо! Заявку збережено.'
-  );
-  form.reset();
-
-} catch (err) {
-  // Даже если браузер кинет NetworkError из-за opaque-ответа, не блокируем UX
-  console.error('fetch error (можно игнорировать в no-cors):', err);
-  const isEN = form.id === 'wl-en';
-  alert(isEN
-    ? '✅ Thank you! Your request has been saved.'
-    : '✅ Дякуємо! Заявку збережено.'
-  );
-  form.reset();
-} finally {
-  if (btn) btn.disabled = false;
   }
 <!-- SUCCESS POPUP -->
 <div id="success-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -454,18 +413,6 @@ form.addEventListener('submit', async function (e) {
   @keyframes fadeIn { from {opacity:0; transform:scale(.96)} to {opacity:1; transform:scale(1)} }
   .animate-fadeIn { animation: fadeIn .25s ease-out forwards; }
 </style>
-
-<script>
-// UTM -> в скрытые поля всех форм
-(function fillUTM(){
-  const params = new URLSearchParams(location.search);
-  document.querySelectorAll('form').forEach(f=>{
-    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k=>{
-      const el = f.querySelector(`input[name="${k}"]`);
-      if (el) el.value = params.get(k) || '';
-    });
-  });
-})();
 
 function showSuccessModal(lang) {
   const modal = document.getElementById('success-modal');
