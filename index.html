@@ -372,48 +372,27 @@
 })();
 </script>
     
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Текущий язык
-  const currentLang = (function () {
-    try { return localStorage.getItem('sellcase_lang'); } catch(e) { return null; }
-  })() || document.documentElement.lang || 'uk';
-
-  // UTM из URL
-  const params = new URLSearchParams(window.location.search);
-  const utmNames = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
-
-  // Две формы: UA и EN
-  document.querySelectorAll('#wl-ua, #wl-en').forEach(form => {
-    // чтобы не навесить обработчик второй раз
-    if (form.dataset.bound === '1') return;
-    form.dataset.bound = '1';
-
-    // Проставляем UTM в скрытые поля
-    utmNames.forEach(name => {
-      const input = form.querySelector(`input[name="${name}"]`);
-      if (input && params.has(name)) input.value = params.get(name);
-    });
-
-// Сабмит
-form.addEventListener('submit', async function (e) {
-  e.preventDefault(); // не уходим со страницы
-  }
 <!-- SUCCESS POPUP -->
 <div id="success-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
   <div class="bg-white rounded-2xl p-8 text-center shadow-xl animate-fadeIn">
-    <svg width="80" height="80" viewBox="0 0 24 24" class="mx-auto mb-4">
-      <path d="M20 7L9 18l-5-5" fill="none" stroke="currentColor" stroke-width="2"/>
+    <svg width="80" height="80" viewBox="0 0 24 24" class="mx-auto mb-4 text-green-500" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 6L9 17l-5-5" />
     </svg>
-    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">✅ Дякуємо! Заявку збережено.</h2>
+    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">✅ Заявку збережено</h2>
   </div>
 </div>
 
 <style>
-  @keyframes fadeIn { from {opacity:0; transform:scale(.96)} to {opacity:1; transform:scale(1)} }
-  .animate-fadeIn { animation: fadeIn .25s ease-out forwards; }
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.95);}
+  to {opacity: 1; transform: scale(1);}
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
 </style>
 
+<script>
 function showSuccessModal(lang) {
   const modal = document.getElementById('success-modal');
   const title = modal.querySelector('[data-i18n="success_title"]');
@@ -421,40 +400,44 @@ function showSuccessModal(lang) {
     ? '✅ Thank you! Your request has been saved.'
     : '✅ Дякуємо! Заявку збережено.';
   modal.classList.remove('hidden');
-  setTimeout(()=>modal.classList.add('hidden'), 2400);
+  setTimeout(() => modal.classList.add('hidden'), 2400);
 }
 
-// отправка без CORS-проблем (FormData + no-cors, не читаем ответ)
-document.querySelectorAll('form').forEach(form=>{
-  form.addEventListener('submit', async (e)=>{
+// --- Отправка формы ---
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-
     const btn = form.querySelector('button[type="submit"]');
-    if (btn) { btn.disabled = true; btn.textContent = (form.id==='wl-en'?'Sending...':'Відправляємо...'); }
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = (form.id === 'wl-en') ? 'Sending...' : 'Відправка...';
+    }
 
     try {
       const action = form.getAttribute('action');
-      const body   = new FormData(form);
+      const body = new FormData(form);
 
       await fetch(action, {
         method: 'POST',
-        body,                 // НЕ добавляем headers — пусть браузер сам
-        mode: 'no-cors',      // не требуем CORS, запрос уйдёт, ответ opaque — но нам он не нужен
-        keepalive: true
+        body,
+        mode: 'no-cors',
+        keepalive: true,
       });
 
       // показываем pop-up по языку
       showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
       form.reset();
 
-    } catch(err) {
-      console.error('submit error:', err);
-      // даже если браузер ругнётся на opaque-ответ — UX не ломаем
+    } catch (err) {
+      console.error('Submit error:', err);
       showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
       form.reset();
     } finally {
-      if (btn) { btn.disabled = false; btn.textContent = (form.id==='wl-en'?'Submit':'Надіслати'); }
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = (form.id === 'wl-en') ? 'Submit' : 'Надіслати';
+      }
     }
   });
 });
-</script>
+    </script>
