@@ -396,29 +396,47 @@ document.addEventListener('DOMContentLoaded', function () {
       if (input && params.has(name)) input.value = params.get(name);
     });
 
-    // Сабмит
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault(); // не уходим на JSON-страницу
+// Сабмит
+form.addEventListener('submit', async function (e) {
+  e.preventDefault(); // не уходим со страницы
 
-      // защита от дабл-кликов
-      const btn = form.querySelector('button[type="submit"]');
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправляємо...';
-      }
+  // защита от дабл-кликов
+  const btn = form.querySelector('button[type="submit"]');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = (currentLang === 'en') ? 'Sending...' : 'Відправлення...';
+  }
 
-        try {
-  const action = form.getAttribute('action');
-  const body = new FormData(form);
-  await fetch(action, { method: 'POST', body });
+  try {
+    const action = form.getAttribute('action');
 
-  const isEN = form.id === 'wl-en';
-  alert(isEN ? '✅ Thank you! Your request has been saved.' : '✅ Дякуємо! Заявку збережено.');
-  form.reset();
-} catch (err) {
-  const isEN = form.id === 'wl-en';
-  alert(isEN ? 'An error occurred. Please try again.' : 'Сталася помилка. Спробуйте ще раз.');
-  console.error(err);
-} finally {
-  if (btn) btn.disabled = false;
-        }
+    // Преобразуем FormData в обычный URL-кодированный формат
+    const formData = new FormData(form);
+    const body = new URLSearchParams();
+    for (const [k, v] of formData.entries()) body.append(k, v);
+
+    await fetch(action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body
+    });
+
+    const isEN = form.id === 'wl-en';
+    alert(isEN
+      ? '✅ Thank you! Your request has been saved.'
+      : '✅ Дякуємо! Заявку збережено.');
+    form.reset();
+
+  } catch (err) {
+    console.error('Error sending form:', err);
+    const isEN = form.id === 'wl-en';
+    alert(isEN
+      ? 'An error occurred. Please try again.'
+      : 'Сталася помилка. Спробуйте ще раз.');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = (currentLang === 'en') ? 'Submit' : 'Надіслати';
+    }
+  }
+});
