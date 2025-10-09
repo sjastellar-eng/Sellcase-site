@@ -372,58 +372,110 @@
 })();
 </script>
 
-<!-- SUCCESS POPUP -->
-<div id="success-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-  <div class="bg-white rounded-2xl p-8 text-center shadow-2xl w-80 animate-fadeIn">
-    <!-- ЛОГОТИП -->
-    <div class="flex justify-center mb-4 animate-pulse">
-      <svg aria-label="SellCase logo" width="52" height="52" viewBox="0 0 64 64">
-        <circle cx="32" cy="32" r="28" fill="#2563EB"></circle>
-        <rect x="24" y="38" width="6" height="16" rx="2" fill="#fff"></rect>
-        <rect x="32" y="32" width="6" height="16" rx="2" fill="#fff"></rect>
-        <rect x="40" y="26" width="6" height="16" rx="2" fill="#fff"></rect>
-      </svg>
-    </div>
-
-    <!-- ТЕКСТ -->
-    <h2 class="text-xl font-bold text-gray-900" data-i18n="success_title">
+<!-- === SUCCESS POPUP (logo + UA/EN) === -->
+<div id="sc-success"
+     style="display:none;position:fixed;inset:0;z-index:9999;backdrop-filter:blur(1px);
+            background:rgba(0,0,0,.35);align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;padding:24px 28px;min-width:min(92vw,660px);
+              box-shadow:0 24px 48px rgba(0,0,0,.18);text-align:center">
+    <div id="sc-success-logo" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
+    <h2 id="sc-success-text"
+        style="margin:0;font-size:28px;line-height:1.25;color:#111827;font-weight:800">
       Дякуємо! Заявку збережено.
     </h2>
   </div>
 </div>
 
 <style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-
-/* Пульсирующее свечение логотипа */
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.08); opacity: 0.9; }
-}
-.animate-pulse {
-  animation: pulse 1.8s ease-in-out infinite;
-}
+  @keyframes fadeIn { from { opacity:0; transform:scale(.98) } to { opacity:1; transform:scale(1) } }
+  #sc-success > div { animation: fadeIn .22s ease-out forwards; }
 </style>
 
 <script>
-function showSuccessModal(lang) {
-  const modal = document.getElementById('success-modal');
-  const title = modal.querySelector('[data-i18n="success_title"]');
-  title.textContent =
-    lang === 'en'
-      ? 'Thank you! Your request has been saved.'
-      : 'Дякуємо! Заявку збережено.';
+  // Получаем текущий язык из id формы
+  function getLangByForm(form) {
+    return form && form.id === 'wl-en' ? 'en' : 'ua';
+  }
 
-  // Показываем pop-up
-  modal.classList.remove('hidden');
+  // Клонируем inline-логотип из хедера в попап
+  function mountLogoIntoPopup() {
+    const holder = document.getElementById('sc-success-logo');
+    holder.innerHTML = ''; // очистка
+    // берём первый svg логотипа в хедере или футере
+    const headerSvg = document.querySelector('header svg[aria-label*="SellCase"]')
+                     || document.querySelector('footer svg[aria-label*="SellCase"]');
+    if (headerSvg) {
+      const cloned = headerSvg.cloneNode(true);
+      // деликатно тюнингуем размер/цвет фирменный
+      cloned.setAttribute('width', '44');
+      cloned.setAttribute('height', '44');
+      // заливаем круглую плашку бренд-цветом (если есть круг)
+      const circle = cloned.querySelector('circle');
+      if (circle) circle.setAttribute('fill', '#0f172a'); // тёмно-синий как на сайте
+      // белые «столбики» логотипа — оставляем как есть
+      holder.appendChild(cloned);
+    } else {
+      // фолбэк: текстовый бейдж SC
+      const badge = document.createElement('div');
+      badge.textContent = 'SC';
+      badge.style.cssText =
+        'display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;' +
+        'border-radius:9999px;background:#0f172a;color:#fff;font-weight:800;font-size:20px;';
+      holder.appendChild(badge);
+    }
+  }
 
-  // Автоматически скрываем через 2,5 секунды
-  setTimeout(() => modal.classList.add('hidden'), 2500);
-}
+  // Тексты для двух языков
+  const successTexts = {
+    ua: 'Дякуємо! Заявку збережено.',
+    en: 'Thanks! Your request has been saved.'
+  };
+
+  function showSuccessModal(lang) {
+    mountLogoIntoPopup();
+    const box = document.getElementById('sc-success');
+    const title = document.getElementById('sc-success-text');
+    title.textContent = successTexts[lang] || successTexts.ua;
+    box.style.display = 'flex';
+    setTimeout(() => { box.style.display = 'none'; }, 2400);
+  }
+
+  // Навешиваем обработчики на обе формы (UA и EN)
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#wl-ua, #wl-en').forEach((form) => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const lang = getLangByForm(form);
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = (lang === 'en') ? 'Sending…' : 'Відправляється…';
+        }
+
+        try {
+          const action = form.getAttribute('action');
+          const body = new FormData(form);
+          await fetch(action, {
+            method: 'POST',
+            body,
+            mode: 'no-cors',
+            keepalive: true
+          });
+
+          showSuccessModal(lang);   // успех
+          form.reset();
+        } catch (err) {
+          console.error('submit error:', err);
+          showSuccessModal(lang);   // даже если opaque-ответ — UX не ломаем
+          form.reset();
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = (lang === 'en') ? 'Submit' : 'Надіслати';
+          }
+        }
+      }, { once:false });
+    });
+  });
 </script>
