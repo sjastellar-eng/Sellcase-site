@@ -373,100 +373,61 @@
 </script>
     
 <!-- SUCCESS POPUP -->
-<div id="success-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-  <div class="bg-white rounded-2xl p-8 text-center shadow-2xl animate-fadeIn">
-    <!-- Логотип SellCase -->
-    <svg aria-label="SellCase logo" width="64" height="64" viewBox="0 0 64 64" class="mx-auto mb-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="32" cy="32" r="28" fill="#2563EB" />
-      <rect x="22" y="36" width="6" height="16" rx="2" fill="#fff"/>
-      <rect x="30" y="30" width="6" height="22" rx="2" fill="#fff"/>
-      <rect x="38" y="24" width="6" height="28" rx="2" fill="#fff"/>
-    </svg>
-
-    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">
-      Thank you! Your request has been saved.
-    </h2>
-  </div>
-</div>
+<div id="success-modal" ...> ... </div>
 
 <style>
-@keyframes fadeIn {
-  from {opacity: 0; transform: scale(0.95);}
-  to {opacity: 1; transform: scale(1);}
-}
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out forwards;
-}
+@keyframes fadeIn { from {opacity:0; transform:scale(.96)} to {opacity:1; transform:scale(1)} }
+.animate-fadeIn { animation: fadeIn .25s ease-out forwards; }
 </style>
 
 <script>
-function showSuccessModal(lang = 'ua') {
+// showSuccessModal(lang)
+function showSuccessModal(lang) {
   const modal = document.getElementById('success-modal');
   const title = modal.querySelector('[data-i18n="success_title"]');
-
-  // Текст по языку
-  title.textContent =
-    lang === 'en'
-      ? '✅ Thank you! Your request has been saved.'
-      : '✅ Дякуємо! Заявку збережено.';
-
+  title.textContent = (lang === 'en')
+    ? '✅ Thank you! Your request has been saved.'
+    : '✅ Дякуємо! Заявку збережено.';
   modal.classList.remove('hidden');
-  setTimeout(() => modal.classList.add('hidden'), 2400);
+  setTimeout(()=> modal.classList.add('hidden'), 2400);
 }
 
-// ------------------------------
-// Обработчик форм
-// ------------------------------
+// единственный обработчик отправки
 document.querySelectorAll('form').forEach((form) => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const btn = form.querySelector('button[type="submit"]');
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent =
-        (document.documentElement.lang || '').toLowerCase().startsWith('en')
-          ? 'Sending...'
-          : 'Відправляю...';
+    if (btn) { 
+      btn.disabled = true; 
+      btn.textContent = (form.id === 'wl-en') ? 'Sending...' : 'Відправляю...';
     }
 
     try {
       const action = form.getAttribute('action');
-      const body = new FormData(form);
+      const body   = new FormData(form);
 
       await fetch(action, {
         method: 'POST',
         body,
         mode: 'no-cors',
-        keepalive: true,
+        keepalive: true
       });
 
-      // Определяем язык формы или страницы
-      const lang =
-        form.id === 'wl-en' ||
-        (document.documentElement.lang || '').toLowerCase().startsWith('en')
-          ? 'en'
-          : 'ua';
-
-      showSuccessModal(lang);
+      showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
       form.reset();
+
     } catch (err) {
       console.error('submit error:', err);
-      const lang =
-        form.id === 'wl-en' ||
-        (document.documentElement.lang || '').toLowerCase().startsWith('en')
-          ? 'en'
-          : 'ua';
-      showSuccessModal(lang);
+      // даже если браузер ругнулся на opaque-ответ — UX не ломаем
+      showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
       form.reset();
     } finally {
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent =
-          (document.documentElement.lang || '').toLowerCase().startsWith('en')
-            ? 'Submit'
-            : 'Відправити';
+      if (btn) { 
+        btn.disabled = false; 
+        btn.textContent = (form.id === 'wl-en') ? 'Submit' : 'Відправити';
       }
     }
   });
 });
+</script>
