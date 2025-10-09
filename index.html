@@ -372,124 +372,66 @@
 })();
 </script>
     
-<!-- === SUCCESS POPUP (overlay + логотип) === -->
-  <div id="success-modal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-    <div class="bg-white rounded-2xl p-8 text-center shadow-xl animate-fadeIn max-w-md mx-auto">
-      <!-- Лого сверху -->
-      <div class="mx-auto mb-4 w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-semibold">SC</div>
-      <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">
-        ✅ Дякуємо! Заявку збережено.
-      </h2>
+<!-- ✅ SUCCESS POPUP -->
+<div id="success-modal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+  <div class="bg-white rounded-2xl p-8 text-center shadow-xl animate-fadeIn max-w-md mx-auto">
+    <!-- логотип SellCase -->
+    <div class="mx-auto mb-4 w-14 h-14 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-lg">
+      SC
     </div>
+    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">
+      ✅ Дякуємо! Заявку збережено.
+    </h2>
   </div>
+</div>
 
-  <script>
-    // ===== helpers =====
-    const ACTION_URL = 'ACTION_URL_HERE'; // <— подставь твой Apps Script /exec
+<style>
+  @keyframes fadeIn {
+    from {opacity:0; transform:scale(.96)}
+    to {opacity:1; transform:scale(1)}
+  }
+  .animate-fadeIn {
+    animation: fadeIn .25s ease-out forwards;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
 
-    // UTM -> скрытые поля всех форм
-    (function fillUTM() {
-      const params = new URLSearchParams(location.search);
-      document.querySelectorAll('form').forEach(f => {
-        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k => {
-          const el = f.querySelector(`input[name="${k}"]`);
-          if (el) el.value = params.get(k) || '';
-        });
-      });
-    })();
+<script>
+  // 🟢 Функция показа pop-up
+  function showSuccessModal(lang) {
+    const modal = document.getElementById('success-modal');
+    const title = modal.querySelector('[data-i18n="success_title"]');
+    title.textContent = (lang === 'en')
+      ? '✅ Thank you! Your request has been saved.'
+      : '✅ Дякуємо! Заявку збережено.';
+    modal.classList.remove('hidden');
+    setTimeout(() => modal.classList.add('hidden'), 2400);
+  }
 
-    // модалка успеха
-    function showSuccessModal(lang) {
-      const modal = document.getElementById('success-modal');
-      const title = modal.querySelector('[data-i18n="success_title"]');
-      title.textContent = (lang === 'en')
-        ? '✅ Thank you! Your request has been saved.'
-        : '✅ Дякуємо! Заявку збережено.';
-      modal.classList.remove('hidden');
-      setTimeout(() => modal.classList.add('hidden'), 2400);
-    }
+  // 🟢 Пример интеграции с формой
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
 
-    // переключение языка (просто показываем нужную форму и меняем тексты)
-    function switchLang(lang) {
-      const ua = document.getElementById('wl-ua');
-      const en = document.getElementById('wl-en');
-      if (lang === 'en') { ua.classList.add('hidden'); en.classList.remove('hidden'); document.documentElement.lang = 'en'; }
-      else { en.classList.add('hidden'); ua.classList.remove('hidden'); document.documentElement.lang = 'uk'; }
+      try {
+        const action = form.getAttribute('action');
+        const body = new FormData(form);
+        await fetch(action, { method: 'POST', body, mode: 'no-cors' });
 
-      // хедер-тексты
-      const title = document.querySelector('[data-i18n="waitlist_title"]');
-      const text  = document.querySelector('[data-i18n="waitlist_text"]');
-      const btns  = document.querySelectorAll('[data-i18n="submit_btn"]');
-      if (lang === 'en') {
-        title.textContent = 'Leave your email to join the waitlist';
-        text.textContent  = 'We will notify you once the service is available';
-        btns.forEach(b => b.textContent = 'Send');
-      } else {
-        title.textContent = 'Залиште свою пошту, щоб потрапити у список очікування';
-        text.textContent  = 'Ми повідомимо вас, коли сервіс стане доступним';
-        btns.forEach(b => b.textContent = 'Відправити');
+        // Показываем pop-up по языку формы
+        showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
+        form.reset();
+      } catch (err) {
+        console.error('Ошибка отправки формы:', err);
+        showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
+        form.reset();
+      } finally {
+        if (btn) btn.disabled = false;
       }
-    }
-
-    // кнопки языка
-    document.getElementById('lang-ua').addEventListener('click', () => {
-      switchLang('ua');
-      document.getElementById('lang-ua').classList.add('bg-gray-900','text-white');
-      document.getElementById('lang-en').classList.remove('bg-gray-900','text-white');
     });
-    document.getElementById('lang-en').addEventListener('click', () => {
-      switchLang('en');
-      document.getElementById('lang-en').classList.add('bg-gray-900','text-white');
-      document.getElementById('lang-ua').classList.remove('bg-gray-900','text-white');
-    });
-
-    // обработка отправки форм (no-cors, без чтения ответа)
-    document.querySelectorAll('form').forEach(form => {
-      // подстраховка: у обеих форм одинаковый action
-      form.setAttribute('action', ACTION_URL);
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const isEN = form.id === 'wl-en' || document.documentElement.lang === 'en';
-
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = isEN ? 'Sending…' : 'Відправляємо…';
-        }
-
-        try {
-          const action = form.getAttribute('action');
-          const body   = new FormData(form);
-
-          // НИЧЕГО лишнего не добавляем — пусть браузер сам поставит boundary
-          await fetch(action, {
-            method: 'POST',
-            body,
-            mode: 'no-cors',
-            keepalive: true
-          });
-
-          showSuccessModal(isEN ? 'en' : 'ua');
-          form.reset();
-
-        } catch (err) {
-          // Даже если ответ opaque и браузер ругнётся — UX не ломаем
-          console.error('submit error:', err);
-          showSuccessModal(isEN ? 'en' : 'ua');
-          form.reset();
-        } finally {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = isEN ? 'Send' : 'Відправити';
-          }
-        }
-      });
-    });
-
-    // стартовый язык — по html lang
-    switchLang(document.documentElement.lang === 'en' ? 'en' : 'ua');
-  </script>
-</body>
-</html>
+  });
+</script>
