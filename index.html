@@ -371,128 +371,35 @@
   });
 })();
 </script>
-    
-<!-- === SUCCESS POPUP (разметка) === -->
-<div id="success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
-  <div id="success-backdrop" class="absolute inset-0 bg-black/60 opacity-0"></div>
-  <div id="success-card" class="relative bg-white rounded-2xl p-8 text-center shadow-2xl max-w-md mx-auto opacity-0">
-    <img data-role="logo" alt="SellCase logo" class="mx-auto mb-4 w-16 h-16 object-contain select-none will-change-transform">
-    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">Дякуємо! Заявку збережено.</h2>
+
+<!-- Success popup (UA only) -->
+<div id="sc-success" style="display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; background:rgba(0,0,0,.55);">
+  <div style="background:#fff; border-radius:16px; padding:24px; width:min(92vw,560px); box-shadow:0 20px 60px rgba(0,0,0,.25); text-align:center;">
+    <!-- Поставь сюда СВОЙ путь к лого, если хочешь строго свой файл -->
+    <img id="sc-success-logo" src="" alt="SellCase" style="width:64px; height:64px; object-fit:contain; margin:0 auto 12px; display:block;">
+    <h2 style="margin:0; font-size:28px; line-height:1.25; color:#111827; font-weight:700;">
+      Дякуємо! Заявку збережено.
+    </h2>
   </div>
 </div>
 
-<style>
-  .hidden{display:none}
-  @keyframes fadeIn {from{opacity:0} to{opacity:1}}
-  @keyframes fadeOut{from{opacity:1} to{opacity:0}}
-  @keyframes zoomIn {from{transform:scale(.95)} to{transform:scale(1)}}
-  @keyframes zoomOut{from{transform:scale(1)} to{transform:scale(.97)}}
-  .anim-fade-in{animation:fadeIn .28s ease-out forwards}
-  .anim-fade-out{animation:fadeOut .22s ease-in forwards}
-  .anim-zoom-in{animation:zoomIn .28s ease-out forwards}
-  .anim-zoom-out{animation:zoomOut .22s ease-in forwards}
-</style>
-
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  // ===== helpers =====
-  const FALLBACK_LOGO =
-    'data:image/svg+xml;utf8,' + encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
-        <circle cx="48" cy="48" r="46" fill="#111827"/><text x="50%" y="54%"
-        text-anchor="middle" font-family="Inter, system-ui" font-size="36"
-        fill="white" font-weight="700">SC</text></svg>`
-    );
-
-  const $ = (sel, root=document)=>root.querySelector(sel);
-
-  function setModalLogo(img){
-    const headerLogo = $('header img, nav img, .logo img, .brand img');
-    img.src = (headerLogo && headerLogo.src) ? headerLogo.src : FALLBACK_LOGO;
-  }
-
-  function detectLang(form){
-    if (form?.id === 'wl-en') return 'en';
-    if (form?.id === 'wl-ua') return 'ua';
-    const htmlLang = (document.documentElement.lang || '').toLowerCase();
-    return htmlLang.includes('en') ? 'en' : 'ua';
-  }
-
-  function showSuccessModal(lang){
-    const modal = $('#success-modal');
-    const backdrop = $('#success-backdrop');
-    const card = $('#success-card');
-    const title = $('[data-i18n="success_title"]', card);
-    const logo = $('[data-role="logo"]', card);
-
-    if (!modal || !backdrop || !card || !title || !logo) {
-      alert(lang === 'en' ? 'Thank you! Your request has been saved.' : 'Дякуємо! Заявку збережено.');
-      return;
+  // Показываем поп-ап на 2.4 сек; если логотип в шапке найден — подставим его
+  function showSuccessUA() {
+    try {
+      var logoInHeader = document.querySelector('header img, nav img, .logo img, .brand img');
+      var logo = document.getElementById('sc-success-logo');
+      if (logo) {
+        logo.src = (logoInHeader && logoInHeader.src)
+          ? logoInHeader.src
+          : 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><circle cx="48" cy="48" r="46" fill="#111827"/><text x="50%" y="56%" text-anchor="middle" font-family="Inter,system-ui" font-size="36" fill="white" font-weight="700">SC</text></svg>');
+      }
+      var box = document.getElementById('sc-success');
+      if (!box) { alert('Дякуємо! Заявку збережено.'); return; }
+      box.style.display = 'flex';
+      setTimeout(function(){ box.style.display = 'none'; }, 2400);
+    } catch(_) {
+      alert('Дякуємо! Заявку збережено.');
     }
-
-    setModalLogo(logo);
-    title.textContent = (lang === 'en')
-      ? 'Thank you! Your request has been saved.'
-      : 'Дякуємо! Заявку збережено.';
-
-    modal.classList.remove('hidden');
-    backdrop.classList.remove('anim-fade-out');
-    card.classList.remove('anim-fade-out','anim-zoom-out');
-    backdrop.classList.add('anim-fade-in');
-    card.classList.add('anim-fade-in','anim-zoom-in');
-
-    setTimeout(() => {
-      backdrop.classList.remove('anim-fade-in');
-      card.classList.remove('anim-fade-in','anim-zoom-in');
-      backdrop.classList.add('anim-fade-out');
-      card.classList.add('anim-fade-out','anim-zoom-out');
-    }, 2400);
-
-    backdrop.addEventListener('animationend', function onHide(e){
-      if (e.animationName === 'fadeOut') {
-        modal.classList.add('hidden');
-        backdrop.removeEventListener('animationend', onHide);
-      }
-    });
   }
-
-  // ===== attach submit handlers =====
-  const forms = [ $('#wl-ua'), $('#wl-en') ].filter(Boolean);
-  console.log('SellCase forms found:', forms.map(f => f.id));
-
-  if (forms.length === 0) {
-    console.warn('Не найдены формы #wl-ua / #wl-en. Проверь id.');
-    return;
-  }
-
-  forms.forEach(form => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      if (btn) { btn.disabled = true; }
-
-      try {
-        const action = form.getAttribute('action');
-        const body = new FormData(form);
-        console.log('POST ->', action);
-
-        await fetch(action, {
-          method: 'POST',
-          body,
-          mode: 'no-cors',
-          keepalive: true
-        });
-
-        showSuccessModal(detectLang(form));
-        form.reset();
-      } catch (err) {
-        console.error('submit error:', err);
-        showSuccessModal(detectLang(form));
-        form.reset();
-      } finally {
-        if (btn) { btn.disabled = false; }
-      }
-    }, { once: false });
-  });
-});
-  </script>
+</script>
