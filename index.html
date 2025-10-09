@@ -372,74 +372,58 @@
 })();
 </script>
 
-<!-- === Success Popup === -->
-<div id="sc-success" style="display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; background:rgba(0,0,0,.55);">
-  <div style="background:#fff; border-radius:16px; padding:24px; width:min(92vw,560px); box-shadow:0 20px 60px rgba(0,0,0,.25); text-align:center;">
-    <img id="sc-success-logo" src="" alt="SellCase logo" style="width:64px; height:64px; object-fit:contain; margin:0 auto 12px; display:block;">
-    <h2 style="margin:0; font-size:28px; line-height:1.25; color:#111827; font-weight:700;">
+<!-- SUCCESS POPUP -->
+<div id="success-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+  <div class="bg-white rounded-2xl p-8 text-center shadow-2xl w-80 animate-fadeIn">
+    <!-- ЛОГОТИП -->
+    <div class="flex justify-center mb-4 animate-pulse">
+      <svg aria-label="SellCase logo" width="52" height="52" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="28" fill="#2563EB"></circle>
+        <rect x="24" y="38" width="6" height="16" rx="2" fill="#fff"></rect>
+        <rect x="32" y="32" width="6" height="16" rx="2" fill="#fff"></rect>
+        <rect x="40" y="26" width="6" height="16" rx="2" fill="#fff"></rect>
+      </svg>
+    </div>
+
+    <!-- ТЕКСТ -->
+    <h2 class="text-xl font-bold text-gray-900" data-i18n="success_title">
       Дякуємо! Заявку збережено.
     </h2>
   </div>
 </div>
 
+<style>
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Пульсирующее свечение логотипа */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.9; }
+}
+.animate-pulse {
+  animation: pulse 1.8s ease-in-out infinite;
+}
+</style>
+
 <script>
-  // === Функция показа поп-апа ===
-  function showSuccessUA() {
-    try {
-      const logoInHeader = document.querySelector('header img, nav img, .logo img, .brand img');
-      const logo = document.getElementById('sc-success-logo');
-      if (logo) {
-        logo.src = (logoInHeader && logoInHeader.src)
-          ? logoInHeader.src
-          : 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><circle cx="48" cy="48" r="46" fill="#111827"/><text x="50%" y="56%" text-anchor="middle" font-family="Inter,system-ui" font-size="36" fill="white" font-weight="700">SC</text></svg>');
-      }
-      const box = document.getElementById('sc-success');
-      if (!box) {
-        alert('Дякуємо! Заявку збережено.');
-        return;
-      }
-      box.style.display = 'flex';
-      setTimeout(() => { box.style.display = 'none'; }, 2400);
-    } catch (err) {
-      alert('Дякуємо! Заявку збережено.');
-    }
-  }
+function showSuccessModal(lang) {
+  const modal = document.getElementById('success-modal');
+  const title = modal.querySelector('[data-i18n="success_title"]');
+  title.textContent =
+    lang === 'en'
+      ? 'Thank you! Your request has been saved.'
+      : 'Дякуємо! Заявку збережено.';
 
-  // === Обработчик отправки формы ===
-  document.addEventListener('DOMContentLoaded', () => {
-    const forms = document.querySelectorAll('#wl-ua, #wl-en');
-    forms.forEach(form => {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = form.querySelector('button[type="submit"]');
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = 'Відправляється...';
-        }
+  // Показываем pop-up
+  modal.classList.remove('hidden');
 
-        try {
-          const action = form.getAttribute('action');
-          const body = new FormData(form);
-          await fetch(action, {
-            method: 'POST',
-            body,
-            mode: 'no-cors',
-            keepalive: true
-          });
-
-          showSuccessUA(); // ✅ Показываем поп-ап
-          form.reset();
-        } catch (err) {
-          console.error('submit error:', err);
-          showSuccessUA(); // ✅ Показываем поп-ап даже при ошибке
-          form.reset();
-        } finally {
-          if (btn) {
-            btn.disabled = false;
-            btn.textContent = 'Надіслати';
-          }
-        }
-      });
-    });
-  });
+  // Автоматически скрываем через 2,5 секунды
+  setTimeout(() => modal.classList.add('hidden'), 2500);
+}
 </script>
