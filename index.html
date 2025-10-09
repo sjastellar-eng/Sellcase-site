@@ -400,24 +400,34 @@
 </style>
 
 <script>
-function showSuccessModal(lang) {
+function showSuccessModal(lang = 'ua') {
   const modal = document.getElementById('success-modal');
   const title = modal.querySelector('[data-i18n="success_title"]');
-  title.textContent = (lang === 'en')
-    ? 'Thank you! Your request has been saved.'
-    : 'Дякуємо! Заявку збережено.';
+
+  // Текст по языку
+  title.textContent =
+    lang === 'en'
+      ? '✅ Thank you! Your request has been saved.'
+      : '✅ Дякуємо! Заявку збережено.';
+
   modal.classList.remove('hidden');
   setTimeout(() => modal.classList.add('hidden'), 2400);
 }
 
-// --- Отправка формы ---
-document.querySelectorAll('form').forEach(form => {
+// ------------------------------
+// Обработчик форм
+// ------------------------------
+document.querySelectorAll('form').forEach((form) => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const btn = form.querySelector('button[type="submit"]');
     if (btn) {
       btn.disabled = true;
-      btn.textContent = (form.id === 'wl-en') ? 'Sending...' : 'Відправка...';
+      btn.textContent =
+        (document.documentElement.lang || '').toLowerCase().startsWith('en')
+          ? 'Sending...'
+          : 'Відправляю...';
     }
 
     try {
@@ -431,20 +441,32 @@ document.querySelectorAll('form').forEach(form => {
         keepalive: true,
       });
 
-      // показываем pop-up по языку
-      showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
-      form.reset();
+      // Определяем язык формы или страницы
+      const lang =
+        form.id === 'wl-en' ||
+        (document.documentElement.lang || '').toLowerCase().startsWith('en')
+          ? 'en'
+          : 'ua';
 
+      showSuccessModal(lang);
+      form.reset();
     } catch (err) {
-      console.error('Submit error:', err);
-      showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
+      console.error('submit error:', err);
+      const lang =
+        form.id === 'wl-en' ||
+        (document.documentElement.lang || '').toLowerCase().startsWith('en')
+          ? 'en'
+          : 'ua';
+      showSuccessModal(lang);
       form.reset();
     } finally {
       if (btn) {
         btn.disabled = false;
-        btn.textContent = (form.id === 'wl-en') ? 'Submit' : 'Надіслати';
+        btn.textContent =
+          (document.documentElement.lang || '').toLowerCase().startsWith('en')
+            ? 'Submit'
+            : 'Відправити';
       }
     }
   });
 });
-</script>
