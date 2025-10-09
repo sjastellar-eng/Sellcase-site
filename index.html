@@ -372,26 +372,21 @@
 })();
 </script>
     
-<!-- ✅ SUCCESS POPUP -->
+<!-- === SUCCESS POPUP (разметка) === -->
 <div id="success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
   <div id="success-backdrop" class="absolute inset-0 bg-black/60 opacity-0"></div>
-
-  <div id="success-card"
-       class="relative bg-white rounded-2xl p-8 text-center shadow-2xl max-w-md mx-auto opacity-0">
-    <!-- ЛОГО: берём из шапки, если нет — вставим SVG ниже -->
+  <div id="success-card" class="relative bg-white rounded-2xl p-8 text-center shadow-2xl max-w-md mx-auto opacity-0">
     <img data-role="logo" alt="SellCase logo" class="mx-auto mb-4 w-16 h-16 object-contain select-none will-change-transform">
-    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">
-      Дякуємо! Заявку збережено.
-    </h2>
+    <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">Дякуємо! Заявку збережено.</h2>
   </div>
 </div>
 
 <style>
-  @keyframes fadeIn { from {opacity:0} to {opacity:1} }
-  @keyframes fadeOut { from {opacity:1} to {opacity:0} }
-  @keyframes zoomIn { from {transform:scale(.95)} to {transform:scale(1)} }
-  @keyframes zoomOut{ from {transform:scale(1)} to {transform:scale(.97)} }
   .hidden{display:none}
+  @keyframes fadeIn {from{opacity:0} to{opacity:1}}
+  @keyframes fadeOut{from{opacity:1} to{opacity:0}}
+  @keyframes zoomIn {from{transform:scale(.95)} to{transform:scale(1)}}
+  @keyframes zoomOut{from{transform:scale(1)} to{transform:scale(.97)}}
   .anim-fade-in{animation:fadeIn .28s ease-out forwards}
   .anim-fade-out{animation:fadeOut .22s ease-in forwards}
   .anim-zoom-in{animation:zoomIn .28s ease-out forwards}
@@ -399,67 +394,53 @@
 </style>
 
 <script>
-  // Встроенный SVG как запасной логотип (чтобы не было "битой картинки")
-  const FALLBACK_LOGO_DATAURI =
-    'data:image/svg+xml;utf8,' +
-    encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
-        <defs>
-          <linearGradient id="g" x1="0" x2="1">
-            <stop offset="0" stop-color="#111827"/>
-            <stop offset="1" stop-color="#1f2937"/>
-          </linearGradient>
-        </defs>
-        <circle cx="48" cy="48" r="46" fill="url(#g)"/>
-        <text x="50%" y="54%" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto" font-size="36" fill="white" font-weight="700">SC</text>
-      </svg>
-    `);
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== helpers =====
+  const FALLBACK_LOGO =
+    'data:image/svg+xml;utf8,' + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+        <circle cx="48" cy="48" r="46" fill="#111827"/><text x="50%" y="54%"
+        text-anchor="middle" font-family="Inter, system-ui" font-size="36"
+        fill="white" font-weight="700">SC</text></svg>`
+    );
 
-  function setModalLogo(imgEl){
-    // ищем логотип из шапки/нави
-    const headerLogo = document.querySelector('header img, nav img, .logo img, .brand img');
-    if (headerLogo && headerLogo.src) {
-      imgEl.src = headerLogo.src;
-    } else {
-      imgEl.src = FALLBACK_LOGO_DATAURI;
-    }
+  const $ = (sel, root=document)=>root.querySelector(sel);
+
+  function setModalLogo(img){
+    const headerLogo = $('header img, nav img, .logo img, .brand img');
+    img.src = (headerLogo && headerLogo.src) ? headerLogo.src : FALLBACK_LOGO;
   }
 
   function detectLang(form){
-    // 1) по id формы
-    if (form && form.id) {
-      if (form.id === 'wl-en') return 'en';
-      if (form.id === 'wl-ua') return 'ua';
-    }
-    // 2) по атрибуту <html lang="...">
+    if (form?.id === 'wl-en') return 'en';
+    if (form?.id === 'wl-ua') return 'ua';
     const htmlLang = (document.documentElement.lang || '').toLowerCase();
-    if (htmlLang.includes('en')) return 'en';
-    return 'ua';
+    return htmlLang.includes('en') ? 'en' : 'ua';
   }
 
-  function showSuccessModal(lang) {
-    const modal    = document.getElementById('success-modal');
-    const backdrop = document.getElementById('success-backdrop');
-    const card     = document.getElementById('success-card');
-    const title    = card.querySelector('[data-i18n="success_title"]');
-    const logoImg  = card.querySelector('[data-role="logo"]');
+  function showSuccessModal(lang){
+    const modal = $('#success-modal');
+    const backdrop = $('#success-backdrop');
+    const card = $('#success-card');
+    const title = $('[data-i18n="success_title"]', card);
+    const logo = $('[data-role="logo"]', card);
 
-    // логотип
-    setModalLogo(logoImg);
+    if (!modal || !backdrop || !card || !title || !logo) {
+      alert(lang === 'en' ? 'Thank you! Your request has been saved.' : 'Дякуємо! Заявку збережено.');
+      return;
+    }
 
-    // текст
+    setModalLogo(logo);
     title.textContent = (lang === 'en')
       ? 'Thank you! Your request has been saved.'
       : 'Дякуємо! Заявку збережено.';
 
-    // показать + анимация
     modal.classList.remove('hidden');
     backdrop.classList.remove('anim-fade-out');
     card.classList.remove('anim-fade-out','anim-zoom-out');
     backdrop.classList.add('anim-fade-in');
     card.classList.add('anim-fade-in','anim-zoom-in');
 
-    // автозакрытие
     setTimeout(() => {
       backdrop.classList.remove('anim-fade-in');
       card.classList.remove('anim-fade-in','anim-zoom-in');
@@ -475,27 +456,43 @@
     });
   }
 
-  // Перехват отправки: FormData + no-cors + показ поп-апа
-  document.querySelectorAll('form').forEach(form => {
+  // ===== attach submit handlers =====
+  const forms = [ $('#wl-ua'), $('#wl-en') ].filter(Boolean);
+  console.log('SellCase forms found:', forms.map(f => f.id));
+
+  if (forms.length === 0) {
+    console.warn('Не найдены формы #wl-ua / #wl-en. Проверь id.');
+    return;
+  }
+
+  forms.forEach(form => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = form.querySelector('button[type="submit"]');
-      if (btn) btn.disabled = true;
+      if (btn) { btn.disabled = true; }
 
       try {
         const action = form.getAttribute('action');
-        const body   = new FormData(form);
-        await fetch(action, { method: 'POST', body, mode: 'no-cors', keepalive: true });
+        const body = new FormData(form);
+        console.log('POST ->', action);
+
+        await fetch(action, {
+          method: 'POST',
+          body,
+          mode: 'no-cors',
+          keepalive: true
+        });
+
         showSuccessModal(detectLang(form));
         form.reset();
-      } catch(err){
+      } catch (err) {
         console.error('submit error:', err);
-        // даже при ошибке сети показываем подтверждение — UX как договорились
         showSuccessModal(detectLang(form));
         form.reset();
       } finally {
-        if (btn) btn.disabled = false;
+        if (btn) { btn.disabled = false; }
       }
-    });
+    }, { once: false });
   });
-</script>
+});
+  </script>
