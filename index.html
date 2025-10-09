@@ -373,14 +373,13 @@
 </script>
     
 <!-- ✅ SUCCESS POPUP -->
-<div id="success-modal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-  <div class="bg-white rounded-2xl p-8 text-center shadow-2xl animate-fadeIn max-w-md mx-auto relative">
-    <!-- логотип SellCase -->
-    <img src="https://raw.githubusercontent.com/sjastellar-assets/sellcase/main/logo-dark.png"
-         alt="SellCase logo"
-         class="mx-auto mb-4 w-16 h-16 object-contain select-none">
-    
-    <!-- Текст по языку -->
+<div id="success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+  <div id="success-backdrop" class="absolute inset-0 bg-black/60 opacity-0"></div>
+
+  <div id="success-card"
+       class="relative bg-white rounded-2xl p-8 text-center shadow-2xl max-w-md mx-auto opacity-0">
+    <!-- ЛОГО: берём из шапки, если нет — вставим SVG ниже -->
+    <img data-role="logo" alt="SellCase logo" class="mx-auto mb-4 w-16 h-16 object-contain select-none will-change-transform">
     <h2 class="text-2xl font-semibold text-gray-800" data-i18n="success_title">
       Дякуємо! Заявку збережено.
     </h2>
@@ -388,55 +387,115 @@
 </div>
 
 <style>
-  @keyframes fadeIn {
-    from {opacity: 0; transform: scale(.95);}
-    to {opacity: 1; transform: scale(1);}
-  }
-  .animate-fadeIn {
-    animation: fadeIn .25s ease-out forwards;
-  }
-  .hidden { display: none; }
+  @keyframes fadeIn { from {opacity:0} to {opacity:1} }
+  @keyframes fadeOut { from {opacity:1} to {opacity:0} }
+  @keyframes zoomIn { from {transform:scale(.95)} to {transform:scale(1)} }
+  @keyframes zoomOut{ from {transform:scale(1)} to {transform:scale(.97)} }
+  .hidden{display:none}
+  .anim-fade-in{animation:fadeIn .28s ease-out forwards}
+  .anim-fade-out{animation:fadeOut .22s ease-in forwards}
+  .anim-zoom-in{animation:zoomIn .28s ease-out forwards}
+  .anim-zoom-out{animation:zoomOut .22s ease-in forwards}
 </style>
 
 <script>
-  // 🟢 Показ Pop-up (с автоопределением языка)
-  function showSuccessModal(lang) {
-    const modal = document.getElementById('success-modal');
-    const title = modal.querySelector('[data-i18n="success_title"]');
-    
-    if (lang === 'en') {
-      title.textContent = 'Thank you! Your request has been saved.';
-    } else {
-      title.textContent = 'Дякуємо! Заявку збережено.';
-    }
+  // Встроенный SVG как запасной логотип (чтобы не было "битой картинки")
+  const FALLBACK_LOGO_DATAURI =
+    'data:image/svg+xml;utf8,' +
+    encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1">
+            <stop offset="0" stop-color="#111827"/>
+            <stop offset="1" stop-color="#1f2937"/>
+          </linearGradient>
+        </defs>
+        <circle cx="48" cy="48" r="46" fill="url(#g)"/>
+        <text x="50%" y="54%" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto" font-size="36" fill="white" font-weight="700">SC</text>
+      </svg>
+    `);
 
-    modal.classList.remove('hidden');
-    setTimeout(() => modal.classList.add('hidden'), 2400);
+  function setModalLogo(imgEl){
+    // ищем логотип из шапки/нави
+    const headerLogo = document.querySelector('header img, nav img, .logo img, .brand img');
+    if (headerLogo && headerLogo.src) {
+      imgEl.src = headerLogo.src;
+    } else {
+      imgEl.src = FALLBACK_LOGO_DATAURI;
+    }
   }
 
-  // 🟢 Отправка формы и показ pop-up
+  function detectLang(form){
+    // 1) по id формы
+    if (form && form.id) {
+      if (form.id === 'wl-en') return 'en';
+      if (form.id === 'wl-ua') return 'ua';
+    }
+    // 2) по атрибуту <html lang="...">
+    const htmlLang = (document.documentElement.lang || '').toLowerCase();
+    if (htmlLang.includes('en')) return 'en';
+    return 'ua';
+  }
+
+  function showSuccessModal(lang) {
+    const modal    = document.getElementById('success-modal');
+    const backdrop = document.getElementById('success-backdrop');
+    const card     = document.getElementById('success-card');
+    const title    = card.querySelector('[data-i18n="success_title"]');
+    const logoImg  = card.querySelector('[data-role="logo"]');
+
+    // логотип
+    setModalLogo(logoImg);
+
+    // текст
+    title.textContent = (lang === 'en')
+      ? 'Thank you! Your request has been saved.'
+      : 'Дякуємо! Заявку збережено.';
+
+    // показать + анимация
+    modal.classList.remove('hidden');
+    backdrop.classList.remove('anim-fade-out');
+    card.classList.remove('anim-fade-out','anim-zoom-out');
+    backdrop.classList.add('anim-fade-in');
+    card.classList.add('anim-fade-in','anim-zoom-in');
+
+    // автозакрытие
+    setTimeout(() => {
+      backdrop.classList.remove('anim-fade-in');
+      card.classList.remove('anim-fade-in','anim-zoom-in');
+      backdrop.classList.add('anim-fade-out');
+      card.classList.add('anim-fade-out','anim-zoom-out');
+    }, 2400);
+
+    backdrop.addEventListener('animationend', function onHide(e){
+      if (e.animationName === 'fadeOut') {
+        modal.classList.add('hidden');
+        backdrop.removeEventListener('animationend', onHide);
+      }
+    });
+  }
+
+  // Перехват отправки: FormData + no-cors + показ поп-апа
   document.querySelectorAll('form').forEach(form => {
-    form.addEventListener('submit', async e => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = form.querySelector('button[type="submit"]');
       if (btn) btn.disabled = true;
 
       try {
         const action = form.getAttribute('action');
-        const body = new FormData(form);
-        await fetch(action, { method: 'POST', body, mode: 'no-cors' });
-
-        // Показываем pop-up по языку
-        showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
+        const body   = new FormData(form);
+        await fetch(action, { method: 'POST', body, mode: 'no-cors', keepalive: true });
+        showSuccessModal(detectLang(form));
         form.reset();
-
-      } catch (err) {
-        console.error('Ошибка отправки формы:', err);
-        showSuccessModal(form.id === 'wl-en' ? 'en' : 'ua');
+      } catch(err){
+        console.error('submit error:', err);
+        // даже при ошибке сети показываем подтверждение — UX как договорились
+        showSuccessModal(detectLang(form));
         form.reset();
       } finally {
         if (btn) btn.disabled = false;
       }
     });
   });
-      </script>
+</script>
