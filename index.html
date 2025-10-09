@@ -372,11 +372,10 @@
 })();
 </script>
 
-<!-- Success popup (UA only) -->
+<!-- === Success Popup === -->
 <div id="sc-success" style="display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; background:rgba(0,0,0,.55);">
   <div style="background:#fff; border-radius:16px; padding:24px; width:min(92vw,560px); box-shadow:0 20px 60px rgba(0,0,0,.25); text-align:center;">
-    <!-- Поставь сюда СВОЙ путь к лого, если хочешь строго свой файл -->
-    <img id="sc-success-logo" src="" alt="SellCase" style="width:64px; height:64px; object-fit:contain; margin:0 auto 12px; display:block;">
+    <img id="sc-success-logo" src="" alt="SellCase logo" style="width:64px; height:64px; object-fit:contain; margin:0 auto 12px; display:block;">
     <h2 style="margin:0; font-size:28px; line-height:1.25; color:#111827; font-weight:700;">
       Дякуємо! Заявку збережено.
     </h2>
@@ -384,22 +383,63 @@
 </div>
 
 <script>
-  // Показываем поп-ап на 2.4 сек; если логотип в шапке найден — подставим его
+  // === Функция показа поп-апа ===
   function showSuccessUA() {
     try {
-      var logoInHeader = document.querySelector('header img, nav img, .logo img, .brand img');
-      var logo = document.getElementById('sc-success-logo');
+      const logoInHeader = document.querySelector('header img, nav img, .logo img, .brand img');
+      const logo = document.getElementById('sc-success-logo');
       if (logo) {
         logo.src = (logoInHeader && logoInHeader.src)
           ? logoInHeader.src
           : 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><circle cx="48" cy="48" r="46" fill="#111827"/><text x="50%" y="56%" text-anchor="middle" font-family="Inter,system-ui" font-size="36" fill="white" font-weight="700">SC</text></svg>');
       }
-      var box = document.getElementById('sc-success');
-      if (!box) { alert('Дякуємо! Заявку збережено.'); return; }
+      const box = document.getElementById('sc-success');
+      if (!box) {
+        alert('Дякуємо! Заявку збережено.');
+        return;
+      }
       box.style.display = 'flex';
-      setTimeout(function(){ box.style.display = 'none'; }, 2400);
-    } catch(_) {
+      setTimeout(() => { box.style.display = 'none'; }, 2400);
+    } catch (err) {
       alert('Дякуємо! Заявку збережено.');
     }
   }
+
+  // === Обработчик отправки формы ===
+  document.addEventListener('DOMContentLoaded', () => {
+    const forms = document.querySelectorAll('#wl-ua, #wl-en');
+    forms.forEach(form => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Відправляється...';
+        }
+
+        try {
+          const action = form.getAttribute('action');
+          const body = new FormData(form);
+          await fetch(action, {
+            method: 'POST',
+            body,
+            mode: 'no-cors',
+            keepalive: true
+          });
+
+          showSuccessUA(); // ✅ Показываем поп-ап
+          form.reset();
+        } catch (err) {
+          console.error('submit error:', err);
+          showSuccessUA(); // ✅ Показываем поп-ап даже при ошибке
+          form.reset();
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'Надіслати';
+          }
+        }
+      });
+    });
+  });
 </script>
