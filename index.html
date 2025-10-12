@@ -479,3 +479,32 @@
     });
   });
 </script>
+<script>
+(function(){
+  const p = new URLSearchParams(location.search);
+  const utm = {
+    utm_source:   p.get('utm_source')   || '',
+    utm_medium:   p.get('utm_medium')   || '',
+    utm_campaign: p.get('utm_campaign') || '',
+    utm_content:  p.get('utm_content')  || '',
+    utm_term:     p.get('utm_term')     || ''
+  };
+  // сохраняем в localStorage (чтобы не потерять при навигации)
+  try { localStorage.setItem('sellcase_utm', JSON.stringify({ ...utm, ts: Date.now() })); } catch(_) {}
+
+  document.querySelectorAll('form').forEach(form => {
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k => {
+      const el = form.querySelector(`input[name="${k}"]`);
+      if (!el) return;
+      let v = utm[k];
+      if (!v) {
+        try {
+          const cache = JSON.parse(localStorage.getItem('sellcase_utm') || '{}');
+          if (cache[k] && (Date.now() - (cache.ts||0) < 7*24*60*60*1000)) v = cache[k];
+        } catch(_){}
+      }
+      el.value = v || '';
+    });
+  });
+})();
+</script>
