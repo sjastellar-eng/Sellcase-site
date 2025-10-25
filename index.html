@@ -508,3 +508,54 @@
   });
 })();
 </script>
+<script>
+/**
+ * Дублируем отправку лидов в бекенд, не ломая существующую отправку в Google.
+ * Работает для форм с id `wl-ua` и `wl-en` (можно добавить свои селекторы).
+ * Важно: бекенд ждёт как минимум name и phone — если их нет, дубль не шлём.
+ */
+(function() {
+  const BACKEND_URL = 'https://sellcase-backend.onrender.com/leads/';
+
+  // какие формы слушаем
+  const FORM_SELECTOR = '#wl-ua, #wl-en, form[name="waitlist-ua"], form[name="waitlist-en"]';
+
+  // безопасный геттер значения поля
+  function get(form, name) {
+    const el = form.querySelector(`[name="${name}"]`);
+    return el && typeof el.value === 'string' ? el.value.trim() : '';
+  }
+
+  // навешиваем один обработчик на документ
+  document.addEventListener('submit', function(e) {
+    const form = e.target;
+    if (!form.matches(FORM_SELECTOR)) return;
+
+    try {
+      // собираем поля формы
+      const payload = {
+        name:        get(form, 'name') || get(form, 'email') || '', // подстрахуемся email'ом
+        phone:       get(form, 'phone') || '',
+        message:     get(form, 'message') || '',
+        utm_source:  get(form, 'utm_source') || '',
+        utm_medium:  get(form, 'utm_medium') || '',
+        utm_campaign:get(form, 'utm_campaign') || '',
+        utm_content: get(form, 'utm_content') || '',
+        utm_term:    get(form, 'utm_term') || '',
+      };
+
+      // если обязательных для бекенда полей нет — не шлём дубль
+      if (!payload.name || !payload.phone) return;
+
+      // отправляем копию в бекенд "фоном", не мешая основному сабмиту
+      fetch(BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true // позволит уйти запросу даже при навигации
+      }).catch(() => { /* тихо игнорируем — основной сабмит всё равно уйдёт */ });
+
+    } catch (_) { /* no-op */ }
+  });
+})();
+</script>
