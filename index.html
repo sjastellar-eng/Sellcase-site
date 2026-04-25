@@ -30,7 +30,12 @@
 </head>
 <body class="bg-gray-50 text-gray-900">
   <!-- Top banner -->
-  <div class="bg-gray-900 text-white text-center text-sm py-2 px-4" data-i18n="top_banner">Бета-доступ безкоштовно для перших 100 користувачів</div>
+  <div style="background:linear-gradient(135deg,#2563EB,#7C3AED)"
+       class="text-white text-center text-sm py-2 px-4 cursor-pointer"
+       onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">
+    🚀 Перші 100 користувачів отримують <strong>Pro безкоштовно на 30 днів</strong>
+    — <span class="underline">Отримати доступ →</span>
+  </div>
 
   <!-- Header -->
   <header class="sticky top-0 bg-white bg-opacity-80 backdrop-filter backdrop-blur border-b border-gray-100 z-40">
@@ -258,7 +263,7 @@
       <h2 class="text-2xl sm:text-3xl font-bold mb-6" data-i18n="faq_title">FAQ та правила</h2>
       <div class="space-y-4 text-sm">
         <details class="p-4 rounded-xl border border-gray-200 bg-white">
-          <summary class="font-semibold cursor-pointer" data-i18n="faq_data_q">Звідси дані?</summary>
+          <summary class="font-semibold cursor-pointer" data-i18n="faq_data_q">Звідки дані?</summary>
           <div class="mt-2 text-gray-600" data-i18n="faq_data_a">Лише з публічних сторінок OLX. Ми поважаємо robots.txt та рейт-ліміти.</div>
         </details>
         <details class="p-4 rounded-xl border border-gray-200 bg-white">
@@ -302,14 +307,21 @@
 
   <script>
 (function () {
+  function switchLangForms(lang) {
+    var uaForm = document.getElementById('wl-ua');
+    var enForm = document.getElementById('wl-en');
+    if (uaForm) uaForm.classList.toggle('hidden', lang !== 'uk');
+    if (enForm) enForm.classList.toggle('hidden', lang !== 'en');
+  }
+
   // === СЛОВАРЬ ===
   var dict = {
     uk: {
       nav_features:"Функції", nav_how:"Як працює", nav_pricing:"Тарифи", nav_faq:"FAQ",
       cta_header:"Спробувати безкоштовно",
-      top_banner:"Бета-доступ безкоштовно для перших 100 користувачів",
+      top_banner:"🚀 Перші 100 користувачів отримують Pro безкоштовно на 30 днів — Отримати доступ →",
       hero_chip_1:"🤖 AI-аналітика OLX", hero_chip_2:"Алерти та CSV",
-      hero_title_prefix:"Знай ринок ", hero_title_suffix:" краще за конкурентів",
+      hero_title_prefix:"Продавай вигідніше з AI-аналітикою ", hero_title_suffix:"",
       hero_sub:"AI-аналіз цін, моніторинг конкурентів і алерти про зміни. Перший сервіс аналітики спеціально для OLX Ukraine.",
       cta_primary:"Спробувати безкоштовно →", cta_secondary:"Дивитися функції",
       feature_alerts:"Алерти про нові оголошення в ніші",
@@ -318,22 +330,22 @@
       features_title:"Ключові функції SellCase",
       f1_h:"📊 Аналіз ринку OLX", f1_p:"Середня, мінімальна та максимальна ціна по будь-якому запиту. AI пояснює тренди і рекомендує оптимальну ціну.",
       f2_h:"🔍 Аналіз конкурентів", f2_p:"Бачите всіх продавців у ніші, їх стратегію та якість оголошень. AI аналізує кожну карточку.",
-      f3_h:"🔔 Алерти про зміни", f3_p:"Ціна впала на 5%? З'явився конкурент? Отримуйте сповіщення в Telegram одразу.",
+      f3_h:"🔔 Алерти про зміни", f3_p:"Ціна впала на 5%? З'явився конкурент? Отримуйте сповіщення одразу.",
       how_title:"Як це працює",
       how_s1_t:"Крок 1", how_s1_h:"Введіть запит або категорію", how_s1_p:"Наприклад: «iPhone 14», «PlayStation 5» або категорія «Ноутбуки»",
       how_s2_t:"Крок 2", how_s2_h:"Отримайте AI-аналіз ринку", how_s2_p:"Середні ціни, топ продавці, engagement score кожного оголошення",
       how_s3_t:"Крок 3", how_s3_h:"Аналізуйте конкурентів", how_s3_p:"Хто продає у вашій ніші, стратегії, що покращити в оголошеннях",
       how_s4_t:"Крок 4", how_s4_h:"Налаштуйте алерти", how_s4_p:"Збережіть проект і отримуйте сповіщення коли ринок змінюється",
       pricing_title:"Тарифи",
-      pricing_lite:"Free", pricing_lite_price:"$0", pricing_lite_f1:"5 слотів спостереження", pricing_lite_f2:"Алерти e-mail (раз/день)", pricing_lite_f3:"Експорт лише CSV",
-      pricing_basic:"Pro", pricing_basic_price:"$9", pricing_basic_f1:"10 слотів спостереження", pricing_basic_f2:"E-mail + базові Telegram-алерти (кожні 3 год)", pricing_basic_f3:"Експорт CSV + Excel",
-      pricing_pro:"Business", pricing_pro_price:"$19", pricing_pro_f1:"20 слотів спостереження", pricing_pro_f2:"Алерти: e-mail + Telegram + Slack (щогодини)", pricing_pro_f3:"Експорт CSV + Excel + Google Sheets", pricing_pro_f4:"Розширені дашборди та сегментації", pricing_pro_f5:"Пріоритетна підтримка",
+      pricing_lite:"Free", pricing_lite_price:"$0", pricing_lite_f1:"3 проекти моніторингу", pricing_lite_f2:"Пошук та аналіз ринку", pricing_lite_f3:"Базовий AI-аналіз + CSV",
+      pricing_basic:"Pro", pricing_basic_price:"$9", pricing_basic_f1:"15 проектів моніторингу", pricing_basic_f2:"Повний AI-аналіз конкурентів", pricing_basic_f3:"Алерти Telegram (щогодини)",
+      pricing_pro:"Business", pricing_pro_price:"$19", pricing_pro_f1:"Необмежені проекти", pricing_pro_f2:"Всі функції Pro", pricing_pro_f3:"API доступ + командний акаунт", pricing_pro_f4:"Розширені дашборди та сегментації", pricing_pro_f5:"Пріоритетна підтримка",
       pricing_cta_waitlist:"У вейтлист",
-      waitlist_title:"Ранній доступ", waitlist_text:"Залиште e-mail і виберіть пріоритети. Першим відкриємо доступ і дамо знижку.", email_label:"E-mail",
+      waitlist_title:"Отримай Pro безкоштовно на 30 днів", waitlist_text:"Залиш контакти — ми активуємо Pro одразу після реєстрації. Тільки для перших 100 користувачів.", email_label:"E-mail",
       wl_alerts:"Алерти (нові/ціни)", wl_dash:"Дашборди (ніші/продавці)", wl_csv:"Експорт CSV", wl_ai:"AI-помічник описів",
-      submit_btn:"Надіслати", submit_ok:"Дякуємо! Заявку збережено.",
+      submit_btn:"Отримати безкоштовний доступ", submit_ok:"Дякуємо! Заявку збережено.",
       faq_title:"FAQ та правила",
-      faq_data_q:"Звідки дані?", faq_data_a:"Ми використовуємо офіційний публічний API OLX Ukraine. Дані оновлюються в реальному часі при кожному запиті.",
+      faq_data_q:"Звідки беруться дані?", faq_data_a:"Ми використовуємо офіційний публічний API OLX Ukraine. Дані оновлюються в реальному часі при кожному запиті.",
       faq_account_q:"Доступ до акаунту потрібен?", faq_account_a:"Ні. SellCase працює незалежно від вашого акаунту OLX.",
       faq_speed_q:"Швидкість оновлення?", faq_speed_a:"Дані підтягуються з OLX в реальному часі при кожному пошуку. Проекти оновлюються автоматично раз на добу.",
       faq_free_q:"Чи є безкоштовний план?", faq_free_a:"Так! Free план дозволяє робити аналіз ринку, зберігати 3 проекти та експортувати CSV.",
@@ -343,9 +355,9 @@
     en: {
       nav_features:”Features”, nav_how:”How it works”, nav_pricing:”Pricing”, nav_faq:”FAQ”,
       cta_header:”Try for free”,
-      top_banner:”Free beta access for the first 100 users”,
+      top_banner:”🚀 First 100 users get Pro free for 30 days — Get access →”,
       hero_chip_1:”🤖 AI analytics for OLX”, hero_chip_2:”Alerts & CSV”,
-      hero_title_prefix:”Know the “, hero_title_suffix:” market better than competitors”,
+      hero_title_prefix:”Sell smarter with AI analytics for “, hero_title_suffix:””,
       hero_sub:”AI price analysis, competitor monitoring and market change alerts. First analytics service for OLX Ukraine.”,
       cta_primary:”Try for free →”, cta_secondary:”See features”,
       feature_alerts:”Alerts about new listings in the niche”,
@@ -354,20 +366,20 @@
       features_title:”Key features of SellCase”,
       f1_h:”📊 OLX Market Analysis”, f1_p:”Average, minimum and maximum price for any query. AI explains trends and recommends the optimal price.”,
       f2_h:”🔍 Competitor Analysis”, f2_p:”See all sellers in your niche, their strategy and listing quality. AI analyzes each card.”,
-      f3_h:”🔔 Market Alerts”, f3_p:”Price dropped 5%? New competitor appeared? Get Telegram notifications instantly.”,
+      f3_h:”🔔 Market Alerts”, f3_p:”Price dropped 5%? New competitor appeared? Get notifications instantly.”,
       how_title:”How it works”,
       how_s1_t:”Step 1”, how_s1_h:”Enter query or category”, how_s1_p:”E.g. ‘iPhone 14’, ‘PlayStation 5’ or category ‘Laptops’”,
       how_s2_t:”Step 2”, how_s2_h:”Get AI market analysis”, how_s2_p:”Average prices, top sellers, engagement score for each listing”,
       how_s3_t:”Step 3”, how_s3_h:”Analyze competitors”, how_s3_p:”Who sells in your niche, strategies, what to improve”,
       how_s4_t:”Step 4”, how_s4_h:”Set up alerts”, how_s4_p:”Save project and get notified when market changes”,
       pricing_title:”Pricing”,
-      pricing_lite:”Free”, pricing_lite_price:”$0”, pricing_lite_f1:”5 watch slots”, pricing_lite_f2:”E-mail alerts (daily)”, pricing_lite_f3:”CSV export only”,
-      pricing_basic:”Pro”, pricing_basic_price:”$9”, pricing_basic_f1:”10 watch slots”, pricing_basic_f2:”E-mail + basic Telegram alerts (every 3h)”, pricing_basic_f3:”CSV + Excel export”,
-      pricing_pro:”Business”, pricing_pro_price:”$19”, pricing_pro_f1:”20 watch slots”, pricing_pro_f2:”Alerts: e-mail + Telegram + Slack (hourly)”, pricing_pro_f3:”CSV + Excel + Google Sheets export”, pricing_pro_f4:”Advanced dashboards & segmentation”, pricing_pro_f5:”Priority support”,
+      pricing_lite:”Free”, pricing_lite_price:”$0”, pricing_lite_f1:”3 monitoring projects”, pricing_lite_f2:”Market search & analysis”, pricing_lite_f3:”Basic AI analysis + CSV”,
+      pricing_basic:”Pro”, pricing_basic_price:”$9”, pricing_basic_f1:”15 monitoring projects”, pricing_basic_f2:”Full AI competitor analysis”, pricing_basic_f3:”Telegram alerts (hourly)”,
+      pricing_pro:”Business”, pricing_pro_price:”$19”, pricing_pro_f1:”Unlimited projects”, pricing_pro_f2:”All Pro features”, pricing_pro_f3:”API access + team account”, pricing_pro_f4:”Advanced dashboards & segmentation”, pricing_pro_f5:”Priority support”,
       pricing_cta_waitlist:”Join waitlist”,
-      waitlist_title:”Early access”, waitlist_text:”Leave your e-mail and pick priorities. We’ll onboard you first and provide a discount.”, email_label:”E-mail”,
+      waitlist_title:”Get Pro free for 30 days”, waitlist_text:”Leave your contacts — we’ll activate Pro right after registration. First 100 users only.”, email_label:”E-mail”,
       wl_alerts:”Alerts (new/prices)”, wl_dash:”Dashboards (niches/sellers)”, wl_csv:”CSV export”, wl_ai:”AI description assistant”,
-      submit_btn:”Submit”, submit_ok:”Thanks! Saved.”,
+      submit_btn:”Get free access”, submit_ok:”Thanks! Saved.”,
       faq_title:”FAQ & compliance”,
       faq_data_q:”Where does the data come from?”, faq_data_a:”We use the official public OLX Ukraine API. Data is updated in real-time on every request.”,
       faq_account_q:”Do you need access to my OLX account?”, faq_account_a:”No. SellCase works independently from your OLX account.”,
@@ -379,13 +391,6 @@
   };
   
   // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ===
-  function switchLangForms(lang) {
-    var ua = document.getElementById('wl-ua');
-    var en = document.getElementById('wl-en');
-    if (ua) ua.classList.toggle('hidden', lang !== 'uk');
-    if (en) en.classList.toggle('hidden', lang !== 'en');
-  }
-
   function applyLang(lang) {
     var map = dict[lang];        // dict должен быть определён выше
     if (!map) return;
@@ -491,6 +496,7 @@
     title.textContent = successTexts[lang] || successTexts.ua;
     box.style.display = 'flex';
     setTimeout(() => { box.style.display = 'none'; }, 2400);
+    setTimeout(() => { window.location.href = 'https://app.sellcase.net/register'; }, 2400);
   }
 
   // Навешиваем обработчики на обе формы (UA и EN)
