@@ -391,5 +391,246 @@
     </div>
   </footer>
 
+  <script>
+  // ============ i18n ============
+  var dict = {
+    uk: {
+      nav_features:"Функції", nav_how:"Як працює", nav_pricing:"Тарифи", nav_faq:"FAQ",
+      cta_header:"Спробувати безкоштовно",
+      top_banner:"🚀 Перші 100 користувачів отримують Pro безкоштовно на 30 днів → Отримати доступ",
+      hero_badge:"OLX аналітика • AI рекомендації",
+      hero_h1:"Продавай вигідніше",
+      hero_sub:"Дізнайся реальну ціну товару, знайди конкурентів і отримай AI-поради. Без здогадок — тільки дані.",
+      hero_f1:"Офіційний API OLX", hero_f2:"AI-аналіз цін і конкурентів", hero_f3:"Безкоштовний старт",
+      cta_primary:"Спробувати безкоштовно →", cta_secondary:"Дивитися функції",
+      card_title:"Приклад аналізу: iPhone 14",
+      card_avg:"Середня ціна", card_min:"Мін. ціна", card_comp:"Конкурентів", card_listings:"Оголошень",
+      card_ai:"Ринок активний. Оптимальна ціна — 16 500–17 000 ₴.",
+      features_title:"Ключові функції SellCase", features_sub:"Все що потрібно для успішних продажів на OLX",
+      f1_h:"Аналіз ринку OLX", f1_p:"Середня, мінімальна та максимальна ціна по будь-якому запиту. Бачиш реальний стан ринку.",
+      f2_h:"AI-рекомендації", f2_p:"AI аналізує ринок і підказує оптимальну ціну входу та стратегію продажу.",
+      f3_h:"Аналіз конкурентів", f3_p:"Всі продавці ніші, їх стратегія, ціни та якість оголошень.",
+      f4_h:"Алерти про зміни", f4_p:"Ціна впала? Новий конкурент? Сповіщення в Telegram одразу.",
+      f5_h:"Проекти та історія", f5_p:"Зберігай ніші, відстежуй динаміку цін за будь-який період.",
+      f6_h:"Експорт CSV", f6_p:"Вивантажуй результати в CSV для Excel або Google Sheets.",
+      how_title:"Як це працює", how_sub:"Від реєстрації до першого аналізу — 2 хвилини",
+      how_s1_h:"Введіть запит або категорію", how_s1_p:"«iPhone 14», «PlayStation 5» або категорія «Ноутбуки»",
+      how_s2_h:"Отримайте AI-аналіз", how_s2_p:"Ціни, топ продавці, engagement score кожного оголошення",
+      how_s3_h:"Аналізуйте конкурентів", how_s3_p:"Стратегії продавців, що покращити у своїх оголошеннях",
+      how_s4_h:"Налаштуйте алерти", how_s4_p:"Збережіть проект і отримуйте сповіщення про зміни ринку",
+      pricing_title:"Тарифи", pricing_sub:"Почніть безкоштовно, масштабуйтесь коли потрібно",
+      plan_free:"Free", plan_free_period:"назавжди",
+      free_f1:"3 проекти моніторингу", free_f2:"Пошук та аналіз ринку",
+      free_f3:"Базовий AI-аналіз", free_f4:"Експорт CSV", free_f5:"Алерти email (раз/день)",
+      free_btn:"Почати безкоштовно",
+      plan_pro:"Pro", plan_pro_period:"/місяць", plan_popular:"Популярний",
+      pro_f1:"15 проектів моніторингу", pro_f2:"Повний AI-аналіз конкурентів",
+      pro_f3:"Алерти Telegram (щогодини)", pro_f4:"Аналіз карточок конкурентів",
+      pro_f5:"Пріоритетна підтримка", pro_btn:"Почати з Pro",
+      plan_business:"Business", plan_business_period:"/місяць",
+      biz_f1:"Необмежені проекти", biz_f2:"Всі функції Pro",
+      biz_f3:"API доступ", biz_f4:"Командний акаунт",
+      biz_f5:"Персональний онбординг", biz_btn:"Зв'язатися з нами",
+      wl_title:"Отримай Pro безкоштовно на 30 днів",
+      wl_sub:"Тільки для перших 100 користувачів. Залиш контакти — активуємо Pro одразу.",
+      wl_btn:"Отримати безкоштовний доступ",
+      faq_title:"FAQ",
+      faq_q1:"Звідки беруться дані?", faq_a1:"Офіційний публічний API OLX Ukraine. Дані оновлюються в реальному часі.",
+      faq_q2:"Чи потрібен акаунт OLX?", faq_a2:"Ні. SellCase працює незалежно від вашого акаунту OLX.",
+      faq_q3:"Як швидко оновлюються дані?", faq_a3:"В реальному часі при кожному пошуку. Проекти — раз на добу.",
+      faq_q4:"Чи є безкоштовний план?", faq_a4:"Так! Free план: аналіз ринку, 3 проекти, CSV — безкоштовно назавжди.",
+      faq_q5:"Як працює AI-аналіз?", faq_a5:"AI аналізує тренди ринку, оцінює якість оголошень та рекомендує оптимальну ціну.",
+      footer_app:"Відкрити додаток →"
+    },
+    en: {
+      nav_features:"Features", nav_how:"How it works", nav_pricing:"Pricing", nav_faq:"FAQ",
+      cta_header:"Try for free",
+      top_banner:"🚀 First 100 users get Pro free for 30 days → Get access",
+      hero_badge:"OLX analytics • AI recommendations",
+      hero_h1:"Sell smarter on OLX",
+      hero_sub:"Find out what your product is worth, discover competitors and get AI advice. No guessing — just data.",
+      hero_f1:"Official OLX API", hero_f2:"AI price & competitor analysis", hero_f3:"Free to start",
+      cta_primary:"Try for free →", cta_secondary:"See features",
+      card_title:"Analysis example: iPhone 14",
+      card_avg:"Average price", card_min:"Min price", card_comp:"Competitors", card_listings:"Listings",
+      card_ai:"Market is active. Optimal entry price — 16,500–17,000 ₴.",
+      features_title:"Key features of SellCase", features_sub:"Everything you need for successful OLX sales",
+      f1_h:"OLX Market Analysis", f1_p:"Average, minimum and maximum price for any query. See the real market state.",
+      f2_h:"AI Recommendations", f2_p:"AI analyzes the market and suggests optimal entry price and sales strategy.",
+      f3_h:"Competitor Analysis", f3_p:"All sellers in the niche, their strategy, prices and listing quality.",
+      f4_h:"Change Alerts", f4_p:"Price dropped? New competitor? Telegram notification immediately.",
+      f5_h:"Projects & History", f5_p:"Save niches, track price dynamics over any period.",
+      f6_h:"CSV Export", f6_p:"Export results to CSV for Excel or Google Sheets.",
+      how_title:"How it works", how_sub:"From registration to first analysis — 2 minutes",
+      how_s1_h:"Enter query or category", how_s1_p:"'iPhone 14', 'PlayStation 5' or category 'Laptops'",
+      how_s2_h:"Get AI analysis", how_s2_p:"Prices, top sellers, engagement score for each listing",
+      how_s3_h:"Analyze competitors", how_s3_p:"Seller strategies, what to improve in your listings",
+      how_s4_h:"Set up alerts", how_s4_p:"Save project and get notified when market changes",
+      pricing_title:"Pricing", pricing_sub:"Start free, scale when needed",
+      plan_free:"Free", plan_free_period:"forever",
+      free_f1:"3 monitoring projects", free_f2:"Market search & analysis",
+      free_f3:"Basic AI analysis", free_f4:"CSV export", free_f5:"Email alerts (daily)",
+      free_btn:"Start for free",
+      plan_pro:"Pro", plan_pro_period:"/month", plan_popular:"Popular",
+      pro_f1:"15 monitoring projects", pro_f2:"Full AI competitor analysis",
+      pro_f3:"Telegram alerts (hourly)", pro_f4:"Competitor listing analysis",
+      pro_f5:"Priority support", pro_btn:"Start with Pro",
+      plan_business:"Business", plan_business_period:"/month",
+      biz_f1:"Unlimited projects", biz_f2:"All Pro features",
+      biz_f3:"API access", biz_f4:"Team account",
+      biz_f5:"Personal onboarding", biz_btn:"Contact us",
+      wl_title:"Get Pro free for 30 days",
+      wl_sub:"First 100 users only. Leave contacts — we'll activate Pro right after registration.",
+      wl_btn:"Get free access",
+      faq_title:"FAQ",
+      faq_q1:"Where does the data come from?", faq_a1:"Official public OLX Ukraine API. Data updated in real-time.",
+      faq_q2:"Do I need an OLX account?", faq_a2:"No. SellCase works independently from your OLX account.",
+      faq_q3:"How fast is data updated?", faq_a3:"Real-time on each search. Projects auto-update once per day.",
+      faq_q4:"Is there a free plan?", faq_a4:"Yes! Free plan: market analysis, 3 projects, CSV — free forever.",
+      faq_q5:"How does AI analysis work?", faq_a5:"AI analyzes market trends, evaluates listing quality and recommends optimal price.",
+      footer_app:"Open app →"
+    }
+  };
+
+  // ============ switchLangForms (MUST be before applyLang) ============
+  function switchLangForms(lang) {
+    var uaForm = document.getElementById('wl-ua');
+    var enForm = document.getElementById('wl-en');
+    if (uaForm) uaForm.classList.toggle('hidden', lang !== 'uk');
+    if (enForm) enForm.classList.toggle('hidden', lang !== 'en');
+  }
+
+  // ============ applyLang ============
+  function applyLang(lang) {
+    var map = dict[lang];
+    if (!map) return;
+    document.documentElement.lang = lang === 'uk' ? 'uk' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (map[key] !== undefined) el.innerText = map[key];
+    });
+    var ukBtn = document.getElementById('btn-uk');
+    var enBtn = document.getElementById('btn-en');
+    if (ukBtn) ukBtn.classList.toggle('active', lang === 'uk');
+    if (enBtn) enBtn.classList.toggle('active', lang === 'en');
+    try { localStorage.setItem('sellcase_lang', lang); } catch(e) {}
+    switchLangForms(lang);
+  }
+
+  window.setLang = function(lang) { applyLang(lang); };
+
+  // ============ Init ============
+  document.addEventListener('DOMContentLoaded', function() {
+    var url = new URL(window.location.href);
+    var lang = url.searchParams.get('lang') || localStorage.getItem('sellcase_lang') || 'uk';
+    if (lang !== 'uk' && lang !== 'en') lang = 'uk';
+    applyLang(lang);
+  });
+  </script>
+
+  <!-- UTM tracking -->
+  <script>
+  (function(){
+    var p = new URLSearchParams(location.search);
+    var utm = {
+      utm_source: p.get('utm_source')||'',
+      utm_medium: p.get('utm_medium')||'',
+      utm_campaign: p.get('utm_campaign')||'',
+      utm_content: p.get('utm_content')||'',
+      utm_term: p.get('utm_term')||''
+    };
+    try { localStorage.setItem('sellcase_utm', JSON.stringify(Object.assign({}, utm, {ts:Date.now()}))); } catch(_) {}
+    document.querySelectorAll('form').forEach(function(form) {
+      ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k) {
+        var el = form.querySelector('[name="'+k+'"]');
+        if (!el) return;
+        var v = utm[k];
+        if (!v) {
+          try {
+            var cache = JSON.parse(localStorage.getItem('sellcase_utm')||'{}');
+            if (cache[k] && (Date.now()-(cache.ts||0) < 7*24*60*60*1000)) v = cache[k];
+          } catch(_) {}
+        }
+        el.value = v || '';
+      });
+    });
+  })();
+  </script>
+
+  <!-- Backend lead submission -->
+  <script>
+  (function() {
+    var BACKEND_URL = 'https://sellcase-backend.onrender.com/leads/';
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      if (!form.matches('#wl-ua, #wl-en')) return;
+      try {
+        var get = function(n) {
+          var el = form.querySelector('[name="'+n+'"]');
+          return el && typeof el.value === 'string' ? el.value.trim() : '';
+        };
+        var payload = {
+          name: get('name') || get('email') || '',
+          phone: get('phone') || '',
+          message: get('message') || '',
+          utm_source: get('utm_source') || '',
+          utm_medium: get('utm_medium') || '',
+          utm_campaign: get('utm_campaign') || '',
+          utm_content: get('utm_content') || '',
+          utm_term: get('utm_term') || ''
+        };
+        if (!payload.name || !payload.phone) return;
+        fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json','Accept':'application/json'},
+          body: JSON.stringify(payload),
+          keepalive: true
+        }).catch(function(){});
+      } catch(_) {}
+    });
+  })();
+  </script>
+
+  <!-- Form submit handler + success popup + redirect -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('#wl-ua, #wl-en').forEach(function(form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Відправляється…'; }
+        try {
+          await fetch(form.getAttribute('action'), {
+            method: 'POST', body: new FormData(form),
+            mode: 'no-cors', keepalive: true
+          });
+        } catch(_) {}
+        var popup = document.getElementById('sc-success');
+        if (popup) popup.style.display = 'flex';
+        form.reset();
+        if (btn) { btn.disabled = false; btn.textContent = 'Отримати безкоштовний доступ'; }
+        setTimeout(function() {
+          window.location.href = 'https://app.sellcase.net/register';
+        }, 2500);
+      });
+    });
+  });
+  </script>
+
+  <!-- Success popup -->
+  <div id="sc-success" style="display:none;position:fixed;inset:0;z-index:9999;
+       background:rgba(0,0,0,.4);align-items:center;justify-content:center">
+    <div style="background:#fff;border-radius:20px;padding:32px 40px;text-align:center;
+                box-shadow:0 24px 48px rgba(0,0,0,.2);max-width:400px;width:90%">
+      <div style="font-size:48px;margin-bottom:12px">🎉</div>
+      <h2 style="font-size:24px;font-weight:800;color:#111827;margin:0 0 8px">
+        Дякуємо!
+      </h2>
+      <p style="color:#6b7280;font-size:14px">
+        Переходимо на реєстрацію…
+      </p>
+    </div>
+  </div>
+
 </body>
 </html>
