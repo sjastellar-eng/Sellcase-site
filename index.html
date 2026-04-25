@@ -21,6 +21,11 @@
     .hero-grad{background:linear-gradient(135deg,#eff6ff 0%,#ffffff 50%,#fff7ed 100%)}
     .lang-btn{padding:.4rem .6rem;border:1px solid #e5e7eb;border-radius:.5rem;font-weight:600}
     .lang-btn.active{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+    .cta-gradient{background:linear-gradient(135deg,#2563EB,#7C3AED)}
+    .gradient-text{background:linear-gradient(135deg,#2563EB,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .feature-card:hover{transform:translateY(-3px);transition:transform .2s ease;box-shadow:0 20px 40px rgba(0,0,0,.12)}
+    details summary::after{content:' ↓';float:right}
+    details[open] summary::after{content:' ↑'}
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -32,7 +37,7 @@
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <svg aria-label="SellCase logo" width="28" height="28" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="28" fill="#0f172a"></circle>
+          <circle cx="32" cy="32" r="28" fill="#2563EB"></circle>
           <rect x="22" y="36" width="6" height="16" rx="2" fill="#ffffff"></rect>
           <rect x="30" y="30" width="6" height="22" rx="2" fill="#ffffff"></rect>
           <rect x="38" y="24" width="6" height="28" rx="2" fill="#ffffff"></rect>
@@ -62,22 +67,42 @@
         </div>
         <h1 class="text-3xl sm:text-5xl font-extrabold">
           <span data-i18n="hero_title_prefix">Заробляйте більше завдяки аналітиці </span>
-          <span class="text-blue-600 font-extrabold">OLX</span>
+          <span class="gradient-text font-extrabold">OLX</span>
           <span data-i18n="hero_title_suffix"></span>
         </h1>
         <p class="mt-4 text-gray-700 text-base sm:text-lg" data-i18n="hero_sub">
           Автоматично збираємо нові оголошення, зміни цін і тренди. Підказуємо оптимальну ціну та коли варто виходити в нішу.
         </p>
         <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a href="https://app.sellcase.net" class="inline-flex items-center justify-center px-5 py-3 rounded-md bg-blue-600 text-white font-medium soft hover:bg-blue-700" data-i18n="cta_primary">Приєднатися</a>
+          <a href="https://app.sellcase.net" class="inline-flex items-center justify-center px-5 py-3 rounded-md cta-gradient text-white font-medium soft" data-i18n="cta_primary">Приєднатися</a>
           <a href="#features" class="inline-flex items-center justify-center px-5 py-3 rounded-md border border-gray-300 text-gray-700 font-medium bg-white hover:bg-gray-50" data-i18n="cta_secondary">Дивитися функції</a>
         </div>
       </div>
-      <div class="soft bg-white rounded-2xl border border-gray-100 p-6">
-        <div class="grid sm:grid-cols-3 gap-3 text-sm">
-          <div class="p-4 rounded-lg border border-gray-200 bg-white text-gray-800" data-i18n="feature_alerts">Алерти про нові оголошення в ніші</div>
-          <div class="p-4 rounded-lg border border-gray-200 bg-white text-gray-800" data-i18n="feature_tracking">Відстеження змін цін конкурентів</div>
-          <div class="p-4 rounded-lg border border-gray-200 bg-white text-gray-800" data-i18n="feature_export">Експорт CSV/Excel для звітів</div>
+      <div class="soft bg-white rounded-2xl border border-gray-100 p-6 space-y-4">
+        <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          Приклад аналізу: iPhone 14
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-4 rounded-xl bg-blue-50 border border-blue-100">
+            <div class="text-xs text-blue-500 font-medium">Середня ціна</div>
+            <div class="text-2xl font-extrabold text-blue-700 mt-1">18 450 ₴</div>
+          </div>
+          <div class="p-4 rounded-xl bg-green-50 border border-green-100">
+            <div class="text-xs text-green-500 font-medium">Мін. ціна</div>
+            <div class="text-2xl font-extrabold text-green-700 mt-1">12 000 ₴</div>
+          </div>
+          <div class="p-4 rounded-xl bg-orange-50 border border-orange-100">
+            <div class="text-xs text-orange-500 font-medium">Конкурентів</div>
+            <div class="text-2xl font-extrabold text-orange-700 mt-1">24</div>
+          </div>
+          <div class="p-4 rounded-xl bg-purple-50 border border-purple-100">
+            <div class="text-xs text-purple-500 font-medium">Оголошень</div>
+            <div class="text-2xl font-extrabold text-purple-700 mt-1">187</div>
+          </div>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-900 text-white text-sm">
+          <div class="text-xs text-gray-400 mb-1">🤖 AI-аналіз</div>
+          <div>Ринок активний. Оптимальна ціна входу — 16 500–17 000 ₴.</div>
         </div>
       </div>
     </div>
@@ -88,9 +113,9 @@
     <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-2xl sm:text-3xl font-bold mb-8" data-i18n="features_title">Ключові функції SellCase</h2>
       <div class="grid md:grid-cols-3 gap-6 text-sm">
-        <div class="bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f1_h">Дашборд «Ніша»</h3><p class="text-gray-600" data-i18n="f1_p">Медіана/квантили цін, швидкість появи нових оголошень, активні продавці.</p></div>
-        <div class="bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f2_h">Алерти</h3><p class="text-gray-600" data-i18n="f2_p">Нові оголошення, зміни цін, зникнення позицій — e-mail/Telegram.</p></div>
-        <div class="bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f3_h">Експорт CSV</h3><p class="text-gray-600" data-i18n="f3_p">Вивантаження відфільтрованих вибірок у CSV/Excel.</p></div>
+        <div class="feature-card bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f1_h">Дашборд «Ніша»</h3><p class="text-gray-600" data-i18n="f1_p">Медіана/квантили цін, швидкість появи нових оголошень, активні продавці.</p></div>
+        <div class="feature-card bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f2_h">Алерти</h3><p class="text-gray-600" data-i18n="f2_p">Нові оголошення, зміни цін, зникнення позицій — e-mail/Telegram.</p></div>
+        <div class="feature-card bg-white border border-gray-100 rounded-xl p-6 soft"><h3 class="font-semibold mb-2" data-i18n="f3_h">Експорт CSV</h3><p class="text-gray-600" data-i18n="f3_p">Вивантаження відфільтрованих вибірок у CSV/Excel.</p></div>
       </div>
     </div>
   </section>
@@ -125,7 +150,10 @@
           <a href="https://app.sellcase.net" class="mt-6 inline-flex px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700" data-i18n="pricing_cta_waitlist">У вейтлист</a>
         </div>
         <!-- Basic -->
-        <div class="p-8 bg-white rounded-2xl border border-blue-200 soft text-center ring-1 ring-blue-600">
+        <div class="p-8 bg-white rounded-2xl border border-blue-200 soft text-center ring-2 ring-blue-600">
+          <div style="text-align:center;margin-bottom:8px">
+            <span style="background:#2563EB;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">Популярний</span>
+          </div>
           <div class="text-sm font-semibold text-gray-700" data-i18n="pricing_basic">Basic</div>
           <div class="mt-2 text-3xl font-extrabold" data-i18n="pricing_basic_price">$9</div>
           <ul class="mt-4 space-y-2 text-sm text-gray-600">
@@ -276,7 +304,7 @@
     <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500">
       <div class="flex items-center space-x-2">
         <svg aria-label="SellCase logo" width="20" height="20" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="28" fill="#0f172a"></circle>
+          <circle cx="32" cy="32" r="28" fill="#2563EB"></circle>
           <rect x="22" y="36" width="6" height="16" rx="2" fill="#ffffff"></rect>
           <rect x="30" y="30" width="6" height="22" rx="2" fill="#ffffff"></rect>
           <rect x="38" y="24" width="6" height="28" rx="2" fill="#ffffff"></rect>
