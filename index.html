@@ -53,7 +53,7 @@
       <div class="flex items-center gap-2">
         <button id="btn-uk" type="button" class="lang-btn active" aria-pressed="true" onclick="setLang('uk');">UA</button>
 <button id="btn-en" type="button" class="lang-btn" aria-pressed="false" onclick="setLang('en');">EN</button>
-        <a href="https://app.sellcase.net" class="hidden sm:inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700" data-i18n="cta_header">У вейтлист</a>
+        <a href="https://app.sellcase.net/register" class="hidden sm:inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700" data-i18n="cta_header">У вейтлист</a>
       </div>
     </div>
   </header>
@@ -74,36 +74,17 @@
           Автоматично збираємо нові оголошення, зміни цін і тренди. Підказуємо оптимальну ціну та коли варто виходити в нішу.
         </p>
         <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a href="https://app.sellcase.net" class="inline-flex items-center justify-center px-5 py-3 rounded-md cta-gradient text-white font-medium soft" data-i18n="cta_primary">Приєднатися</a>
+          <a href="https://app.sellcase.net/register" class="inline-flex items-center justify-center px-5 py-3 rounded-md cta-gradient text-white font-medium soft" data-i18n="cta_primary">Приєднатися</a>
           <a href="#features" class="inline-flex items-center justify-center px-5 py-3 rounded-md border border-gray-300 text-gray-700 font-medium bg-white hover:bg-gray-50" data-i18n="cta_secondary">Дивитися функції</a>
         </div>
       </div>
-      <div class="soft bg-white rounded-2xl border border-gray-100 p-6 space-y-4">
-        <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-          Приклад аналізу: iPhone 14
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div class="p-4 rounded-xl bg-blue-50 border border-blue-100">
-            <div class="text-xs text-blue-500 font-medium">Середня ціна</div>
-            <div class="text-2xl font-extrabold text-blue-700 mt-1">18 450 ₴</div>
-          </div>
-          <div class="p-4 rounded-xl bg-green-50 border border-green-100">
-            <div class="text-xs text-green-500 font-medium">Мін. ціна</div>
-            <div class="text-2xl font-extrabold text-green-700 mt-1">12 000 ₴</div>
-          </div>
-          <div class="p-4 rounded-xl bg-orange-50 border border-orange-100">
-            <div class="text-xs text-orange-500 font-medium">Конкурентів</div>
-            <div class="text-2xl font-extrabold text-orange-700 mt-1">24</div>
-          </div>
-          <div class="p-4 rounded-xl bg-purple-50 border border-purple-100">
-            <div class="text-xs text-purple-500 font-medium">Оголошень</div>
-            <div class="text-2xl font-extrabold text-purple-700 mt-1">187</div>
-          </div>
-        </div>
-        <div class="p-4 rounded-xl bg-gray-900 text-white text-sm">
-          <div class="text-xs text-gray-400 mb-1">🤖 AI-аналіз</div>
-          <div>Ринок активний. Оптимальна ціна входу — 16 500–17 000 ₴.</div>
-        </div>
+      <div class="soft rounded-2xl overflow-hidden border border-gray-100">
+        <img
+          src="images/hero.png"
+          alt="SellCase — аналітика ринку OLX"
+          class="w-full h-auto"
+          onerror="this.parentElement.innerHTML='<div class=\'p-8 bg-gradient-to-br from-blue-50 to-indigo-100 h-64 flex items-center justify-center rounded-2xl\'><span class=\'text-4xl\'>📊</span></div>'"
+        />
       </div>
     </div>
   </section>
@@ -325,11 +306,11 @@
   var dict = {
     uk: {
       nav_features:"Функції", nav_how:"Як працює", nav_pricing:"Тарифи", nav_faq:"FAQ",
-      cta_header:"Спробувати",
+      cta_header:"Спробувати безкоштовно",
       top_banner:"Бета-доступ безкоштовно для перших 100 користувачів",
       hero_chip_1:"🤖 AI-аналітика OLX", hero_chip_2:"Алерти та CSV",
-      hero_title_prefix:"Аналізуй ринок ", hero_title_suffix:" і продавай вигідніше",
-      hero_sub:"AI-аналіз цін, моніторинг конкурентів і алерти про зміни ринку. Перший сервіс аналітики спеціально для OLX Ukraine.",
+      hero_title_prefix:"Знай ринок ", hero_title_suffix:" краще за конкурентів",
+      hero_sub:"AI-аналіз цін, моніторинг конкурентів і алерти про зміни. Перший сервіс аналітики спеціально для OLX Ukraine.",
       cta_primary:"Спробувати безкоштовно →", cta_secondary:"Дивитися функції",
       feature_alerts:"Алерти про нові оголошення в ніші",
       feature_tracking:"Відстеження змін цін конкурентів",
@@ -361,10 +342,10 @@
     },
     en: {
       nav_features:”Features”, nav_how:”How it works”, nav_pricing:”Pricing”, nav_faq:”FAQ”,
-      cta_header:”Try it”,
+      cta_header:”Try for free”,
       top_banner:”Free beta access for the first 100 users”,
       hero_chip_1:”🤖 AI analytics for OLX”, hero_chip_2:”Alerts & CSV”,
-      hero_title_prefix:”Analyze “, hero_title_suffix:” market and sell smarter”,
+      hero_title_prefix:”Know the “, hero_title_suffix:” market better than competitors”,
       hero_sub:”AI price analysis, competitor monitoring and market change alerts. First analytics service for OLX Ukraine.”,
       cta_primary:”Try for free →”, cta_secondary:”See features”,
       feature_alerts:”Alerts about new listings in the niche”,
@@ -398,6 +379,13 @@
   };
   
   // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ===
+  function switchLangForms(lang) {
+    var ua = document.getElementById('wl-ua');
+    var en = document.getElementById('wl-en');
+    if (ua) ua.classList.toggle('hidden', lang !== 'uk');
+    if (en) en.classList.toggle('hidden', lang !== 'en');
+  }
+
   function applyLang(lang) {
     var map = dict[lang];        // dict должен быть определён выше
     if (!map) return;
