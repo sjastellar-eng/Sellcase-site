@@ -172,6 +172,141 @@
     </div>
   </section>
 
+  <!-- NICHE CHECKER -->
+  <section id="niche-checker" class="py-16" style="background:linear-gradient(180deg,#EEF2FF 0%,#F8FAFF 100%)">
+    <div class="max-w-2xl mx-auto px-4">
+
+      <!-- Section header -->
+      <div class="text-center mb-8">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-4 uppercase tracking-wide"
+              style="background:rgba(37,99,235,.12);color:#2563EB;border:1px solid rgba(37,99,235,.22)">
+          🆓 Безкоштовно
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold" data-i18n="nc_title">Перевір нішу безкоштовно</h2>
+        <p class="mt-3 text-gray-500" data-i18n="nc_sub">Введи запит з OLX — отримай оцінку ніші 0–100 за конкуренцією, свіжістю та порогом входу.</p>
+      </div>
+
+      <!-- Mini-tool card -->
+      <div class="bg-white rounded-2xl overflow-hidden"
+           style="border:1.5px solid #DBEAFE;box-shadow:0 20px 48px rgba(37,99,235,.12)">
+
+        <!-- Tool header bar -->
+        <div class="flex items-center justify-between px-6 py-3 border-b"
+             style="background:linear-gradient(135deg,#EFF6FF,#F5F3FF);border-color:#EDE9FE">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🔬</span>
+            <span class="font-bold text-sm text-gray-800">SellCase Niche Checker</span>
+          </div>
+          <span class="px-2 py-0.5 rounded text-xs font-bold"
+                style="background:rgba(37,99,235,.12);color:#2563EB;letter-spacing:.05em">BETA</span>
+        </div>
+
+        <!-- Tool body -->
+        <div class="p-6 md:p-8">
+
+          <!-- Input row -->
+          <div class="flex gap-3 mb-1">
+            <input id="nc-query" type="text" autocomplete="off"
+                   placeholder="Наприклад: iPhone 13, дитячий велосипед…"
+                   data-i18n-placeholder="nc_placeholder"
+                   class="flex-1 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="nc-btn" type="button" onclick="runNicheCheck()"
+                    class="grad-bg text-white px-5 py-3 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity whitespace-nowrap"
+                    data-i18n="nc_btn">Перевірити нішу</button>
+          </div>
+          <p class="text-xs text-gray-400 mb-6" data-i18n="nc_hint">Будь-який товар або категорія з OLX Ukraine</p>
+
+          <!-- Loading -->
+          <div id="nc-loading" class="hidden text-center py-10">
+            <div class="inline-block w-8 h-8 border-2 border-blue-100 border-t-blue-500 rounded-full animate-spin mb-3"></div>
+            <p class="text-gray-400 text-sm" data-i18n="nc_loading">Аналізуємо OLX…</p>
+            <p class="text-gray-300 text-xs mt-1" data-i18n="nc_loading_hint">Зазвичай 5–10 секунд</p>
+          </div>
+
+          <!-- Error -->
+          <div id="nc-error" class="hidden rounded-xl px-4 py-3 text-sm text-center"
+               style="background:#FEF2F2;color:#DC2626">
+            <span data-i18n="nc_error">Забагато запитів — спробуй через хвилину</span>
+          </div>
+
+          <!-- Results -->
+          <div id="nc-results" class="hidden">
+
+            <!-- Score gauge + verdict -->
+            <div class="flex flex-col sm:flex-row items-center gap-6 mb-6 p-5 rounded-xl" style="background:#F8FAFF">
+              <div class="relative flex-shrink-0" style="width:108px;height:108px">
+                <svg viewBox="0 0 108 108" width="108" height="108">
+                  <circle cx="54" cy="54" r="44" fill="none" stroke="#E5E7EB" stroke-width="11"/>
+                  <circle id="nc-gauge" cx="54" cy="54" r="44" fill="none" stroke="#10B981" stroke-width="11"
+                          stroke-linecap="round"
+                          stroke-dasharray="276.46" stroke-dashoffset="276.46"
+                          transform="rotate(-90 54 54)"
+                          style="transition:stroke-dashoffset .9s cubic-bezier(.4,0,.2,1),stroke .3s ease"/>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                  <span id="nc-score-num" class="text-2xl font-extrabold leading-none" style="color:#10B981">—</span>
+                  <span class="text-xs text-gray-400">/100</span>
+                </div>
+              </div>
+              <div class="text-center sm:text-left">
+                <div id="nc-verdict-label" class="text-xl font-extrabold mb-1"></div>
+                <div id="nc-query-echo" class="text-xs text-gray-400 mb-2"></div>
+                <div id="nc-verdict-hint" class="text-sm text-gray-600"></div>
+              </div>
+            </div>
+
+            <!-- Unlocked factor rows -->
+            <div id="nc-factors-open" class="space-y-3 mb-3"></div>
+
+            <!-- Locked factor rows -->
+            <div class="space-y-2 mb-2">
+              <div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
+                <span class="text-base flex-shrink-0">🔒</span>
+                <div class="flex-1" style="filter:blur(3px);pointer-events:none;user-select:none">
+                  <div class="h-2.5 bg-gray-300 rounded-full mb-1.5" style="width:58%"></div>
+                  <div class="h-2 bg-gray-200 rounded-full" style="width:40%"></div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
+                <span class="text-base flex-shrink-0">🔒</span>
+                <div class="flex-1" style="filter:blur(3px);pointer-events:none;user-select:none">
+                  <div class="h-2.5 bg-gray-300 rounded-full mb-1.5" style="width:48%"></div>
+                  <div class="h-2 bg-gray-200 rounded-full" style="width:62%"></div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
+                <span class="text-base flex-shrink-0">🔒</span>
+                <div class="flex-1" style="filter:blur(3px);pointer-events:none;user-select:none">
+                  <div class="h-2.5 bg-gray-300 rounded-full mb-1.5" style="width:70%"></div>
+                  <div class="h-2 bg-gray-200 rounded-full" style="width:35%"></div>
+                </div>
+              </div>
+            </div>
+            <p class="text-center text-xs text-gray-400 mb-6" data-i18n="nc_locked">Повний розклад + рекомендації — в SellCase</p>
+
+            <!-- CTA gradient box -->
+            <div class="rounded-2xl p-6 text-center" style="background:linear-gradient(135deg,#1D4ED8,#7C3AED)">
+              <p class="font-bold text-base text-white mb-1" data-i18n="nc_cta_h">Хочеш повний аналіз та стеж за конкурентами?</p>
+              <p class="text-sm mb-4" style="color:#BFDBFE" data-i18n="nc_cta_sub">Приєднуйся до перших 100 у Telegram — Pro безкоштовно на 3 місяці. Топ-10 найактивніших отримають Pro назавжди.</p>
+              <a href="https://t.me/+B7bfzOhkrY8yMDJi" target="_blank"
+                 class="inline-block bg-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors"
+                 style="color:#1D4ED8"
+                 data-i18n="nc_cta_btn">Приєднатись в Telegram →</a>
+            </div>
+
+          </div><!-- /results -->
+
+        </div><!-- /tool body -->
+      </div><!-- /card -->
+
+      <!-- Disclaimer -->
+      <p class="text-center text-xs text-gray-400 mt-4 px-4" data-i18n="nc_disclaimer">
+        Це безкоштовний інструмент-демо. Повний функціонал SellCase включає трекінг конкурентів, цінові алерти та AI-аналіз.
+      </p>
+
+    </div>
+  </section>
+
   <section class="py-12 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4">
       <div class="soft rounded-2xl overflow-hidden">
@@ -433,7 +568,20 @@
       faq_q3:"Як швидко оновлюються дані?", faq_a3:"В реальному часі при кожному пошуку. Проекти — раз на добу.",
       faq_q4:"Чи є безкоштовний план?", faq_a4:"Так! Free план: аналіз ринку, 3 проекти, Excel (.xlsx) — безкоштовно назавжди.",
       faq_q5:"Як працює AI-аналіз?", faq_a5:"AI аналізує тренди ринку, оцінює якість оголошень та рекомендує оптимальну ціну.",
-      footer_app:"Відкрити додаток →"
+      footer_app:"Відкрити додаток →",
+      nc_title:"Перевір нішу безкоштовно",
+      nc_sub:"Введи запит з OLX — отримай оцінку ніші 0–100 за конкуренцією, свіжістю та порогом входу.",
+      nc_hint:"Будь-який товар або категорія з OLX Ukraine",
+      nc_placeholder:"Наприклад: iPhone 13, дитячий велосипед…",
+      nc_btn:"Перевірити нішу",
+      nc_loading:"Аналізуємо OLX…",
+      nc_loading_hint:"Зазвичай 5–10 секунд",
+      nc_error:"Забагато запитів — спробуй через хвилину",
+      nc_locked:"Повний розклад + рекомендації — в SellCase",
+      nc_cta_h:"Хочеш повний аналіз та стеж за конкурентами?",
+      nc_cta_sub:"Приєднуйся до перших 100 у Telegram — Pro безкоштовно на 3 місяці. Топ-10 найактивніших отримають Pro назавжди.",
+      nc_cta_btn:"Приєднатись в Telegram →",
+      nc_disclaimer:"Це безкоштовний інструмент-демо. Повний функціонал SellCase включає трекінг конкурентів, цінові алерти та AI-аналіз."
     },
     en: {
       nav_features:"Features", nav_how:"How it works", nav_pricing:"Pricing", nav_faq:"FAQ",
@@ -481,7 +629,20 @@
       faq_q3:"How fast is data updated?", faq_a3:"Real-time on each search. Projects auto-update once per day.",
       faq_q4:"Is there a free plan?", faq_a4:"Yes! Free plan: market analysis, 3 projects, Excel (.xlsx) — free forever.",
       faq_q5:"How does AI analysis work?", faq_a5:"AI analyzes market trends, evaluates listing quality and recommends optimal price.",
-      footer_app:"Open app →"
+      footer_app:"Open app →",
+      nc_title:"Check your niche for free",
+      nc_sub:"Enter an OLX search query — get a niche score 0–100 based on competition, freshness, and entry barrier.",
+      nc_hint:"Any product or category from OLX Ukraine",
+      nc_placeholder:"e.g. iPhone 13, kids bicycle…",
+      nc_btn:"Check niche",
+      nc_loading:"Analyzing OLX…",
+      nc_loading_hint:"Usually 5–10 seconds",
+      nc_error:"Too many requests — try again in a minute",
+      nc_locked:"Full breakdown + recommendations — in SellCase",
+      nc_cta_h:"Want the full analysis and competitor tracking?",
+      nc_cta_sub:"Join the first 100 in Telegram — Pro free for 3 months. Top 10 most active members get Pro forever.",
+      nc_cta_btn:"Join on Telegram →",
+      nc_disclaimer:"This is a free demo tool. The full SellCase product includes competitor tracking, price alerts, and AI analysis."
     }
   };
 
@@ -501,6 +662,10 @@
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
       var key = el.getAttribute('data-i18n');
       if (map[key] !== undefined) el.innerText = map[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-placeholder');
+      if (map[key] !== undefined) el.placeholder = map[key];
     });
     var ukBtn = document.getElementById('btn-uk');
     var enBtn = document.getElementById('btn-en');
@@ -632,6 +797,121 @@
       </a>
     </div>
   </div>
+  <!-- Niche Checker -->
+  <script>
+  (function() {
+    var NICHE_URL = 'https://sellcase-backend.onrender.com/api/v1/public/niche-score';
+
+    window.runNicheCheck = function() {
+      var query = (document.getElementById('nc-query').value || '').trim();
+      if (!query) { document.getElementById('nc-query').focus(); return; }
+
+      var btn     = document.getElementById('nc-btn');
+      var loading = document.getElementById('nc-loading');
+      var error   = document.getElementById('nc-error');
+      var results = document.getElementById('nc-results');
+
+      btn.disabled = true;
+      loading.classList.remove('hidden');
+      error.classList.add('hidden');
+      results.classList.add('hidden');
+
+      fetch(NICHE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ query: query })
+      })
+      .then(function(r) {
+        if (r.status === 429) throw new Error('rate_limit');
+        if (!r.ok) throw new Error('api_error');
+        return r.json();
+      })
+      .then(function(data) {
+        loading.classList.add('hidden');
+        btn.disabled = false;
+        renderNicheResult(data, query);
+        results.classList.remove('hidden');
+      })
+      .catch(function() {
+        loading.classList.add('hidden');
+        btn.disabled = false;
+        error.classList.remove('hidden');
+      });
+    };
+
+    function renderNicheResult(data, query) {
+      var score = Math.round(Number(data.overall_score) || 0);
+      score = Math.max(0, Math.min(100, score));
+
+      var color = score >= 70 ? '#10B981' : score >= 40 ? '#F59E0B' : '#EF4444';
+      var circumference = 276.46;
+      var offset = circumference - (score / 100) * circumference;
+
+      var gauge = document.getElementById('nc-gauge');
+      gauge.setAttribute('stroke', color);
+      gauge.setAttribute('stroke-dashoffset', offset);
+
+      var scoreNum = document.getElementById('nc-score-num');
+      scoreNum.textContent = score;
+      scoreNum.style.color = color;
+
+      var lang = document.documentElement.lang === 'en' ? 'en' : 'uk';
+      var verdictMap = {
+        uk: {
+          good:   { label: 'Гарна ніша ✅',          hint: 'Низька конкуренція, хороший поріг входу.' },
+          medium: { label: 'Середня конкуренція ⚠️', hint: 'Ніша активна, але є місце для нових гравців.' },
+          hard:   { label: 'Складна ніша 🔴',        hint: 'Висока конкуренція. Потрібна чітка стратегія.' }
+        },
+        en: {
+          good:   { label: 'Good niche ✅',               hint: 'Low competition, low entry barrier.' },
+          medium: { label: 'Moderate competition ⚠️',     hint: 'Active niche with room for new sellers.' },
+          hard:   { label: 'Tough niche 🔴',              hint: 'High competition — a clear strategy is needed.' }
+        }
+      };
+      var tier = score >= 70 ? 'good' : score >= 40 ? 'medium' : 'hard';
+      var vd = verdictMap[lang][tier];
+
+      document.getElementById('nc-verdict-label').textContent = vd.label;
+      document.getElementById('nc-verdict-label').style.color = color;
+      document.getElementById('nc-verdict-hint').textContent = vd.hint;
+      document.getElementById('nc-query-echo').textContent = '«' + query + '»';
+
+      var factorsEl = document.getElementById('nc-factors-open');
+      factorsEl.innerHTML = '';
+      var factors = data.factors || {};
+      var fallbackLabels = {
+        freshness:     { uk: 'Свіжість оголошень', en: 'Listing freshness' },
+        entry_barrier: { uk: 'Поріг входу',         en: 'Entry barrier' }
+      };
+      ['freshness', 'entry_barrier'].forEach(function(key) {
+        var f = factors[key] || {};
+        var s = Math.round(Number(f.score) || 0);
+        s = Math.max(0, Math.min(100, s));
+        var label = f.label || (fallbackLabels[key] ? fallbackLabels[key][lang] : key);
+        var explanation = f.explanation || '';
+        var fc = s >= 70 ? '#10B981' : s >= 40 ? '#F59E0B' : '#EF4444';
+        var row = document.createElement('div');
+        row.className = 'flex items-center gap-3 rounded-xl border border-gray-100 px-4 py-3';
+        row.innerHTML =
+          '<div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" ' +
+          'style="background:' + fc + '1A;color:' + fc + '">' + (s || '—') + '</div>' +
+          '<div class="flex-1 min-w-0">' +
+          '<div class="font-semibold text-sm text-gray-800">' + label + '</div>' +
+          (explanation ? '<div class="text-xs text-gray-500 mt-0.5 leading-snug">' + explanation + '</div>' : '') +
+          '</div>';
+        factorsEl.appendChild(row);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var input = document.getElementById('nc-query');
+      if (input) input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') runNicheCheck();
+      });
+    });
+  })();
+  </script>
+
   <script type="text/javascript">
   window.$crisp=[];
   window.CRISP_WEBSITE_ID="d607c3a5-7878-43dd-9873-25229037a36c";
