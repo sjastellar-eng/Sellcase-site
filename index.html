@@ -146,12 +146,12 @@
         <div class="card-hover bg-white border border-gray-100 rounded-2xl p-6 soft">
           <div class="text-3xl mb-3">🤖</div>
           <h3 class="font-bold text-lg mb-2" data-i18n="f2_h">AI-аналіз конкурентів</h3>
-          <p class="text-gray-500 text-sm" data-i18n="f2_p">Перевіряє заголовок, фото, ціну та перегляди кожного оголошення конкурента — ти бачиш де вони слабші за тебе.</p>
+          <p class="text-gray-500 text-sm" data-i18n="f2_p">Перевіряє заголовок, фото, опис, ціну, просування та перегляди кожного оголошення — бачиш сильні та слабкі місця кожного гравця в ніші.</p>
         </div>
         <div class="card-hover bg-white border border-gray-100 rounded-2xl p-6 soft">
           <div class="text-3xl mb-3">🔍</div>
           <h3 class="font-bold text-lg mb-2" data-i18n="f3_h">Аналіз конкурентів</h3>
-          <p class="text-gray-500 text-sm" data-i18n="f3_p">Всі продавці ніші, їх стратегія, ціни та якість оголошень.</p>
+          <p class="text-gray-500 text-sm" data-i18n="f3_p">Всі продавці ніші, їх стратегія, ціни та якість оголошень. Реальні перегляди будь-якого оголошення — в один клік.</p>
         </div>
         <div class="card-hover bg-white border border-gray-100 rounded-2xl p-6 soft">
           <div class="text-3xl mb-3">🔔</div>
@@ -385,6 +385,7 @@
             <li>✓ <span data-i18n="pro_f1">20 проектів моніторингу</span></li>
             <li>✓ <span data-i18n="pro_f2">Повний AI-аналіз конкурентів</span></li>
             <li>✓ <span data-i18n="pro_f3">Щоденні Telegram та Email алерти</span></li>
+            <li>✓ <span data-i18n="pro_f_views">Реальні перегляди будь-якого оголошення в 1 клік</span></li>
             <li>✓ <span data-i18n="pro_f4">5 відстежуваних продавців</span></li>
             <li>✓ <span data-i18n="pro_f5">Графік тренду цін по проекту</span></li>
             <li>✓ <span data-i18n="pro_f6">Порівняння цін з реальними магазинами</span></li>
@@ -495,7 +496,7 @@
         </details>
         <details class="p-5 rounded-2xl border border-gray-200 bg-white">
           <summary class="font-semibold cursor-pointer" data-i18n="faq_q5">Як працює AI-аналіз конкурентів?</summary>
-          <p class="mt-3 text-gray-500 text-sm" data-i18n="faq_a5">AI перевіряє кожне оголошення конкурента: заголовок (ключові слова, довжина), фото (кількість), опис (наявність та деталі), ціну (відносно ринку), перегляди (активність). Отримуєш конкретний чеклист що покращити у своєму оголошенні.</p>
+          <p class="mt-3 text-gray-500 text-sm" data-i18n="faq_a5">AI перевіряє кожне оголошення конкурента: заголовок (ключові слова, довжина), фото (кількість), опис (наявність та деталі), ціну (відносно ринку), просування та перегляди (активність). Отримуєш конкретний чеклист що покращити у своєму оголошенні.</p>
         </details>
         <details class="p-5 rounded-2xl border border-gray-200 bg-white">
           <summary class="font-semibold cursor-pointer" data-i18n="faq_q6">Чим SellCase відрізняється від ОЛХ Аналітики?</summary>
@@ -541,8 +542,8 @@
       card_ai:"Ринок активний. Оптимальна ціна — 16 500–17 000 ₴.",
       features_title:"Ключові функції SellCase", features_sub:"Все що потрібно для успішних продажів на OLX",
       f1_h:"Аналіз ринку OLX", f1_p:"Середня, мінімальна та максимальна ціна по будь-якому запиту. Окрема статистика для нових та б/в товарів.",
-      f2_h:"AI-аналіз конкурентів", f2_p:"Перевіряє заголовок, фото, ціну та перегляди кожного оголошення конкурента — ти бачиш де вони слабші за тебе.",
-      f3_h:"Аналіз конкурентів", f3_p:"Всі продавці ніші, їх стратегія, ціни та якість оголошень.",
+      f2_h:"AI-аналіз конкурентів", f2_p:"Перевіряє заголовок, фото, опис, ціну, просування та перегляди кожного оголошення — бачиш сильні та слабкі місця кожного гравця в ніші.",
+      f3_h:"Аналіз конкурентів", f3_p:"Всі продавці ніші, їх стратегія, ціни та якість оголошень. Реальні перегляди будь-якого оголошення — в один клік.",
       f4_h:"Алерти про зміни", f4_p:"Ціна впала? Новий конкурент? Сповіщення щоденно в Telegram та Email.",
       f5_h:"Тренди цін", f5_p:"Графік зміни середньої ціни по твоїй ніші за весь час моніторингу.",
       f6_h:"Експорт Excel", f6_p:"Вивантажуй результати в Excel (.xlsx) для аналізу, звітів або Google Sheets.",
@@ -560,7 +561,8 @@
       free_btn:"Почати безкоштовно",
       plan_pro:"Pro", plan_pro_period:"/місяць", plan_popular:"Популярний",
       pro_f1:"20 проектів моніторингу", pro_f2:"Повний AI-аналіз конкурентів",
-      pro_f3:"Щоденні Telegram та Email алерти", pro_f4:"5 відстежуваних продавців",
+      pro_f3:"Щоденні Telegram та Email алерти", pro_f_views:"Реальні перегляди будь-якого оголошення в 1 клік",
+      pro_f4:"5 відстежуваних продавців",
       pro_f5:"Графік тренду цін по проекту", pro_f6:"Порівняння цін з реальними магазинами",
       pro_f7:"Щотижневий email-дайджест", pro_f8:"Експорт Excel (.xlsx)",
       pro_f9:"Пріоритетна підтримка", pro_btn:"Почати з Pro",
@@ -577,7 +579,7 @@
       faq_q2:"Чи потрібен акаунт OLX?", faq_a2:"Ні. SellCase працює незалежно від вашого акаунту OLX.",
       faq_q3:"Як швидко оновлюються дані?", faq_a3:"В реальному часі при кожному пошуку. Проекти — раз на добу.",
       faq_q4:"Чи є безкоштовний план?", faq_a4:"Так! Free план: аналіз ринку, 3 проекти, engagement score, щотижневий дайджест — безкоштовно назавжди.",
-      faq_q5:"Як працює AI-аналіз конкурентів?", faq_a5:"AI перевіряє кожне оголошення конкурента: заголовок (ключові слова, довжина), фото (кількість), опис (наявність та деталі), ціну (відносно ринку), перегляди (активність). Отримуєш конкретний чеклист що покращити у своєму оголошенні.",
+      faq_q5:"Як працює AI-аналіз конкурентів?", faq_a5:"AI перевіряє кожне оголошення конкурента: заголовок (ключові слова, довжина), фото (кількість), опис (наявність та деталі), ціну (відносно ринку), просування та перегляди (активність). Отримуєш конкретний чеклист що покращити у своєму оголошенні.",
       faq_q6:"Чим SellCase відрізняється від ОЛХ Аналітики?", faq_a6:"ОЛХ Аналітика показує що продається на ринку. SellCase показує що роблять конкретні конкуренти і де вони слабші за тебе. Різниця: аналіз ніші vs аналіз конкурентів.",
       footer_app:"Відкрити додаток →",
       nc_title:"Перевір нішу безкоштовно",
@@ -613,8 +615,8 @@
       card_ai:"Market is active. Optimal entry price — 16,500–17,000 ₴.",
       features_title:"Key features of SellCase", features_sub:"Everything you need for successful OLX sales",
       f1_h:"OLX Market Analysis", f1_p:"Average, minimum and maximum price for any query. Separate stats for new and used items.",
-      f2_h:"AI Competitor Analysis", f2_p:"Checks the title, photos, price and views of each competitor listing — you see exactly where they're weaker.",
-      f3_h:"Competitor Analysis", f3_p:"All sellers in the niche, their strategy, prices and listing quality.",
+      f2_h:"AI Competitor Analysis", f2_p:"Checks the title, photos, description, price, promotion and views of each listing — you see strengths and weak spots of every player in the niche.",
+      f3_h:"Competitor Analysis", f3_p:"All sellers in the niche, their strategy, prices and listing quality. Real views of any listing — in one click.",
       f4_h:"Change Alerts", f4_p:"Price dropped? New competitor? Daily notifications via Telegram and Email.",
       f5_h:"Price Trends", f5_p:"Chart of average price changes in your niche over the entire monitoring period.",
       f6_h:"Excel Export", f6_p:"Export results to Excel (.xlsx) for analysis, reports or Google Sheets.",
@@ -632,7 +634,8 @@
       free_btn:"Start for free",
       plan_pro:"Pro", plan_pro_period:"/month", plan_popular:"Popular",
       pro_f1:"20 monitoring projects", pro_f2:"Full AI competitor analysis",
-      pro_f3:"Daily Telegram & Email alerts", pro_f4:"5 tracked sellers",
+      pro_f3:"Daily Telegram & Email alerts", pro_f_views:"Real views of any listing in 1 click",
+      pro_f4:"5 tracked sellers",
       pro_f5:"Price trend chart per project", pro_f6:"Price comparison with real stores",
       pro_f7:"Weekly email digest", pro_f8:"Excel export (.xlsx)",
       pro_f9:"Priority support", pro_btn:"Start with Pro",
@@ -649,7 +652,7 @@
       faq_q2:"Do I need an OLX account?", faq_a2:"No. SellCase works independently from your OLX account.",
       faq_q3:"How fast is data updated?", faq_a3:"Real-time on each search. Projects auto-update once per day.",
       faq_q4:"Is there a free plan?", faq_a4:"Yes! Free plan: market analysis, 3 projects, engagement score, weekly digest — free forever.",
-      faq_q5:"How does AI competitor analysis work?", faq_a5:"AI checks each competitor listing: title (keywords, length), photos (count), description (presence and detail), price (vs market), views (activity). You get a concrete checklist of what to improve in your own listing.",
+      faq_q5:"How does AI competitor analysis work?", faq_a5:"AI checks each competitor listing: title (keywords, length), photos (count), description (presence and detail), price (vs market), promotion and views (activity). You get a concrete checklist of what to improve in your own listing.",
       faq_q6:"How is SellCase different from OLX Analytics?", faq_a6:"OLX Analytics shows what sells on the market. SellCase shows what specific competitors are doing and where they're weaker than you. The difference: niche analysis vs competitor analysis.",
       footer_app:"Open app →",
       nc_title:"Check your niche for free",
