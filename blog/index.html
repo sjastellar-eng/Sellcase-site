@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="icon" type="image/x-icon" href="../logo/favicon_absolute_max.ico"/>
+  <title>Блог SellCase — OLX аналітика для продавців</title>
+  <meta name="description" content="Корисні статті про аналіз конкурентів, моніторинг цін та роботу з OLX. Практичні поради для дропшиперів і реселерів."/>
+  <link rel="canonical" href="https://sellcase.net/blog/"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://sellcase.net/blog/"/>
+  <meta property="og:title" content="Блог SellCase — OLX аналітика для продавців"/>
+  <meta property="og:description" content="Корисні статті про аналіз конкурентів, моніторинг цін та роботу з OLX."/>
+  <meta property="og:image" content="https://sellcase.net/images/og-image.png"/>
+  <meta property="og:site_name" content="SellCase"/>
+  <meta name="robots" content="index, follow"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    html,body { font-family:'Inter',system-ui,-apple-system,sans-serif }
+    .grad-bg  { background:linear-gradient(135deg,#2563EB,#7C3AED) }
+    .soft     { box-shadow:0 12px 30px rgba(0,0,0,.08) }
+    .card-hover { transition:transform .2s ease }
+    .card-hover:hover { transform:translateY(-3px) }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6MSSS40WXW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6MSSS40WXW');
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Header -->
+  <header class="sticky top-0 bg-white bg-opacity-90 backdrop-blur border-b border-gray-100 z-40">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-start">
+        <img src="../logo/logo.png" alt="SellCase" style="height:120px;width:auto;display:block" onerror="this.style.display='none'">
+      </a>
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-gray-600">
+        <a href="/#features"  class="hover:text-blue-600">Функції</a>
+        <a href="/#how"       class="hover:text-blue-600">Як працює</a>
+        <a href="/#pricing"   class="hover:text-blue-600">Тарифи</a>
+        <a href="/blog/"      class="text-blue-600 font-semibold">Блог</a>
+      </nav>
+      <a href="https://app.sellcase.net/register"
+         class="hidden sm:inline-flex items-center px-4 py-2 rounded-lg grad-bg text-white text-sm font-semibold">
+        Спробувати безкоштовно
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-white border-b border-gray-100">
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium mb-4"
+           style="background:rgba(37,99,235,.12);color:#2563EB;border:1px solid rgba(37,99,235,.25)">
+        Блог SellCase
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900">OLX аналітика для продавців</h1>
+      <p class="mt-3 text-gray-500 text-lg">Практичні статті про конкурентів, ціни та інструменти для дропшиперів і реселерів.</p>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <main class="max-w-4xl mx-auto px-4 py-12">
+    <div class="grid gap-6">
+
+      <!-- Article 1 -->
+      <article class="bg-white rounded-2xl soft p-6 card-hover">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-xs font-medium px-2.5 py-1 rounded-full"
+                style="background:#EFF6FF;color:#2563EB">OLX • Аналіз конкурентів</span>
+          <span class="text-xs text-gray-400">Липень 2026</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">
+          <a href="/blog/yak-diznatysya-perehlyady-olx.html" class="hover:text-blue-600 transition-colors">
+            Як дізнатися скільки переглядів у чужого оголошення на OLX
+          </a>
+        </h2>
+        <p class="text-gray-500 text-sm leading-relaxed mb-4">
+          Лічильник переглядів на OLX публічний — його бачить будь-хто без авторизації. Розбираємо де саме знайти цифру, чого вона не показує і як автоматично аналізувати перегляди десятків конкурентів за секунди.
+        </p>
+        <a href="/blog/yak-diznatysya-perehlyady-olx.html"
+           class="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700">
+          Читати далі
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- CTA -->
+  <section class="max-w-4xl mx-auto px-4 pb-16">
+    <div class="rounded-2xl grad-bg p-8 text-white text-center">
+      <h2 class="text-2xl font-bold mb-2">Аналізуй конкурентів автоматично</h2>
+      <p class="text-blue-100 mb-6">Перегляди, ціни, промоція — все в одному місці. Безкоштовно для перших 100 користувачів.</p>
+      <a href="https://app.sellcase.net/register"
+         class="inline-flex items-center px-6 py-3 rounded-xl bg-white font-bold text-blue-700 hover:bg-blue-50 transition-colors">
+        Спробувати безкоштовно →
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 border-t border-gray-100 bg-white">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+      <div class="flex items-center gap-2">
+        <img src="../logo/logo.png" alt="SellCase" style="height:32px;width:auto" onerror="this.style.display='none'">
+        <span class="text-gray-400 text-xs">© 2026 SellCase</span>
+      </div>
+      <div class="flex flex-col md:flex-row items-center gap-3 md:gap-6">
+        <a href="/terms.html"   class="hover:text-blue-600">Умови використання</a>
+        <a href="/privacy.html" class="hover:text-blue-600">Політика конфіденційності</a>
+        <a href="mailto:support@sellcase.net" class="hover:text-blue-600">support@sellcase.net</a>
+        <a href="https://app.sellcase.net" class="hover:text-blue-600 font-medium">Відкрити додаток →</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
