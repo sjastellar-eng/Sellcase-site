@@ -71,14 +71,26 @@
   <header class="sticky top-0 bg-white bg-opacity-90 backdrop-blur border-b border-gray-100 z-40">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
 
-      <!-- Logo (left-aligned on all screen sizes) -->
-      <a href="/" class="flex items-start flex-shrink-0">
-        <img src="logo/logo.png"
-             alt="SellCase"
-             height="120"
-             style="height:120px;width:auto;display:block"
-             onerror="this.style.display='none'">
-      </a>
+      <!-- Left group: burger (mobile) + logo -->
+      <div class="flex items-center gap-3">
+        <!-- Burger (mobile only) -->
+        <button id="burger-btn" type="button"
+                class="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-gray-100 gap-1.5"
+                aria-label="Меню"
+                onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
+          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
+          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
+        </button>
+        <!-- Logo -->
+        <a href="/" class="flex items-start flex-shrink-0">
+          <img src="logo/logo.png"
+               alt="SellCase"
+               height="120"
+               style="height:120px;width:auto;display:block"
+               onerror="this.style.display='none'">
+        </a>
+      </div>
 
       <!-- Desktop Nav (hidden on mobile) -->
       <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-gray-600">
@@ -89,24 +101,13 @@
         <a href="/blog/"    class="hover:text-blue-600" data-i18n="nav_blog">Блог</a>
       </nav>
 
-      <!-- Right side -->
+      <!-- Right group: lang switcher (always) + CTA (desktop only) -->
       <div class="flex items-center gap-2">
-        <!-- Lang switcher: desktop only -->
-        <button id="btn-uk" type="button" class="lang-btn active hidden md:inline-block" onclick="setLang('uk')">UA</button>
-        <button id="btn-en" type="button" class="lang-btn        hidden md:inline-block" onclick="setLang('en')">EN</button>
-        <!-- CTA: desktop only -->
+        <button id="btn-uk" type="button" class="lang-btn active" onclick="setLang('uk')">UA</button>
+        <button id="btn-en" type="button" class="lang-btn"        onclick="setLang('en')">EN</button>
         <a href="https://app.sellcase.net/register"
            class="hidden md:inline-flex items-center px-4 py-2 rounded-lg grad-bg text-white text-sm font-semibold"
            data-i18n="cta_header">Спробувати безкоштовно</a>
-        <!-- Burger (mobile only) -->
-        <button id="burger-btn" type="button"
-                class="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-gray-100 gap-1.5"
-                aria-label="Меню"
-                onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
-          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
-          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
-        </button>
       </div>
 
     </div>
@@ -129,13 +130,7 @@
         <a href="/blog/" data-i18n="nav_blog"
            class="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-blue-600"
            onclick="document.getElementById('mobile-menu').classList.add('hidden')">Блог</a>
-        <div class="mt-2 pt-2 border-t border-gray-100 flex flex-col gap-2">
-          <!-- Lang switcher in mobile menu -->
-          <div class="flex gap-2 px-3">
-            <button type="button" class="lang-btn active flex-1" onclick="setLang('uk');document.getElementById('mobile-menu').classList.add('hidden')">UA</button>
-            <button type="button" class="lang-btn flex-1"        onclick="setLang('en');document.getElementById('mobile-menu').classList.add('hidden')">EN</button>
-          </div>
-          <!-- CTA -->
+        <div class="mt-2 pt-2 border-t border-gray-100">
           <a href="https://app.sellcase.net/register"
              class="block px-4 py-2.5 rounded-lg text-center text-white font-semibold grad-bg"
              data-i18n="cta_header">Спробувати безкоштовно</a>
