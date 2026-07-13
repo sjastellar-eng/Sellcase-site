@@ -47,6 +47,9 @@
     .lang-btn.active { background:#1d4ed8;color:#fff;border-color:#1d4ed8 }
     .card-hover { transition:transform .2s ease }
     .card-hover:hover { transform:translateY(-3px) }
+    @media (max-width: 767px) {
+      #header-logo { position:absolute; left:50%; transform:translateX(-50%); z-index:1 }
+    }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6MSSS40WXW"></script>
@@ -69,18 +72,18 @@
 
   <!-- Header -->
   <header class="sticky top-0 bg-white bg-opacity-90 backdrop-blur border-b border-gray-100 z-40">
-    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between relative">
 
       <!-- Logo -->
-      <a href="/" class="flex items-start">
+      <a href="/" id="header-logo" class="flex items-start">
         <img src="logo/logo.png"
              alt="SellCase"
-             height="120"
-             style="height:120px;width:auto;display:block"
+             height="155"
+             style="height:155px;width:auto;display:block"
              onerror="this.style.display='none'">
       </a>
 
-      <!-- Nav -->
+      <!-- Desktop Nav -->
       <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-gray-600">
         <a href="#features" class="hover:text-blue-600" data-i18n="nav_features">Функції</a>
         <a href="#how"      class="hover:text-blue-600" data-i18n="nav_how">Як працює</a>
@@ -96,8 +99,43 @@
         <a href="https://app.sellcase.net/register"
            class="hidden sm:inline-flex items-center px-4 py-2 rounded-lg grad-bg text-white text-sm font-semibold"
            data-i18n="cta_header">Спробувати безкоштовно</a>
+        <!-- Burger (mobile only) -->
+        <button id="burger-btn" type="button"
+                class="md:hidden ml-1 flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-gray-100 gap-1.5"
+                aria-label="Меню"
+                onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
+          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
+          <span class="block w-5 h-0.5 rounded bg-gray-700"></span>
+        </button>
       </div>
 
+    </div>
+
+    <!-- Mobile Nav Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg">
+      <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-0.5 text-sm font-medium">
+        <a href="#features" data-i18n="nav_features"
+           class="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+           onclick="document.getElementById('mobile-menu').classList.add('hidden')">Функції</a>
+        <a href="#how" data-i18n="nav_how"
+           class="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+           onclick="document.getElementById('mobile-menu').classList.add('hidden')">Як працює</a>
+        <a href="#pricing" data-i18n="nav_pricing"
+           class="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+           onclick="document.getElementById('mobile-menu').classList.add('hidden')">Тарифи</a>
+        <a href="#faq" data-i18n="nav_faq"
+           class="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+           onclick="document.getElementById('mobile-menu').classList.add('hidden')">FAQ</a>
+        <a href="/blog/" data-i18n="nav_blog"
+           class="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+           onclick="document.getElementById('mobile-menu').classList.add('hidden')">Блог</a>
+        <div class="mt-2 pt-2 border-t border-gray-100">
+          <a href="https://app.sellcase.net/register"
+             class="block px-4 py-2.5 rounded-lg text-center text-white font-semibold grad-bg"
+             data-i18n="cta_header">Спробувати безкоштовно</a>
+        </div>
+      </nav>
     </div>
   </header>
 
