@@ -880,6 +880,21 @@
         el.value = v || '';
       });
     });
+    // Append UTM params to all app.sellcase.net links
+    (function(){
+      var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+      var cache = {};
+      try { cache = JSON.parse(localStorage.getItem('sellcase_utm')||'{}'); } catch(_) {}
+      var fresh = cache.ts && (Date.now()-cache.ts < 7*24*60*60*1000);
+      var qs = keys.map(function(k){
+        var v = utm[k] || (fresh && cache[k]) || '';
+        return v ? k+'='+encodeURIComponent(v) : '';
+      }).filter(Boolean).join('&');
+      if (!qs) return;
+      document.querySelectorAll('a[href*="app.sellcase.net"]').forEach(function(a){
+        a.href += (a.href.indexOf('?') === -1 ? '?' : '&') + qs;
+      });
+    })();
   })();
   </script>
 

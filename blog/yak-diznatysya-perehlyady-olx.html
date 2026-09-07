@@ -274,5 +274,31 @@
     </div>
   </footer>
 
+<script>
+(function(){
+  var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  var utm = {};
+  var p = new URLSearchParams(location.search);
+  KEYS.forEach(function(k){ if(p.get(k)) utm[k] = p.get(k); });
+  if (utm.utm_source) {
+    try { localStorage.setItem('sellcase_utm', JSON.stringify(Object.assign({}, utm, {ts:Date.now()}))); } catch(_) {}
+  }
+  if (!utm.utm_source) {
+    try {
+      var cache = JSON.parse(localStorage.getItem('sellcase_utm')||'{}');
+      if (cache.ts && Date.now()-cache.ts < 7*24*60*60*1000) {
+        KEYS.forEach(function(k){ if(cache[k]) utm[k] = cache[k]; });
+      }
+    } catch(_) {}
+  }
+  var qs = KEYS.filter(function(k){ return utm[k]; })
+               .map(function(k){ return k+'='+encodeURIComponent(utm[k]); })
+               .join('&');
+  if (!qs) return;
+  document.querySelectorAll('a[href*="app.sellcase.net"]').forEach(function(a){
+    a.href += (a.href.indexOf('?') === -1 ? '?' : '&') + qs;
+  });
+})();
+</script>
 </body>
 </html>
