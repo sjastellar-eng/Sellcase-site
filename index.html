@@ -51,6 +51,8 @@
     .card-hover { transition:transform .2s ease }
     .card-hover:hover { transform:translateY(-3px) }
     .logo-img { height:120px; width:auto; display:block }
+    .blog-scroll { scrollbar-width:none; -webkit-overflow-scrolling:touch }
+    .blog-scroll::-webkit-scrollbar { display:none }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6MSSS40WXW"></script>
@@ -598,6 +600,62 @@
     </div>
   </section>
 
+  <!-- BLOG CAROUSEL -->
+  <section class="py-14 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-extrabold text-gray-900" data-i18n="blog_section_title">З блогу</h2>
+        <a href="/blog/" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1" data-i18n="blog_section_link">Всі статті →</a>
+      </div>
+      <div class="blog-scroll" style="display:flex;overflow-x:auto;gap:16px;padding-bottom:12px;scroll-snap-type:x mandatory">
+        <a href="/blog/sezonni-nishi-olx-osin-2026.html"
+           class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100"
+           style="flex-shrink:0;width:260px;scroll-snap-align:start;text-decoration:none">
+          <img src="images/thumb-seasonal.webp"
+               alt="Сезонні ніші на OLX: що продавати восени 2026"
+               class="w-full object-cover" style="height:160px" loading="lazy">
+          <div class="p-4">
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background:#EFF6FF;color:#2563EB">OLX • Сезонність</span>
+            <p class="mt-2 font-semibold text-gray-900 text-sm leading-snug">Сезонні ніші на OLX: що продавати восени 2026</p>
+          </div>
+        </a>
+        <a href="/blog/yak-diznatysya-perehlyady-olx.html"
+           class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100"
+           style="flex-shrink:0;width:260px;scroll-snap-align:start;text-decoration:none">
+          <img src="images/thumb-views.webp"
+               alt="Як дізнатися скільки переглядів у чужого оголошення на OLX"
+               class="w-full object-cover" style="height:160px" loading="lazy">
+          <div class="p-4">
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background:#EFF6FF;color:#2563EB">OLX • Конкуренти</span>
+            <p class="mt-2 font-semibold text-gray-900 text-sm leading-snug">Як дізнатися скільки переглядів у чужого оголошення на OLX</p>
+          </div>
+        </a>
+        <a href="/blog/chomu-ogoloshennya-ne-prodaie-cheklist.html"
+           class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100"
+           style="flex-shrink:0;width:260px;scroll-snap-align:start;text-decoration:none">
+          <img src="images/thumb-checklist.webp"
+               alt="Чому твоє оголошення на OLX не продає: чеклист з 7 пунктів"
+               class="w-full object-cover" style="height:160px" loading="lazy">
+          <div class="p-4">
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background:#EFF6FF;color:#2563EB">OLX • Продажі</span>
+            <p class="mt-2 font-semibold text-gray-900 text-sm leading-snug">Чому твоє оголошення на OLX не продає: чеклист з 7 пунктів</p>
+          </div>
+        </a>
+        <a href="/blog/dropshyping-olx-nisha-2026.html"
+           class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100"
+           style="flex-shrink:0;width:260px;scroll-snap-align:start;text-decoration:none">
+          <img src="images/thumb-niche.webp"
+               alt="Дропшипінг на OLX: як вибрати нішу з мінімальною конкуренцією у 2026 році"
+               class="w-full object-cover" style="height:160px" loading="lazy">
+          <div class="p-4">
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background:#EFF6FF;color:#2563EB">Дропшипінг • OLX</span>
+            <p class="mt-2 font-semibold text-gray-900 text-sm leading-snug">Дропшипінг на OLX: як вибрати нішу з мінімальною конкуренцією у 2026 році</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- FINAL CTA -->
   <section class="py-20 grad-bg">
     <div class="max-w-3xl mx-auto px-4 text-center">
@@ -724,7 +782,8 @@
       nc_cta_h:"Хочеш повний аналіз та стеж за конкурентами?",
       nc_cta_sub:"Приєднуйся до перших 100 користувачів у Telegram-спільноті — отримай Pro безкоштовно на 3 місяці. Топ-10 найактивніших отримають Pro назавжди.",
       nc_cta_btn:"Приєднатись в Telegram →",
-      nc_disclaimer:"Це безкоштовний інструмент-демо. Повний функціонал SellCase включає трекінг конкурентів, цінові алерти та AI-аналіз."
+      nc_disclaimer:"Це безкоштовний інструмент-демо. Повний функціонал SellCase включає трекінг конкурентів, цінові алерти та AI-аналіз.",
+      blog_section_title:"З блогу", blog_section_link:"Всі статті →"
     },
     en: {
       nav_features:"Features", nav_how:"How it works", nav_pricing:"Pricing", nav_faq:"FAQ", nav_blog:"Blog",
@@ -810,7 +869,8 @@
       nc_cta_h:"Want the full analysis and competitor tracking?",
       nc_cta_sub:"Join the first 100 in Telegram — Pro free for 3 months. Top 10 most active members get Pro forever.",
       nc_cta_btn:"Join on Telegram →",
-      nc_disclaimer:"This is a free demo tool. The full SellCase product includes competitor tracking, price alerts, and AI analysis."
+      nc_disclaimer:"This is a free demo tool. The full SellCase product includes competitor tracking, price alerts, and AI analysis.",
+      blog_section_title:"From the blog", blog_section_link:"All articles →"
     }
   };
 
