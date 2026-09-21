@@ -1016,6 +1016,12 @@
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('#wl-ua, #wl-en').forEach(function(form) {
+      var emailInput = form.querySelector('input[type="email"]');
+      if (emailInput) {
+        emailInput.addEventListener('focus', function() {
+          gtag('event', 'promo_form_started');
+        }, { once: true });
+      }
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
         var lang = (form.id === 'wl-en') ? 'en' : 'ua';
@@ -1027,6 +1033,7 @@
             mode: 'no-cors', keepalive: true
           });
         } catch(_) {}
+        gtag('event', 'promo_form_completed');
         form.reset();
         if (btn) {
           btn.disabled = false;
