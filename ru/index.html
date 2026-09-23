@@ -640,6 +640,38 @@
   })();
   </script>
 
+  <!-- Backend lead submission -->
+  <script>
+  (function() {
+    var BACKEND_URL = 'https://sellcase-backend.onrender.com/leads/';
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      if (!form.matches('#wl-ru')) return;
+      try {
+        var get = function(n) {
+          var el = form.querySelector('[name="'+n+'"]');
+          return el && typeof el.value === 'string' ? el.value.trim() : '';
+        };
+        var payload = {
+          email: get('email') || '',
+          utm_source: get('utm_source') || '',
+          utm_medium: get('utm_medium') || '',
+          utm_campaign: get('utm_campaign') || '',
+          utm_content: get('utm_content') || '',
+          utm_term: get('utm_term') || ''
+        };
+        if (!payload.email) return;
+        fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json','Accept':'application/json'},
+          body: JSON.stringify(payload),
+          keepalive: true
+        }).catch(function(){});
+      } catch(_) {}
+    });
+  })();
+  </script>
+
   <!-- Form submit handler -->
   <script>
   document.addEventListener('DOMContentLoaded', function() {
