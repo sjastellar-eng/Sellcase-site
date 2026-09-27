@@ -1025,9 +1025,14 @@
 
   <!-- Success popup -->
   <div id="sc-success" style="display:none;position:fixed;inset:0;z-index:9999;
-       background:rgba(0,0,0,.4);align-items:center;justify-content:center">
-    <div style="background:#fff;border-radius:20px;padding:32px 40px;text-align:center;
+       background:rgba(0,0,0,.4);align-items:center;justify-content:center"
+       onclick="if(event.target===this)this.style.display='none'">
+    <div style="position:relative;background:#fff;border-radius:20px;padding:32px 40px;text-align:center;
                 box-shadow:0 24px 48px rgba(0,0,0,.2);max-width:400px;width:90%">
+      <button onclick="document.getElementById('sc-success').style.display='none'"
+              aria-label="Закрити"
+              style="position:absolute;top:12px;right:14px;background:none;border:none;
+                     font-size:20px;line-height:1;color:#9ca3af;cursor:pointer;padding:4px">✕</button>
       <div style="font-size:48px;margin-bottom:12px">🎉</div>
       <h2 style="font-size:24px;font-weight:800;color:#111827;margin:0 0 8px">
         Вітаємо в команді SellCase!
@@ -1044,6 +1049,14 @@
       </a>
     </div>
   </div>
+  <script>
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var p = document.getElementById('sc-success');
+      if (p) p.style.display = 'none';
+    }
+  });
+  </script>
   <!-- Niche Checker -->
   <script>
   (function() {
