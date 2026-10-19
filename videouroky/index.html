@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/logo/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/logo/favicon-512.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Відеоуроки SellCase — Покрокові інструкції для OLX-продавців</title>
+  <meta name="description" content="Відеоуроки SellCase: як аналізувати ніші, стежити за конкурентами та збільшувати продажі на OLX. Дивись безкоштовно."/>
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://sellcase.net/videouroky/"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://sellcase.net/videouroky/"/>
+  <meta property="og:title" content="Відеоуроки SellCase — Покрокові інструкції"/>
+  <meta property="og:description" content="Відеоуроки SellCase: як аналізувати ніші, стежити за конкурентами та збільшувати продажі на OLX."/>
+  <meta property="og:image" content="https://sellcase.net/images/og-image.png"/>
+  <meta property="og:locale" content="uk_UA"/>
+  <meta property="og:site_name" content="SellCase"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Відеоуроки SellCase — Покрокові інструкції"/>
+  <meta name="twitter:description" content="Відеоуроки SellCase: як аналізувати ніші, стежити за конкурентами та збільшувати продажі на OLX."/>
+  <meta name="twitter:image" content="https://sellcase.net/images/og-image.png"/>
+
+  <meta name="robots" content="index, follow"/>
+  <meta name="author" content="SellCase"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    html,body { font-family:'Inter',system-ui,-apple-system,sans-serif }
+    .grad-bg  { background:linear-gradient(135deg,#2563EB,#7C3AED) }
+    .soft     { box-shadow:0 12px 30px rgba(0,0,0,.08) }
+    .lang-btn { padding:.4rem .6rem;border:1px solid #e5e7eb;border-radius:.5rem;font-weight:600;background:#fff;cursor:pointer }
+    .lang-btn.active { background:#1d4ed8;color:#fff;border-color:#1d4ed8 }
+    .logo-img { height:120px; width:auto; display:block }
+    @media (max-width:639px) { .lang-btn { padding:.3rem .45rem;font-size:.75rem } }
+
+    /* Video card */
+    .vc-thumb { position:relative; aspect-ratio:9/16; background:#000; overflow:hidden; border-radius:12px 12px 0 0; cursor:pointer }
+    .vc-thumb img { width:100%; height:100%; object-fit:cover; display:block }
+    .vc-thumb iframe { position:absolute; inset:0; width:100%; height:100%; border:0 }
+    .vc-play {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.25); transition:background .2s
+    }
+    .vc-play:hover { background:rgba(0,0,0,.4) }
+    .vc-play-btn {
+      width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.95);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 4px 16px rgba(0,0,0,.3)
+    }
+    .vc-play-btn svg { width:22px; height:22px; margin-left:4px; fill:#2563EB }
+  </style>
+
+  <!-- JSON-LD VideoObject for published videos -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Огляд SellCase — аналітика OLX",
+      "description": "Коротке знайомство з SellCase: що можна дізнатися за кілька кліків і чому сервіс корисний OLX-продавцям.",
+      "thumbnailUrl": "https://i.ytimg.com/vi/v0pZMEbw8cg/hqdefault.jpg",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/v0pZMEbw8cg",
+      "uploadDate": "TODO: вкажи дату публікації",
+      "duration": "TODO: вкажи тривалість (напр. PT0M45S)"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Реєстрація і старт у SellCase",
+      "description": "Як зареєструватися і налаштувати акаунт менш ніж за 2 хвилини.",
+      "thumbnailUrl": "https://i.ytimg.com/vi/H0qGrEoRQDs/hqdefault.jpg",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/H0qGrEoRQDs",
+      "uploadDate": "TODO: вкажи дату публікації",
+      "duration": "TODO: вкажи тривалість"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Пошук і оцінка ніші на OLX",
+      "description": "Як ввести будь-який товар і отримати оцінку попиту, конкуренції та середньої ціни на OLX.",
+      "thumbnailUrl": "https://i.ytimg.com/vi/slAdsfVHIco/hqdefault.jpg",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/slAdsfVHIco",
+      "uploadDate": "TODO: вкажи дату публікації",
+      "duration": "TODO: вкажи тривалість"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Аналіз конкурентів на OLX у SellCase",
+      "description": "Дивись перегляди, ціни і слабкі місця конкурентів — прямо в SellCase.",
+      "thumbnailUrl": "https://i.ytimg.com/vi/QDBfU5xWMsg/hqdefault.jpg",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/QDBfU5xWMsg",
+      "uploadDate": "TODO: вкажи дату публікації",
+      "duration": "TODO: вкажи тривалість"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Експорт даних OLX в Excel",
+      "description": "Збери всі дані про нішу у зручну таблицю для подальшого аналізу.",
+      "thumbnailUrl": "https://i.ytimg.com/vi/dAeQa4BeyFU/hqdefault.jpg",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/dAeQa4BeyFU",
+      "uploadDate": "TODO: вкажи дату публікації",
+      "duration": "TODO: вкажи тривалість"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Сповіщення в Telegram від SellCase",
+      "description": "Отримуй автоматичні сповіщення коли падає ціна або з'являється новий конкурент.",
+      "thumbnailUrl": "https://i.ytimg.com/vi/Sw58TSTg5qg/hqdefault.jpg",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/Sw58TSTg5qg",
+      "uploadDate": "TODO: вкажи дату публікації",
+      "duration": "TODO: вкажи тривалість"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Проєкти і PDF-звіти в SellCase",
+      "description": "Як зберегти аналіз ніші і поділитися PDF-звітом з партнером або клієнтом.",
+      "thumbnailUrl": "https://i.ytimg.com/vi/IJGFhwzbz9E/hqdefault.jpg",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/IJGFhwzbz9E",
+      "uploadDate": "TODO: вкажи дату публікації",
+      "duration": "TODO: вкажи тривалість"
+    }
+  ]
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6MSSS40WXW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6MSSS40WXW');
+    gtag('event', 'landing_view', { page: 'videouroky' });
+  </script>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Header -->
+  <header class="sticky top-0 bg-white bg-opacity-90 backdrop-blur border-b border-gray-100 z-40">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center flex-shrink-0">
+        <img src="/logo/logo.png"
+             alt="SellCase"
+             height="120"
+             class="logo-img"
+             onerror="this.style.display='none'">
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-gray-600">
+        <a href="/#features" class="hover:text-blue-600">Функції</a>
+        <a href="/#how"      class="hover:text-blue-600">Як працює</a>
+        <a href="/#pricing"  class="hover:text-blue-600">Тарифи</a>
+        <a href="/#faq"      class="hover:text-blue-600">FAQ</a>
+        <a href="/blog/"     class="hover:text-blue-600">Блог</a>
+        <a href="/videouroky/" class="text-blue-600 font-semibold">Відеоуроки</a>
+      </nav>
+
+      <!-- Right group -->
+      <div class="flex items-center gap-1 sm:gap-2">
+        <a href="https://app.sellcase.net/login"
+           class="text-xs text-gray-400 hover:text-gray-600 transition-colors whitespace-nowrap">Увійти →</a>
+        <a href="https://app.sellcase.net/register"
+           class="hidden md:inline-flex items-center px-4 py-2 rounded-lg grad-bg text-white text-sm font-semibold">
+          Спробувати безкоштовно
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="py-12 md:py-16 bg-gray-50 border-b border-gray-100">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium mb-4"
+           style="background:rgba(37,99,235,.1);color:#2563EB;border:1px solid rgba(37,99,235,.2)">
+        7 відео • YouTube Shorts
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Відеоуроки SellCase</h1>
+      <p class="text-gray-500 text-base sm:text-lg max-w-xl mx-auto">
+        Покрокові інструкції як отримати максимум від SellCase — від реєстрації до аналізу конкурентів і PDF-звітів.
+      </p>
+    </div>
+  </section>
+
+  <!-- Video grid -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6" id="video-grid">
+
+        <!-- Video 1: Огляд сайту -->
+        <div class="video-card flex flex-col" data-vid="v0pZMEbw8cg" data-num="1"
+             data-title="Огляд сайту">
+          <div class="vc-thumb">
+            <img src="https://i.ytimg.com/vi/v0pZMEbw8cg/hqdefault.jpg"
+                 alt="Огляд сайту — SellCase"
+                 width="360" height="640" loading="lazy">
+            <div class="vc-play" role="button" aria-label="Відтворити відео «Огляд сайту»"
+                 onclick="vcPlay(this)">
+              <div class="vc-play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-white border border-t-0 border-gray-100 rounded-b-xl flex-1 flex flex-col">
+            <p class="text-xs text-blue-600 font-semibold mb-1">01</p>
+            <h2 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Огляд сайту</h2>
+            <p class="text-xs text-gray-500 leading-relaxed mb-2 flex-1">Коротке знайомство з SellCase: що можна дізнатися за кілька кліків.</p>
+            <p class="text-xs text-gray-400">⏱ <!-- TODO: додай тривалість --></p>
+          </div>
+          <details class="border border-t-0 border-gray-100 rounded-b-xl -mt-px">
+            <summary class="px-3 py-2 text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+              Текстова версія
+            </summary>
+            <div class="px-3 pb-3 text-xs text-gray-500 leading-relaxed">
+              <!-- TODO: додай текстову розшифровку коли озвучка буде готова -->
+              <em>Розшифровку буде додано після готовності озвучки.</em>
+            </div>
+          </details>
+        </div>
+
+        <!-- Video 2: Реєстрація і старт -->
+        <div class="video-card flex flex-col" data-vid="H0qGrEoRQDs" data-num="2"
+             data-title="Реєстрація і старт">
+          <div class="vc-thumb">
+            <img src="https://i.ytimg.com/vi/H0qGrEoRQDs/hqdefault.jpg"
+                 alt="Реєстрація і старт — SellCase"
+                 width="360" height="640" loading="lazy">
+            <div class="vc-play" role="button" aria-label="Відтворити відео «Реєстрація і старт»"
+                 onclick="vcPlay(this)">
+              <div class="vc-play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-white border border-t-0 border-gray-100 rounded-b-xl flex-1 flex flex-col">
+            <p class="text-xs text-blue-600 font-semibold mb-1">02</p>
+            <h2 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Реєстрація і старт</h2>
+            <p class="text-xs text-gray-500 leading-relaxed mb-2 flex-1">Як зареєструватися і налаштувати акаунт менш ніж за 2 хвилини.</p>
+            <p class="text-xs text-gray-400">⏱ <!-- TODO: додай тривалість --></p>
+          </div>
+          <details class="border border-t-0 border-gray-100 rounded-b-xl -mt-px">
+            <summary class="px-3 py-2 text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+              Текстова версія
+            </summary>
+            <div class="px-3 pb-3 text-xs text-gray-500 leading-relaxed">
+              <em>Розшифровку буде додано після готовності озвучки.</em>
+            </div>
+          </details>
+        </div>
+
+        <!-- Video 3: Пошук і оцінка ніші -->
+        <div class="video-card flex flex-col" data-vid="slAdsfVHIco" data-num="3"
+             data-title="Пошук і оцінка ніші">
+          <div class="vc-thumb">
+            <img src="https://i.ytimg.com/vi/slAdsfVHIco/hqdefault.jpg"
+                 alt="Пошук і оцінка ніші — SellCase"
+                 width="360" height="640" loading="lazy">
+            <div class="vc-play" role="button" aria-label="Відтворити відео «Пошук і оцінка ніші»"
+                 onclick="vcPlay(this)">
+              <div class="vc-play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-white border border-t-0 border-gray-100 rounded-b-xl flex-1 flex flex-col">
+            <p class="text-xs text-blue-600 font-semibold mb-1">03</p>
+            <h2 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Пошук і оцінка ніші</h2>
+            <p class="text-xs text-gray-500 leading-relaxed mb-2 flex-1">Як ввести будь-який товар і отримати оцінку попиту, конкуренції та середньої ціни.</p>
+            <p class="text-xs text-gray-400">⏱ <!-- TODO: додай тривалість --></p>
+          </div>
+          <details class="border border-t-0 border-gray-100 rounded-b-xl -mt-px">
+            <summary class="px-3 py-2 text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+              Текстова версія
+            </summary>
+            <div class="px-3 pb-3 text-xs text-gray-500 leading-relaxed">
+              <em>Розшифровку буде додано після готовності озвучки.</em>
+            </div>
+          </details>
+        </div>
+
+        <!-- Video 4: Конкуренти -->
+        <div class="video-card flex flex-col" data-vid="QDBfU5xWMsg" data-num="4"
+             data-title="Конкуренти">
+          <div class="vc-thumb">
+            <img src="https://i.ytimg.com/vi/QDBfU5xWMsg/hqdefault.jpg"
+                 alt="Конкуренти — SellCase"
+                 width="360" height="640" loading="lazy">
+            <div class="vc-play" role="button" aria-label="Відтворити відео «Конкуренти»"
+                 onclick="vcPlay(this)">
+              <div class="vc-play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-white border border-t-0 border-gray-100 rounded-b-xl flex-1 flex flex-col">
+            <p class="text-xs text-blue-600 font-semibold mb-1">04</p>
+            <h2 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Конкуренти</h2>
+            <p class="text-xs text-gray-500 leading-relaxed mb-2 flex-1">Дивись перегляди, ціни і слабкі місця конкурентів — прямо в SellCase.</p>
+            <p class="text-xs text-gray-400">⏱ <!-- TODO: додай тривалість --></p>
+          </div>
+          <details class="border border-t-0 border-gray-100 rounded-b-xl -mt-px">
+            <summary class="px-3 py-2 text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+              Текстова версія
+            </summary>
+            <div class="px-3 pb-3 text-xs text-gray-500 leading-relaxed">
+              <em>Розшифровку буде додано після готовності озвучки.</em>
+            </div>
+          </details>
+        </div>
+
+        <!-- Video 5: Експорт в Excel -->
+        <div class="video-card flex flex-col" data-vid="dAeQa4BeyFU" data-num="5"
+             data-title="Експорт в Excel">
+          <div class="vc-thumb">
+            <img src="https://i.ytimg.com/vi/dAeQa4BeyFU/hqdefault.jpg"
+                 alt="Експорт в Excel — SellCase"
+                 width="360" height="640" loading="lazy">
+            <div class="vc-play" role="button" aria-label="Відтворити відео «Експорт в Excel»"
+                 onclick="vcPlay(this)">
+              <div class="vc-play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-white border border-t-0 border-gray-100 rounded-b-xl flex-1 flex flex-col">
+            <p class="text-xs text-blue-600 font-semibold mb-1">05</p>
+            <h2 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Експорт в Excel</h2>
+            <p class="text-xs text-gray-500 leading-relaxed mb-2 flex-1">Збери всі дані про нішу у зручну таблицю для подальшого аналізу.</p>
+            <p class="text-xs text-gray-400">⏱ <!-- TODO: додай тривалість --></p>
+          </div>
+          <details class="border border-t-0 border-gray-100 rounded-b-xl -mt-px">
+            <summary class="px-3 py-2 text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+              Текстова версія
+            </summary>
+            <div class="px-3 pb-3 text-xs text-gray-500 leading-relaxed">
+              <em>Розшифровку буде додано після готовності озвучки.</em>
+            </div>
+          </details>
+        </div>
+
+        <!-- Video 6: Сповіщення в Telegram -->
+        <div class="video-card flex flex-col" data-vid="Sw58TSTg5qg" data-num="6"
+             data-title="Сповіщення в Telegram">
+          <div class="vc-thumb">
+            <img src="https://i.ytimg.com/vi/Sw58TSTg5qg/hqdefault.jpg"
+                 alt="Сповіщення в Telegram — SellCase"
+                 width="360" height="640" loading="lazy">
+            <div class="vc-play" role="button" aria-label="Відтворити відео «Сповіщення в Telegram»"
+                 onclick="vcPlay(this)">
+              <div class="vc-play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-white border border-t-0 border-gray-100 rounded-b-xl flex-1 flex flex-col">
+            <p class="text-xs text-blue-600 font-semibold mb-1">06</p>
+            <h2 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Сповіщення в Telegram</h2>
+            <p class="text-xs text-gray-500 leading-relaxed mb-2 flex-1">Автоматичні сповіщення коли падає ціна або з'являється новий конкурент.</p>
+            <p class="text-xs text-gray-400">⏱ <!-- TODO: додай тривалість --></p>
+          </div>
+          <details class="border border-t-0 border-gray-100 rounded-b-xl -mt-px">
+            <summary class="px-3 py-2 text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+              Текстова версія
+            </summary>
+            <div class="px-3 pb-3 text-xs text-gray-500 leading-relaxed">
+              <em>Розшифровку буде додано після готовності озвучки.</em>
+            </div>
+          </details>
+        </div>
+
+        <!-- Video 7: Проєкти і PDF -->
+        <div class="video-card flex flex-col" data-vid="IJGFhwzbz9E" data-num="7"
+             data-title="Проєкти і PDF">
+          <div class="vc-thumb">
+            <img src="https://i.ytimg.com/vi/IJGFhwzbz9E/hqdefault.jpg"
+                 alt="Проєкти і PDF — SellCase"
+                 width="360" height="640" loading="lazy">
+            <div class="vc-play" role="button" aria-label="Відтворити відео «Проєкти і PDF»"
+                 onclick="vcPlay(this)">
+              <div class="vc-play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-white border border-t-0 border-gray-100 rounded-b-xl flex-1 flex flex-col">
+            <p class="text-xs text-blue-600 font-semibold mb-1">07</p>
+            <h2 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Проєкти і PDF</h2>
+            <p class="text-xs text-gray-500 leading-relaxed mb-2 flex-1">Як зберегти аналіз ніші і поділитися PDF-звітом з партнером або клієнтом.</p>
+            <p class="text-xs text-gray-400">⏱ <!-- TODO: додай тривалість --></p>
+          </div>
+          <details class="border border-t-0 border-gray-100 rounded-b-xl -mt-px">
+            <summary class="px-3 py-2 text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+              Текстова версія
+            </summary>
+            <div class="px-3 pb-3 text-xs text-gray-500 leading-relaxed">
+              <em>Розшифровку буде додано після готовності озвучки.</em>
+            </div>
+          </details>
+        </div>
+
+        <!-- Video 8: Свій товар — HIDDEN (data-hidden="true") -->
+        <!-- To publish: remove the style="display:none" and the data-hidden attribute -->
+        <div class="video-card flex flex-col" data-vid="_KRRIPUgK8M" data-num="8"
+             data-title="Свій товар" data-hidden="true" style="display:none">
+          <div class="vc-thumb">
+            <img src="https://i.ytimg.com/vi/_KRRIPUgK8M/hqdefault.jpg"
+                 alt="Свій товар — SellCase"
+                 width="360" height="640" loading="lazy">
+            <div class="vc-play" role="button" aria-label="Відтворити відео «Свій товар»"
+                 onclick="vcPlay(this)">
+              <div class="vc-play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-white border border-t-0 border-gray-100 rounded-b-xl flex-1 flex flex-col">
+            <p class="text-xs text-blue-600 font-semibold mb-1">08</p>
+            <h2 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Свій товар</h2>
+            <p class="text-xs text-gray-500 leading-relaxed mb-2 flex-1"><!-- TODO: додай опис --></p>
+            <p class="text-xs text-gray-400">⏱ <!-- TODO: додай тривалість --></p>
+          </div>
+          <details class="border border-t-0 border-gray-100 rounded-b-xl -mt-px">
+            <summary class="px-3 py-2 text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+              Текстова версія
+            </summary>
+            <div class="px-3 pb-3 text-xs text-gray-500 leading-relaxed">
+              <em>Розшифровку буде додано після готовності озвучки.</em>
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="py-14 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-xl mx-auto px-4 text-center">
+      <h2 class="text-2xl font-extrabold mb-3">Готовий спробувати?</h2>
+      <p class="text-gray-500 mb-6">Зареєструйся безкоштовно і перевір свою нішу прямо зараз.</p>
+      <a href="https://app.sellcase.net/register"
+         class="inline-flex items-center px-8 py-4 rounded-xl grad-bg text-white font-bold hover:opacity-90 transition-opacity">
+        Спробувати безкоштовно →
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 border-t border-gray-100 bg-white">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+      <div class="flex items-center gap-2">
+        <img src="/logo/logo.png" alt="SellCase" style="height:32px;width:auto" onerror="this.style.display='none'">
+        <span class="text-gray-400 text-xs">© 2026 SellCase</span>
+      </div>
+      <div class="flex flex-col md:flex-row items-center gap-3 md:gap-6">
+        <a href="/videouroky/" class="hover:text-blue-600 font-medium">Відеоуроки</a>
+        <a href="/blog/"       class="hover:text-blue-600">Блог</a>
+        <a href="/terms.html"  class="hover:text-blue-600">Умови використання</a>
+        <a href="/privacy.html" class="hover:text-blue-600">Політика конфіденційності</a>
+        <a href="mailto:support@sellcase.net" class="hover:text-blue-600">support@sellcase.net</a>
+        <a href="https://app.sellcase.net" class="hover:text-blue-600 font-medium">Відкрити додаток →</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lazy embed + GA4 -->
+  <script>
+  function vcPlay(overlay) {
+    var card = overlay.closest('[data-vid]');
+    var vid   = card.dataset.vid;
+    var title = card.dataset.title;
+    var thumb = card.querySelector('.vc-thumb');
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + vid + '?autoplay=1&rel=0&playsinline=1';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0';
+    // Remove img + overlay, insert iframe
+    overlay.remove();
+    thumb.querySelector('img').style.display = 'none';
+    thumb.appendChild(iframe);
+    gtag('event', 'video_play', { video_id: vid, video_title: title });
+  }
+  </script>
+
+  <!-- UTM persistence (same as main page) -->
+  <script>
+  (function(){
+    var TTL = 7*24*60*60*1000;
+    function parseUtm(s){var p={},q=s.replace(/^\?/,'').split('&');q.forEach(function(p2){var kv=p2.split('=');if(kv[0])p[decodeURIComponent(kv[0])]=decodeURIComponent(kv[1]||'');});return p;}
+    function saveUtm(u){try{localStorage.setItem('sellcase_utm',JSON.stringify({d:u,t:Date.now()}));}catch(e){}}
+    function loadUtm(){try{var s=JSON.parse(localStorage.getItem('sellcase_utm')||'{}');if(s.t&&Date.now()-s.t<TTL)return s.d;}catch(e){}return null;}
+    var qs=parseUtm(location.search);
+    if(qs.utm_source)saveUtm(qs);
+    var utm=loadUtm()||qs;
+    document.querySelectorAll('a[href*="app.sellcase.net"]').forEach(function(a){
+      try{
+        var u=new URL(a.href);
+        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){if(utm[k])u.searchParams.set(k,utm[k]);});
+        a.href=u.toString();
+      }catch(e){}
+    });
+  })();
+  </script>
+
+  <!-- Crisp chat (same as main page) -->
+  <script>window.$crisp=[];window.CRISP_WEBSITE_ID="4ecec9de-a4cb-4c43-9b9a-7c39ee93b7e3";(function(){var d=document;var s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+
+</body>
+</html>
